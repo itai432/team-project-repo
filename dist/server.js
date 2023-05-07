@@ -3,6 +3,8 @@ exports.__esModule = true;
 var express_1 = require("express");
 var app = express_1["default"]();
 var mongoose_1 = require("mongoose");
+var dotenv = require("dotenv");
+dotenv.config();
 var uri = process.env.MONGODB_URI;
 if (uri) {
     mongoose_1["default"]
@@ -16,6 +18,8 @@ else {
 }
 app.use(express_1["default"].json());
 app.use(express_1["default"].static("./client"));
+var usersRoute_1 = require("./API/users/usersRoute");
+app.use('/api/users', usersRoute_1["default"]);
 app.listen(3000, function () {
     console.log("server listen on port 3000");
 });

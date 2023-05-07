@@ -1,0 +1,34 @@
+.RegisterContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.RegisterContainer__RegisterHeader {
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 24px;
+}
+.RegisterContainer__UserNameInput, .RegisterContainer__PasswordInput, .RegisterContainer__EmailInput, .RegisterContainer__BirthDayInput {
+  display: block;
+  margin-bottom: 16px;
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 16px;
+}
+.RegisterContainer__SubmitBtn, .RegisterContainer__LoginBtn {
+  display: inline-block;
+  margin-top: 16px;
+  padding: 8px 16px;
+  border: none;
+  border-radius: 4px;
+  background-color: #007bff;
+  color: #fff;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+.RegisterContainer__SubmitBtn:hover, .RegisterContainer__LoginBtn:hover {
+  background-color: #0062cc;
+}

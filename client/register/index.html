@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register</title>
+    <link rel="stylesheet" href="./dist/registerStyle.css">
+    <script src="./dist/register.js" defer></script>
+</head>
+<body>
+    <form onsubmit="handleCreateUser(event)" class="RegisterContainer">
+        <div class="RegisterContainer__RegisterHeader"></div>
+        <div>
+            <label for="userName">Username:</label>
+            <input type="text" id="userName" name="userName" class="RegisterContainer__UserNameInput" required>
+        </div>
+        <div>
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password" class="RegisterContainer__PasswordInput" required>
+        </div>
+        <div>
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" class="RegisterContainer__EmailInput" required>
+        </div>
+        <div>
+            <label for="birthDay">Birthday:</label>
+            <input type="date" id="birthDay" name="birthDay" class="RegisterContainer__BirthDayInput" required>
+        </div>
+        <div>
+            <button type="submit" class="RegisterContainer__SubmitBtn">Register</button>
+        </div>
+        <div>
+            <button type="button" class="RegisterContainer__LoginBtn">Login</button>
+        </div>
+    </form>
+    
+</body>
+</html>
