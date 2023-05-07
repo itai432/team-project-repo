@@ -13,7 +13,7 @@ export const getUsers = async (req: any, res: any) => {
   }
 };
 
-export const addUser = async (req: any, res: any) => {
+export const createUser = async (req: any, res: any) => {
   try {
     const { userName, password, email, birthDay } = req.body;
     console.log(userName, password, email, birthDay);
