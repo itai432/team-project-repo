@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login</title>
+    <link rel="stylesheet" href="./dist/style.css" />
+    <script src="./dist/login.js" defer></script>
+  </head>
+  <body>
+    <form onsubmit="handleLogin(event)" class="LoginContainer">
+        <h1 class="LoginContainer__hederContainer">Login</h1>
+        <div class="LoginContainer__UserInput">
+          <label for="email">Email</label>
+          <input
+            type="email"
+            name="email"
+            id="email"
+            placeholder="Enter your Email"
+            required
+          />
+        </div>
+        <div class="LoginContainer__PasswordInput">
+          <label for="password">Password</label>
+          <input
+            type="password"
+            name="password"
+            id="password"
+            placeholder="Enter your password"
+            required
+          />
+        </div>
+      
+        <div class="LoginContainer__LoginBtn"><button type="submit">Login</button></div>
+        <div class="LoginContainer__RegisterBtn">Register</div>
+        <div class="LoginContainer__ForgotPasswordBtn">Forgot Password</div>
+      </form>
+        </body>
+</html>
