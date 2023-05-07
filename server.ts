@@ -2,6 +2,7 @@ import express from "express";
 const app = express();
 import mongoose, { Schema } from "mongoose";
 import * as dotenv from "dotenv";
+dotenv.config();
 const uri: string | undefined = process.env.MONGODB_URI;
 
 if (uri) {
