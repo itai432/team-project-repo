@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="./dist/style.css">
     <script src="./dist/homePage.js"></script>
 </head>
-<body onload="handleGetProduct()">
+<body onload="handleGetPosts()">
     <header class="header">
         <nav class="header__nav">
           <div class="header__navLeft">
@@ -18,7 +18,7 @@
             <a href="http://localhost:3000/homePage/index.html" class="header__link">Home</a>
             <a href="http://localhost:3000/login/index.html" class="header__link">Login</a>
             <a href="http://localhost:3000/register/index.html" class="header__link">Register</a>
-          </div>
+
         </nav>
         <div class="header__hero">
           <h1 class="header__title">Welcome to My Social Media Network</h1>
@@ -27,7 +27,11 @@
       </header>
       <main class="main">
         <div class="main__container">
-          <div onload="renderPost()" class="main__postsContainer" id="postRoot" ></div>
+          <div class="main__container__createPost" id="createPostRoot">
+            <button onclick="reanderPopUpCreatePost()" id="">submit</button>
+          </div>
+        </div>
+          <div onload="renderPost()" class="main__postsContainer" id="postRoot"></div>
         </div>
       </main>
 </body>
