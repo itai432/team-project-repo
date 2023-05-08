@@ -24,6 +24,11 @@ import usersRouter from './API/users/usersRoute';
 app.use('/api/users', usersRouter);
 
 
+import postsRoute from './API/posts/postsRoute';
+app.use('/api/posts', postsRoute);
+
+
+
 
 
 

@@ -1,8 +1,8 @@
 interface User {
-  userName: string;
+  username: string;
   password: string;
   email: string;
-  birthDay: string;
+  birthday: string;
 }
 
 function handleLogin(ev: any) {
@@ -26,8 +26,9 @@ function handleLogin(ev: any) {
         .then((data) => {
           const{ok}=data;
           if(ok){
-            //add herf to the main page//
-            window.location.href= ""
+            const {password, ...currentUser} = data.userDB
+            localStorage.setItem("currentUser", JSON.stringify(currentUser))
+            window.location.href= "http://localhost:3000/homePage/index.html"
 
           }
           console.log(data);

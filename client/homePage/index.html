@@ -6,8 +6,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>home page</title>
     <link rel="stylesheet" href="./dist/style.css">
+    <script src="./dist/homePage.js"></script>
 </head>
-<body>
+<body onload="handleGetProduct()">
     <header class="header">
         <nav class="header__nav">
           <div class="header__navLeft">
@@ -26,7 +27,7 @@
       </header>
       <main class="main">
         <div class="main__container">
-          <div class="main__postsContainer"></div>
+          <div onload="renderPost()" class="main__postsContainer" id="postRoot" ></div>
         </div>
       </main>
 </body>
