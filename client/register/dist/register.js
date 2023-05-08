@@ -25,7 +25,10 @@ function handleCreateUser(ev) {
         })
             .then(function (res) { return res.json(); })
             .then(function (data) {
-            console.log(data);
+            var ok = data.ok;
+            if (ok) {
+                window.location.href = "http://localhost:3000/homePage/index.html";
+            }
         })["catch"](function (error) {
             console.error(error);
         });
