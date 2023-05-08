@@ -21,7 +21,7 @@ function renderPost(post: Post) {
         <h1>${post.header}</h1>
         <p>${post.date}</p>
         <div>
-          <input type="number" id="quantityInput" value="1" min="1"> thtrthbdf
+          <input type="text" id=""> 
           <button ('${post._id}')">Add Comment</button>
         </div>
         </div>
@@ -53,34 +53,48 @@ function renderPost(post: Post) {
       console.error(error);
     }
   }
-
+  
   function reanderPopUpCreatePost() {
     try {
-        const html = `
-        <form onsubmit="handleCreatePost(event)" class="CreatePostContainer">
-        <div class="CreatePostContainer__CreatePostHeader"></div>
-        <div>
-            <label for="header">header:</label>
-            <input type="text" id="header" name="header" class="CreatePostContainer__HeaderInput" required>
-        </div>
-        <div>
-            <label for="content">Content:</label>
-            <input type="url" id="content" name="content" class="CreatePostContainer__ContentInput" required>
-        </div>
-        <div>
-            <button type="submit" class="CreatePostContainer__SubmitBtn">Post</button>
-        </div>
-    </form>
-      `;
       const createPostRoot = document.querySelector("#createPostRoot");
       if (!createPostRoot) throw new Error("createPostRoot not found");
+      const html = `
+      <form onsubmit="handleCreatePost(event)" class="CreatePostContainer">
+      <button type="button" class="CreatePostContainer__CloseBtn" onclick="closeCreatePostPopup()">&times;</button>
+      <div class="CreatePostContainer__CreatePostHeader"></div>
+      <div>
+        <label for="header">Header:</label>
+        <input type="text" id="header" name="header" class="CreatePostContainer__HeaderInput" required>
+      </div>
+      <div>
+        <label for="content">Content:</label>
+        <input type="url" id="content" name="content" class="CreatePostContainer__ContentInput" required>
+      </div>
+      <div>
+        <button type="submit" class="CreatePostContainer__SubmitBtn">Post</button>
+      </div>
+    </form>
+      `;
+      const createPostBtn = createPostRoot.querySelector("button");
+      if (!createPostBtn) throw new Error("createPostBtn not found");
+      createPostBtn.style.display = "none";
       createPostRoot.innerHTML += html;
-      
     } catch (error) {
       console.error(error);
     }
   }
-
+  function closeCreatePostPopup() {
+    const createPostRoot = document.querySelector("#createPostRoot");
+  
+    if (createPostRoot) {
+      createPostRoot.innerHTML = "";
+      const addPostBtn = document.querySelector("#createPostRoot") as HTMLButtonElement;
+      if (addPostBtn) addPostBtn.style.display = "block";
+    }
+  };
+  
+  
+  
   function handleCreatePost(ev:any){
     try {
       ev.preventDefault();

@@ -1,6 +1,6 @@
 function renderPost(post) {
     try {
-        var html = "\n        <div id=\"post\" class=\"mainPagePost\">\n        <img src=\"" + post.content + "\" alt=\"" + post.header + "\">\n        <h1>" + post.header + "</h1>\n        <p>" + post.date + "</p>\n        <div>\n          <input type=\"number\" id=\"quantityInput\" value=\"1\" min=\"1\"> thtrthbdf\n          <button ('" + post._id + "')\">Add Comment</button>\n        </div>\n        </div>\n      ";
+        var html = "\n        <div id=\"post\" class=\"mainPagePost\">\n        <img src=\"" + post.content + "\" alt=\"" + post.header + "\">\n        <h1>" + post.header + "</h1>\n        <p>" + post.date + "</p>\n        <div>\n          <input type=\"text\" id=\"\"> \n          <button ('" + post._id + "')\">Add Comment</button>\n        </div>\n        </div>\n      ";
         var postRoot = document.querySelector("#postRoot");
         if (!postRoot)
             throw new Error("postRoot not found");
@@ -31,16 +31,30 @@ function handleGetPosts() {
 }
 function reanderPopUpCreatePost() {
     try {
-        var html = "\n        <form onsubmit=\"handleCreatePost(event)\" class=\"CreatePostContainer\">\n        <div class=\"CreatePostContainer__CreatePostHeader\"></div>\n        <div>\n            <label for=\"header\">header:</label>\n            <input type=\"text\" id=\"header\" name=\"header\" class=\"CreatePostContainer__HeaderInput\" required>\n        </div>\n        <div>\n            <label for=\"content\">Content:</label>\n            <input type=\"url\" id=\"content\" name=\"content\" class=\"CreatePostContainer__ContentInput\" required>\n        </div>\n        <div>\n            <button type=\"submit\" class=\"CreatePostContainer__SubmitBtn\">Post</button>\n        </div>\n    </form>\n      ";
         var createPostRoot = document.querySelector("#createPostRoot");
         if (!createPostRoot)
             throw new Error("createPostRoot not found");
+        var html = "\n      <form onsubmit=\"handleCreatePost(event)\" class=\"CreatePostContainer\">\n      <button type=\"button\" class=\"CreatePostContainer__CloseBtn\" onclick=\"closeCreatePostPopup()\">&times;</button>\n      <div class=\"CreatePostContainer__CreatePostHeader\"></div>\n      <div>\n        <label for=\"header\">Header:</label>\n        <input type=\"text\" id=\"header\" name=\"header\" class=\"CreatePostContainer__HeaderInput\" required>\n      </div>\n      <div>\n        <label for=\"content\">Content:</label>\n        <input type=\"url\" id=\"content\" name=\"content\" class=\"CreatePostContainer__ContentInput\" required>\n      </div>\n      <div>\n        <button type=\"submit\" class=\"CreatePostContainer__SubmitBtn\">Post</button>\n      </div>\n    </form>\n      ";
+        var createPostBtn = createPostRoot.querySelector("button");
+        if (!createPostBtn)
+            throw new Error("createPostBtn not found");
+        createPostBtn.style.display = "none";
         createPostRoot.innerHTML += html;
     }
     catch (error) {
         console.error(error);
     }
 }
+function closeCreatePostPopup() {
+    var createPostRoot = document.querySelector("#createPostRoot");
+    if (createPostRoot) {
+        createPostRoot.innerHTML = "";
+        var addPostBtn = document.querySelector("#createPostRoot");
+        if (addPostBtn)
+            addPostBtn.style.display = "block";
+    }
+}
+;
 function handleCreatePost(ev) {
     try {
         ev.preventDefault();
