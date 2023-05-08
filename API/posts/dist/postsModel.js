@@ -7,7 +7,7 @@ exports.PostSchema = new mongoose_1.Schema({
     username: usersModel_1.UserSchema,
     header: String,
     content: String,
-    date: Date
+    date: String
 });
 exports.PostsModel = mongoose_1["default"].model("posts", exports.PostSchema);
 exports["default"] = exports.PostsModel;
