@@ -3,18 +3,18 @@ import mongoose, {Schema} from "mongoose";
 
 
 interface User{
-        userName: string,
+        username: string,
         password: string,
         email: string,
-        birthDay: Date,
+        birthday: Date,
 
 }
 
 export const UserSchema= new Schema({
-    userName: {require: true, type:String},
+    username: {require: true, type:String},
     password: {require: true, type:String},
     email: {require:true, type:String},
-    birthDay: {require:true, type:Date}
+    birthday: {require:true, type:Date}
 })
 
 const UserModel = mongoose.model("users",UserSchema);
