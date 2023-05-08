@@ -1,10 +1,9 @@
 
 interface User{
-    userName: string,
+    username: string,
     password: string,
     email: string,
-    birthDay: Date,
-
+    birthday: string,
 }
 interface Post {
     _id: string,
@@ -20,7 +19,7 @@ function renderPost(post: Post) {
         <div id="post" class="mainPagePost">
         <img src="${post.content}" alt="${post.header}">
         <h1>${post.header}</h1>
-        <p>$${post.date}</p>
+        <p>${post.date}</p>
         <div>
           <input type="number" id="quantityInput" value="1" min="1"> thtrthbdf
           <button ('${post._id}')">Add Comment</button>
@@ -88,14 +87,15 @@ function renderPost(post: Post) {
       console.log(ev.target.elements);
       const header = ev.target.elements.header.value;
       const content = ev.target.elements.content.value;
-      const date = Date.now;
+      const date = new Date();
+      console.log(date)
 
       if (!header) throw new Error("No header");
       if (!content) throw new Error("No content");
       if (!date) throw new Error("No date");
 
 
-      const newPost: any = {  content,header,date};
+      const newPost: any = {content,header,date: date.toString()};
       fetch("/api/posts/create-post", {
           method: "POST",
           headers: {

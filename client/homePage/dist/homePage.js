@@ -1,6 +1,6 @@
 function renderPost(post) {
     try {
-        var html = "\n        <div id=\"post\" class=\"mainPagePost\">\n        <img src=\"" + post.content + "\" alt=\"" + post.header + "\">\n        <h1>" + post.header + "</h1>\n        <p>$" + post.date + "</p>\n        <div>\n          <input type=\"number\" id=\"quantityInput\" value=\"1\" min=\"1\"> thtrthbdf\n          <button ('" + post._id + "')\">Add Comment</button>\n        </div>\n        </div>\n      ";
+        var html = "\n        <div id=\"post\" class=\"mainPagePost\">\n        <img src=\"" + post.content + "\" alt=\"" + post.header + "\">\n        <h1>" + post.header + "</h1>\n        <p>" + post.date + "</p>\n        <div>\n          <input type=\"number\" id=\"quantityInput\" value=\"1\" min=\"1\"> thtrthbdf\n          <button ('" + post._id + "')\">Add Comment</button>\n        </div>\n        </div>\n      ";
         var postRoot = document.querySelector("#postRoot");
         if (!postRoot)
             throw new Error("postRoot not found");
@@ -47,14 +47,15 @@ function handleCreatePost(ev) {
         console.log(ev.target.elements);
         var header = ev.target.elements.header.value;
         var content = ev.target.elements.content.value;
-        var date = Date.now;
+        var date = new Date();
+        console.log(date);
         if (!header)
             throw new Error("No header");
         if (!content)
             throw new Error("No content");
         if (!date)
             throw new Error("No date");
-        var newPost = { content: content, header: header, date: date };
+        var newPost = { content: content, header: header, date: date.toString() };
         fetch("/api/posts/create-post", {
             method: "POST",
             headers: {
