@@ -74,6 +74,10 @@ body {
   flex-direction: column;
   gap: 2%;
 }
+.main img {
+  max-width: 20%;
+  max-height: 20%;
+}
 
 .post {
   background-color: #fff;
