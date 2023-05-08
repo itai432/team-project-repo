@@ -30,7 +30,10 @@ interface User {
           })
             .then((res) => res.json())
             .then((data) => {
-              console.log(data);
+              const{ok}=data;
+          if(ok){
+            window.location.href= "http://localhost:3000/homePage/index.html"
+          }
             })
             .catch((error) => {
               console.error(error);
