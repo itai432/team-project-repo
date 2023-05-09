@@ -1,0 +1,116 @@
+* {
+    box-sizing: border-box;
+  }
+  
+  body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    font-size: 16px;
+  }
+  
+  .header {
+    background-color: #4682b4;
+    color: #fff;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    text-align: center;
+  }
+  
+  .header__nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    margin-bottom: 20px;
+  }
+  
+  .header__navLeft {
+    flex-basis: 50%;
+  }
+  
+  .header__navRight {
+    display: flex;
+    justify-content: flex-end;
+    flex-basis: 50%;
+  }
+  
+  .header__logo {
+    color: #fff;
+    font-size: 24px;
+    font-weight: bold;
+    text-decoration: none;
+  }
+  
+  .header__link {
+    color: #fff;
+    font-size: 18px;
+    text-decoration: none;
+    margin-left: 20px;
+  }
+  
+  .header__hero {
+    width: 100%;
+    text-align: center;
+    margin-bottom: 40px;
+  }
+  
+  .header__title {
+    font-size: 48px;
+    margin: 0;
+    padding: 0;
+  }
+  
+  .header__subtitle {
+    font-size: 24px;
+    margin: 0;
+    padding: 0;
+  }
+  
+  .main {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #f4f4f4;
+  }
+  
+  .main__container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 80%;
+    max-width: 1200px;
+    padding: 20px;
+    background-color: #fff;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  .main__container__profileInfo {
+    width: 100%;
+    margin-bottom: 40px;
+  }
+  
+  .main__container__editProfile {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+  }
+  
+  .main__container__editProfile button {
+    font-size: 18px;
+    padding: 10px 20px;
+    background-color: #4682b4;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .main__container__editProfile button:hover {
+    background-color: #34628b;
+  }

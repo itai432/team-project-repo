@@ -5,7 +5,9 @@ var app = express_1["default"]();
 var mongoose_1 = require("mongoose");
 var dotenv = require("dotenv");
 dotenv.config();
+var cookie_parser_1 = require("cookie-parser");
 var uri = process.env.MONGODB_URI;
+app.use(cookie_parser_1["default"]());
 if (uri) {
     mongoose_1["default"]
         .connect(uri)

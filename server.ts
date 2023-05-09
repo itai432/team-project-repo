@@ -3,7 +3,12 @@ const app = express();
 import mongoose, { Schema } from "mongoose";
 import * as dotenv from "dotenv";
 dotenv.config();
+import cookieParser from 'cookie-parser';
 const uri: string | undefined = process.env.MONGODB_URI;
+
+
+app.use(cookieParser())
+
 
 if (uri) {
     mongoose
