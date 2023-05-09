@@ -7,7 +7,6 @@ interface User{
         password: string,
         email: string,
         birthday: Date,
-
 }
 
 export const UserSchema= new Schema({

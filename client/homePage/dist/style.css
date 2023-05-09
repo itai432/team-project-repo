@@ -73,6 +73,7 @@ body {
   display: flex;
   padding: 2%;
   align-items: center;
+  justify-content: center;
 }
 .main img {
   max-width: 20%;
