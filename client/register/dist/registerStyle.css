@@ -1,3 +1,7 @@
+body {
+  font-family: "Comfortaa", cursive;
+}
+
 .RegisterContainer {
   display: flex;
   flex-direction: column;

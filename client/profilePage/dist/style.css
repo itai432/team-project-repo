@@ -5,8 +5,57 @@
 body {
   margin: 0;
   padding: 0;
-  font-family: Arial, sans-serif;
+  font-family: "Comfortaa", cursive;
   font-size: 16px;
+}
+
+#navbarWrapper {
+  display: flex;
+  align-items: center;
+  box-shadow: 0px 2px 4px -1px rgba(0, 0, 0, 0.2), 0px 4px 5px 0px rgba(0, 0, 0, 0.14), 0px 1px 10px 0px rgba(0, 0, 0, 0.12);
+  height: 5rem;
+  background-color: #1379ff;
+  color: white;
+  justify-content: space-between;
+  position: fixed;
+  width: 100%;
+  z-index: 1;
+}
+
+.navbarTitle {
+  font-size: 2rem;
+  padding: 0 0 0 2rem;
+  cursor: pointer;
+  text-decoration: none;
+  color: white;
+}
+
+.navbarElements {
+  font-size: 1.3rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  width: 20rem;
+}
+
+.element {
+  text-decoration: none;
+  color: white;
+}
+
+.welcomeWrapper {
+  padding: 8rem 0 0 0;
+  text-align: center;
+  background-color: #f4f4f4;
+}
+
+.welcomeProfile {
+  font-size: 1.5rem;
+  padding: 0 0 1.5rem 0;
+}
+
+.subText {
+  font-size: 1.2rem;
 }
 
 .header {
@@ -38,6 +87,7 @@ body {
 }
 
 .header__logo {
+  margin-top: 8rem;
   color: #fff;
   font-size: 24px;
   font-weight: bold;
@@ -73,7 +123,6 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh;
   background-color: #f4f4f4;
 }
 
@@ -85,8 +134,6 @@ body {
   width: 80%;
   max-width: 1200px;
   padding: 20px;
-  background-color: #fff;
-  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
 }
 
 .main__container__profileInfo {
@@ -101,9 +148,9 @@ body {
 }
 
 .main__container__editProfile button {
-  font-size: 18px;
+  font-size: 1.2rem;
   padding: 10px 20px;
-  background-color: #4682b4;
+  background-color: #1379ff;
   color: #fff;
   border: none;
   border-radius: 5px;
@@ -112,5 +159,5 @@ body {
 }
 
 .main__container__editProfile button:hover {
-  background-color: #34628b;
+  background-color: #5fa5ff;
 }
