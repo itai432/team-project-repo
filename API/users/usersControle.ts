@@ -15,14 +15,14 @@ export const getUsers = async (req: any, res: any) => {
 
 export const createUser = async (req: any, res: any) => {
   try {
-    const { userName, password, email, birthDay } = req.body;
-    console.log(userName, password, email, birthDay);
+    const { username, password, email, birthday } = req.body;
+    console.log(username, password, email, birthday);
 
     const userDB = await UserModel.create({
-      userName,
+      username,
       password,
       email,
-      birthDay,
+      birthday,
     });
     console.log(userDB);
 

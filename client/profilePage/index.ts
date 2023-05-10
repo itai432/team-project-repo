@@ -50,3 +50,38 @@ function handleGetProfileInfo() {
       console.error(error);
     }
   }
+
+  function handleGetUserPosts() {
+    try {
+      
+      fetch("/api/posts/get-posts")
+        .then((res) => res.json())
+        .then(({ posts }) => {
+          if (!posts) throw new Error("didnt find Posts");
+          const html = posts
+          .map((posts) => {
+            return   renderUserPosts(posts);
+          })
+        
+        });
+    } catch (error) {
+      console.error(error);
+    }
+  }
+  
+  function renderUserPosts(posts:Post) {
+    try {
+      const html = `
+        <div class="mainPagePost">
+          <h3>${posts.header}</h3>
+          <img src="${posts.content}" alt="${posts.header}">
+          </div>
+      `;
+      const postsUserRoot = document.querySelector("#postsUserRoot");
+      if (!postsUserRoot) throw new Error("postsUserRoot not found");
+      postsUserRoot.innerHTML += html;
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
