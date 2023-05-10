@@ -1,6 +1,12 @@
 function renderPost(post) {
     try {
-        var html = "\n        <div id=\"post\" class=\"mainPagePost\">\n        <img src=\"" + post.content + "\" alt=\"" + post.header + "\">\n        <h1>" + post.header + "</h1>\n        <p>" + post.date + "</p>\n        <div>\n          <input type=\"text\" id=\"\"> \n          <button ('" + post._id + "')\">Add Comment</button>\n        </div>\n        </div>\n      ";
+        var postDate = new Date(post.date);
+        var formattedDate = postDate.toLocaleDateString('en-US', {
+            year: 'numeric',
+            month: 'short',
+            day: 'numeric'
+        });
+        var html = "\n      <div id=\"post\" class=\"mainPagePost\">\n        <img src=\"" + post.content + "\" alt=\"" + post.header + "\">\n        <h1>" + post.header + "</h1>\n        <p>" + formattedDate + "</p>\n        <div>\n          <input placeholder=\"Add Comment\" type=\"text\" id=\"\"> \n          <button ('" + post._id + "')\" >Add Comment</button>\n        </div>\n      </div>\n    ";
         var postRoot = document.querySelector("#postRoot");
         if (!postRoot)
             throw new Error("postRoot not found");
