@@ -6,11 +6,31 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Profile Page</title>
     <link rel="stylesheet" href="./dist/style.css">
+    <!-- google fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Comfortaa&display=swap" rel="stylesheet">
+    <!-- google fonts -->
     <script src="./dist/index.js"></script>
 </head>
 <body>
     <body onload="handleGetProfileInfo()">
-        <header class="header">
+      <div id="navbarWrapper">
+        <a href="http://localhost:3000/homePage/index.html" class="navbarTitle">My Social Media</a>
+        <div class="navbarElements">
+          <a href="http://localhost:3000/login/index.html" class="element">Login</a>
+          <a href="http://localhost:3000/register/index.html" class="element">Register</a>
+          <a href="http://localhost:3000/profilePage/index.html" class="element">Profile</a>
+        </div>
+      </div>
+      <div class="welcomeWrapper">
+        <div class="welcomeProfile">Welcome to Your Profile Page</div>
+        <div>Here you can view and edit your profile information</div>
+      </div>
+            
+
+
+        <!-- <header class="header">
             <nav class="header__nav">
               <div class="header__navLeft">
                 <a href="#" class="header__logo">Our Social Media Network</a>
@@ -26,9 +46,11 @@
               <h1 class="header__title">Welcome to Your Profile Page</h1>
               <p class="header__subtitle">Here you can view and edit your profile information.</p>
             </div>
-          </header>
+          </header> -->
+
+
+
           <main class="main">
-    
             <div class="main__container">
               <div class="main__container__profileInfo" id="profileInfoRoot"></div>
               <div class="main__container__editProfile" id="editProfileRoot">
