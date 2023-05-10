@@ -14,27 +14,33 @@ interface Post {
 
 
 function renderPost(post: Post) {
-    try {
-        const html = `
-        <div id="post" class="mainPagePost">
+  try {
+    const postDate = new Date(post.date);
+    const formattedDate = postDate.toLocaleDateString('en-US', { 
+      year: 'numeric', 
+      month: 'short', 
+      day: 'numeric'
+    });
+
+    const html = `
+      <div id="post" class="mainPagePost">
         <img src="${post.content}" alt="${post.header}">
         <h1>${post.header}</h1>
-        <p>${post.date}</p>
+        <p>${formattedDate}</p>
         <div>
-          <input type="text" id=""> 
-          <button ('${post._id}')">Add Comment</button>
+          <input placeholder="Add Comment" type="text" id=""> 
+          <button ('${post._id}')" >Add Comment</button>
         </div>
-        </div>
-      `;
-      const postRoot = document.querySelector("#postRoot");
-      if (!postRoot) throw new Error("postRoot not found");
-      postRoot.innerHTML += html;
-      console.log(post)
-      
-    } catch (error) {
-      console.error(error);
-    }
+      </div>
+    `;
+    const postRoot = document.querySelector("#postRoot");
+    if (!postRoot) throw new Error("postRoot not found");
+    postRoot.innerHTML += html;
+    console.log(post)
+  } catch (error) {
+    console.error(error);
   }
+}
 
   function handleGetPosts() {
     try {

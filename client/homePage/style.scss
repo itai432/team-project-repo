@@ -9,10 +9,55 @@ html {
 }
 
 body {
-  font-family: sans-serif;
   background-color: #f7f7f7;
   align-items: center;
   text-align: center;
+  font-family: "Comfortaa", cursive;
+}
+
+#navbarWrapper {
+  display: flex;
+  align-items: center;
+  box-shadow: 0px 2px 4px -1px rgba(0, 0, 0, 0.2),
+    0px 4px 5px 0px rgba(0, 0, 0, 0.14), 0px 1px 10px 0px rgba(0, 0, 0, 0.12);
+  height: 5rem;
+  background-color: rgb(19, 121, 255);
+  color: white;
+  justify-content: space-between;
+  position: fixed;
+  width: 100%;
+  z-index: 1;
+}
+
+.navbarTitle {
+  font-size: 2rem;
+  padding: 0 0 0 2rem;
+  cursor: pointer;
+  text-decoration: none;
+  color: white;
+}
+
+.navbarElements {
+  font-size: 1.3rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  width: 20rem;
+}
+
+.element {
+  text-decoration: none;
+  color: white;
+}
+
+.welcomeText {
+  padding: 8rem 0 2rem 0;
+  font-size: 2rem;
+}
+
+.welcomeSubText {
+  font-size: 1.4rem;
+  padding-bottom: 2rem;
 }
 
 .header {
@@ -53,7 +98,7 @@ body {
 }
 
 .header__hero {
-  max-width: 90%;
+  // max-width: 90%;
   margin: 2% auto;
   text-align: center;
 }
@@ -74,11 +119,83 @@ body {
   padding: 2%;
   align-items: center;
   justify-content: center;
-  img{
+  img {
     max-width: 20%;
     max-height: 20%;
   }
 }
+.main__postsContainer {
+  background-color: white;
+  border: 1px solid #e6e6e6;
+  border-radius: 3px;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+  margin: 20px auto;
+  max-width: 600px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+
+.main__postsContainer h1 {
+  font-size: 1.6rem;
+  font-weight: 600;
+  margin: 10px;
+  text-align: center;
+}
+
+.main__postsContainer p {
+  font-size: 1.4rem;
+  color: #8e8e8e;
+  margin: 10px;
+  text-align: center;
+}
+
+.main__postsContainer input[type="text"] {
+  background-color: #fafafa;
+  border: none;
+  border-top: 1px solid #e6e6e6;
+  font-size: 1.4rem;
+  padding: 12px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.main__postsContainer button {
+  background-color: #0095f6;
+  border: none;
+  border-radius: 3px;
+  color: white;
+  cursor: pointer;
+  font-size: 1.4rem;
+  font-weight: 600;
+  margin: 10px;
+  padding: 12px;
+  width: 100%;
+}
+
+.main__postsContainer button:hover {
+  background-color: #0080f6;
+}
+
+@media screen and (min-width: 768px) {
+  .main__postsContainer {
+    flex-direction: row;
+  }
+  
+  .main__postsContainer img {
+    max-width: 50%;
+    height: 100%;
+    margin: 0;
+  }
+  
+  .main__postsContainer h1,
+  .main__postsContainer p {
+    text-align: left;
+  }
+}
+
+
 
 .main__container__createPost {
   display: flex;
@@ -87,7 +204,7 @@ body {
 }
 
 .main__container__createPost button {
-  background-color: #ff5700;
+  background-color: rgb(19, 121, 255);
   color: #fff;
   padding: 1% 2%;
   border: none;
@@ -96,15 +213,10 @@ body {
   cursor: pointer;
 }
 
-.main__container {
-  max-width: 90%;
-}
-
 .main__postsContainer {
   display: flex;
   flex-direction: column;
   gap: 2%;
-
 }
 
 .post {
@@ -193,7 +305,7 @@ body {
 }
 
 .CreatePostContainer button[type="submit"] {
-  background-color: #0077cc;
+  background-color: rgb(19, 121, 255);
   color: #fff;
   padding: 10px 20px;
   border: none;
@@ -203,6 +315,5 @@ body {
 }
 
 .CreatePostContainer button[type="submit"]:hover {
-  background-color: #005ea6;
+  background-color: rgb(19, 121, 255);
 }
-
