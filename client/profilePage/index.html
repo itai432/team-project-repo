@@ -14,7 +14,7 @@
     <script src="./dist/index.js"></script>
 </head>
 <body>
-    <body onload="handleGetProfileInfo()">
+    <body onload="handleGetProfileInfo(),handleGetUserPosts()">
       <div id="navbarWrapper">
         <a href="http://localhost:3000/homePage/index.html" class="navbarTitle">My Social Media</a>
         <div class="navbarElements">
@@ -27,35 +27,13 @@
         <div class="welcomeProfile">Welcome to Your Profile Page</div>
         <div>Here you can view and edit your profile information</div>
       </div>
-            
-
-
-        <!-- <header class="header">
-            <nav class="header__nav">
-              <div class="header__navLeft">
-                <a href="#" class="header__logo">Our Social Media Network</a>
-              </div>
-              <div class="header__navRight">
-                <a href="http://localhost:3000/homePage/index.html" class="header__link">Home</a>
-                <a href="http://localhost:3000/profilePage/index.html" class="header__link">Profile Page</a>
-                <a href="http://localhost:3000/login/index.html" class="header__link">Login</a>
-                <a href="http://localhost:3000/register/index.html" class="header__link">Register</a>
-    
-            </nav>
-            <div class="header__hero">
-              <h1 class="header__title">Welcome to Your Profile Page</h1>
-              <p class="header__subtitle">Here you can view and edit your profile information.</p>
-            </div>
-          </header> -->
-
-
-
           <main class="main">
             <div class="main__container">
               <div class="main__container__profileInfo" id="profileInfoRoot"></div>
               <div class="main__container__editProfile" id="editProfileRoot">
                 <button>Edit Profile</button>
               </div>
+              <div class="main_container__postsUser" id="postsUserRoot"></div>
             </div>
           </main>
 </body>

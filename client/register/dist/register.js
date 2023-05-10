@@ -2,19 +2,19 @@ function handleCreateUser(ev) {
     try {
         ev.preventDefault();
         console.log(ev.target.elements);
-        var userName = ev.target.elements.userName.value;
+        var username = ev.target.elements.username.value;
         var password = ev.target.elements.password.value;
         var email = ev.target.elements.email.value;
-        var birthDay = ev.target.elements.birthDay.value;
-        if (!userName)
+        var birthday = ev.target.elements.birthday.value;
+        if (!username)
             throw new Error("No name");
         if (!password)
             throw new Error("No Password");
         if (!email)
             throw new Error("No email");
-        if (!birthDay)
+        if (!birthday)
             throw new Error("No birthDay");
-        var newUser = { userName: userName, password: password, email: email, birthDay: birthDay };
+        var newUser = { username: username, password: password, email: email, birthday: birthday };
         fetch("/api/users/create-user", {
             method: "POST",
             headers: {

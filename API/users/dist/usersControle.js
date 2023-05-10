@@ -62,18 +62,18 @@ exports.getUsers = function (req, res) { return __awaiter(void 0, void 0, void 0
     });
 }); };
 exports.createUser = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var _a, userName, password, email, birthDay, userDB, error_2;
+    var _a, username, password, email, birthday, userDB, error_2;
     return __generator(this, function (_b) {
         switch (_b.label) {
             case 0:
                 _b.trys.push([0, 2, , 3]);
-                _a = req.body, userName = _a.userName, password = _a.password, email = _a.email, birthDay = _a.birthDay;
-                console.log(userName, password, email, birthDay);
+                _a = req.body, username = _a.username, password = _a.password, email = _a.email, birthday = _a.birthday;
+                console.log(username, password, email, birthday);
                 return [4 /*yield*/, usersModel_1["default"].create({
-                        userName: userName,
+                        username: username,
                         password: password,
                         email: email,
-                        birthDay: birthDay
+                        birthday: birthday
                     })];
             case 1:
                 userDB = _b.sent();
