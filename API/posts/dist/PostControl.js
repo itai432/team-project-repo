@@ -38,14 +38,21 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 exports.__esModule = true;
 exports.getPosts = exports.editPost = exports.deletePost = exports.createPost = void 0;
 var postsModel_1 = require("./postsModel");
+var jwt_simple_1 = require("jwt-simple");
+var secret = process.env.JWT_SECRET;
 exports.createPost = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var _a, header, content, date, postDB, error_1;
+    var _a, header, content, date, user, decoded, userId, postDB, error_1;
     return __generator(this, function (_b) {
         switch (_b.label) {
             case 0:
                 _b.trys.push([0, 2, , 3]);
                 _a = req.body, header = _a.header, content = _a.content, date = _a.date;
-                return [4 /*yield*/, postsModel_1["default"].create({ header: header, content: content, date: date })];
+                user = req.cookies.user;
+                if (!secret)
+                    throw new Error("No secret");
+                decoded = jwt_simple_1["default"].decode(user, secret);
+                userId = decoded.userId;
+                return [4 /*yield*/, postsModel_1["default"].create({ user: userId, header: header, content: content, date: date })];
             case 1:
                 postDB = _b.sent();
                 res.send({ post: postDB });
