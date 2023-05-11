@@ -1,16 +1,23 @@
 import PostsModel from "./postsModel";
+import jwt from "jwt-simple";
+const secret = process.env.JWT_SECRET;
 
+export const createPost = async (req: any, res: any) => {
+  try {
+    const { header, content, date } = req.body;
+    const { user } = req.cookies; 
+    if (!secret) throw new Error("No secret");
 
-export const createPost = async (req:any, res:any) => {
-    try {
-      const {header,content,date} = req.body;
-      const postDB = await PostsModel.create({header,content,date});
-      res.send({post:postDB})
-    } catch (error:any) {
-      console.error(error);
-        res.status(500).send({ error: error.message });
-    }
-  };
+    const decoded = jwt.decode(user, secret);
+    const userId = decoded.userId;
+
+    const postDB = await PostsModel.create({ user: userId, header, content, date });
+    res.send({ post: postDB });
+  } catch (error: any) {
+    console.error(error);
+    res.status(500).send({ error: error.message });
+  }
+};
 
 
   export const deletePost = async (req: any, res: any) => {
