@@ -50,7 +50,7 @@ function handleGetUserPosts() {
 }
 function renderUserPosts(posts) {
     try {
-        var html = "\n        <div class=\"mainPagePost\">\n          <h3>" + posts.header + "</h3>\n          <img src=\"" + posts.content + "\" alt=\"" + posts.header + "\">\n          </div>\n      ";
+        var html = "\n        <div class=\"mainPagePost\">\n        <img src=\"" + posts.content + "\" alt=\"" + posts.header + "\">\n        <h3>" + posts.header + "</h3>\n          </div>\n      ";
         var postsUserRoot = document.querySelector("#postsUserRoot");
         if (!postsUserRoot)
             throw new Error("postsUserRoot not found");

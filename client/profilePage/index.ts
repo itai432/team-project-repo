@@ -73,8 +73,8 @@ function handleGetProfileInfo() {
     try {
       const html = `
         <div class="mainPagePost">
-          <h3>${posts.header}</h3>
-          <img src="${posts.content}" alt="${posts.header}">
+        <img src="${posts.content}" alt="${posts.header}">
+        <h3>${posts.header}</h3>
           </div>
       `;
       const postsUserRoot = document.querySelector("#postsUserRoot");
