@@ -6,12 +6,11 @@ function renderPost(post) {
             month: 'short',
             day: 'numeric'
         });
-        var html = "\n      <div id=\"post\" class=\"mainPagePost\">\n        <img src=\"" + post.content + "\" alt=\"" + post.header + "\">\n        <h1>" + post.header + "</h1>\n        <p>" + formattedDate + "</p>\n        <div>\n          <input placeholder=\"Add Comment\" type=\"text\" id=\"\"> \n          <button ('" + post._id + "')\" >Add Comment</button>\n        </div>\n      </div>\n    ";
+        var html = "\n      <div id=\"post_" + post._id + "\" class=\"mainPagePost\">\n        <img src=\"" + post.content + "\" alt=\"" + post.header + "\">\n        <h1>" + post.header + "</h1>\n        <p>" + formattedDate + "</p>\n        <div>\n          <input placeholder=\"Add Comment\" type=\"text\" id=\"commentInput_" + post._id + "\"> \n          <button onclick=\"handleCreateComment('" + post._id + "')\" >Add Comment</button>\n        </div>\n      </div>\n    ";
         var postRoot = document.querySelector("#postRoot");
         if (!postRoot)
             throw new Error("postRoot not found");
         postRoot.innerHTML += html;
-        console.log(post);
     }
     catch (error) {
         console.error(error);
@@ -68,7 +67,6 @@ function handleCreatePost(ev) {
         var header = ev.target.elements.header.value;
         var content = ev.target.elements.content.value;
         var date = new Date();
-        console.log(date);
         if (!header)
             throw new Error("No header");
         if (!content)
@@ -95,3 +93,37 @@ function handleCreatePost(ev) {
         console.error(error);
     }
 }
+//comments not working still
+// function handleCreateComment(postId: string) {
+//   try {
+//     const commentInput = document.querySelector(
+//       `#commentInput_${postId}`
+//     ) as HTMLInputElement;
+//     if (!commentInput) {
+//       throw new Error("Comment input not found");
+//     }
+//     const comment = commentInput.value;
+//     if (!comment) {
+//       throw new Error("No comment");
+//     }
+//     const newComment = { postId, content: comment };
+//     fetch("/api/comments/create-comment", {
+//       method: "POST",
+//       headers: {
+//         Accept: "application/json",
+//         "Content-Type": "application/json",
+//         Authorization: `Bearer <user>`,
+//       },
+//       body: JSON.stringify(newComment),
+//     })
+//       .then((res) => res.json())
+//       .then((data) => {
+//         console.log(data);
+//       })
+//       .catch((error) => {
+//         console.error(error);
+//       });
+//   } catch (error) {
+//     console.error(error);
+//   }
+// }

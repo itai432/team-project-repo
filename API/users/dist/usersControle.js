@@ -68,7 +68,6 @@ exports.createUser = function (req, res) { return __awaiter(void 0, void 0, void
             case 0:
                 _b.trys.push([0, 2, , 3]);
                 _a = req.body, username = _a.username, password = _a.password, email = _a.email, birthday = _a.birthday;
-                console.log(username, password, email, birthday);
                 return [4 /*yield*/, usersModel_1["default"].create({
                         username: username,
                         password: password,
@@ -77,7 +76,6 @@ exports.createUser = function (req, res) { return __awaiter(void 0, void 0, void
                     })];
             case 1:
                 userDB = _b.sent();
-                console.log(userDB);
                 res.status(201).send({ ok: true });
                 return [3 /*break*/, 3];
             case 2:
@@ -99,7 +97,6 @@ exports.login = function (req, res) { return __awaiter(void 0, void 0, void 0, f
                 if (!email || !password) {
                     throw new mongoose_1.Error("Email and password are required");
                 }
-                console.log(email, password);
                 return [4 /*yield*/, usersModel_1["default"].findOne({ email: email, password: password })];
             case 1:
                 userDB = _b.sent();
@@ -108,7 +105,6 @@ exports.login = function (req, res) { return __awaiter(void 0, void 0, void 0, f
                 if (!secret)
                     throw new mongoose_1.Error("Missing jwt secret");
                 token = jwt_simple_1["default"].encode({ userId: userDB._id }, secret);
-                console.log(token);
                 res.cookie("user", token, { httpOnly: true });
                 res.status(201).send({ ok: true });
                 return [3 /*break*/, 3];
@@ -152,11 +148,9 @@ exports.getUserById = function (req, res) { return __awaiter(void 0, void 0, voi
             case 0:
                 _a.trys.push([0, 2, , 3]);
                 user = req.cookies.user;
-                console.log(user);
                 if (!secret)
                     throw new mongoose_1.Error("No secret");
                 decoded = jwt_simple_1["default"].decode(user, secret);
-                console.log(decoded);
                 userId = decoded.userId;
                 return [4 /*yield*/, usersModel_1["default"].findById(userId)];
             case 1:

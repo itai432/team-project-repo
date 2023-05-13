@@ -33,6 +33,10 @@ import postsRoute from './API/posts/postsRoute';
 app.use('/api/posts', postsRoute);
 
 
+import commentsRoute from './API/comments/commentsRoute';
+app.use('/api/comments', commentsRoute);
+
+
 
 
 
