@@ -23,20 +23,19 @@ function renderPost(post: Post) {
     });
 
     const html = `
-      <div id="post" class="mainPagePost">
+      <div id="post_${post._id}" class="mainPagePost">
         <img src="${post.content}" alt="${post.header}">
         <h1>${post.header}</h1>
         <p>${formattedDate}</p>
         <div>
-          <input placeholder="Add Comment" type="text" id=""> 
-          <button ('${post._id}')" >Add Comment</button>
+          <input placeholder="Add Comment" type="text" id="commentInput_${post._id}"> 
+          <button onclick="handleCreateComment('${post._id}')" >Add Comment</button>
         </div>
       </div>
     `;
     const postRoot = document.querySelector("#postRoot");
     if (!postRoot) throw new Error("postRoot not found");
     postRoot.innerHTML += html;
-    console.log(post)
   } catch (error) {
     console.error(error);
   }
@@ -108,7 +107,6 @@ function renderPost(post: Post) {
       const header = ev.target.elements.header.value;
       const content = ev.target.elements.content.value;
       const date = new Date();
-      console.log(date)
 
       if (!header) throw new Error("No header");
       if (!content) throw new Error("No content");
@@ -136,3 +134,39 @@ function renderPost(post: Post) {
       console.error(error)
   }
   }
+//comments not working still
+// function handleCreateComment(postId: string) {
+//   try {
+//     const commentInput = document.querySelector(
+//       `#commentInput_${postId}`
+//     ) as HTMLInputElement;
+//     if (!commentInput) {
+//       throw new Error("Comment input not found");
+//     }
+
+//     const comment = commentInput.value;
+//     if (!comment) {
+//       throw new Error("No comment");
+//     }
+
+//     const newComment = { postId, content: comment };
+//     fetch("/api/comments/create-comment", {
+//       method: "POST",
+//       headers: {
+//         Accept: "application/json",
+//         "Content-Type": "application/json",
+//         Authorization: `Bearer <user>`,
+//       },
+//       body: JSON.stringify(newComment),
+//     })
+//       .then((res) => res.json())
+//       .then((data) => {
+//         console.log(data);
+//       })
+//       .catch((error) => {
+//         console.error(error);
+//       });
+//   } catch (error) {
+//     console.error(error);
+//   }
+// }

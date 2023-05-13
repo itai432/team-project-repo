@@ -16,7 +16,6 @@ export const getUsers = async (req: any, res: any) => {
 export const createUser = async (req: any, res: any) => {
   try {
     const { username, password, email, birthday } = req.body;
-    console.log(username, password, email, birthday);
 
     const userDB = await UserModel.create({
       username,
@@ -24,7 +23,6 @@ export const createUser = async (req: any, res: any) => {
       email,
       birthday,
     });
-    console.log(userDB);
 
     res.status(201).send({ ok: true });
   } catch (error) {
@@ -41,7 +39,6 @@ export const login = async (req: any, res: any) => {
       throw new Error("Email and password are required");
     }
 
-    console.log(email, password);
 
     const userDB = await UserModel.findOne({ email, password });
 
@@ -50,7 +47,6 @@ export const login = async (req: any, res: any) => {
     if (!secret) throw new Error("Missing jwt secret");
 
     const token = jwt.encode({ userId: userDB._id }, secret);
-    console.log(token);
 
     res.cookie("user", token, { httpOnly: true });
 
@@ -76,11 +72,9 @@ export const deleteUser = async (res: any, req: any) => {
 export const getUserById  = async (req: any, res: any) => {
   try {
     const { user } = req.cookies;
-    console.log(user);
     if (!secret) throw new Error("No secret");
     
     const decoded = jwt.decode(user, secret);
-    console.log(decoded);
     
     const { userId } = decoded;
 
@@ -92,3 +86,5 @@ export const getUserById  = async (req: any, res: any) => {
     res.status(500).send({ error: error.message });
   }
 };
+
+
