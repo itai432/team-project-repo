@@ -136,7 +136,7 @@ function handleCreateComment(postId) {
     }
 }
 function fetchCommentsForPost(postId) {
-    fetch("/api/comments/get-comments-by-postid")
+    fetch("/api/comments/get-comments?postId=" + postId)
         .then(function (res) { return res.json(); })
         .then(function (_a) {
         var comments = _a.comments;
@@ -150,7 +150,7 @@ function fetchCommentsForPost(postId) {
         var postElement = document.querySelector("#post_" + postId);
         if (!postElement)
             throw new Error("Post element with id " + postId + " not found");
-        var commentsContainer = postElement.querySelector(".commentsContainer_" + postId);
+        var commentsContainer = postElement.querySelector('.commentsContainer');
         if (!commentsContainer)
             throw new Error("Comments container for post " + postId + " not found");
         commentsContainer.innerHTML = commentsHtml;

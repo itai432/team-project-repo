@@ -49,51 +49,7 @@ function renderPost(post: Post) {
 }
 
 
-function fetchCommentsForPost(postId: string) {
-  fetch(`/api/comments/get-comments?postId=${postId}`)
-    .then((res) => res.json())
-    .then(({ comments }) => {
-      if (!comments) throw new Error("No comments found");
 
-      const commentsHtml = comments
-        .map((comment) => {
-          return renderComment(comment);
-        })
-        .join('');
-
-      const postElement = document.querySelector(`#post_${postId}`);
-      if (!postElement) throw new Error(`Post element with id ${postId} not found`);
-
-      const commentsContainer = postElement.querySelector('.commentsContainer');
-      if (!commentsContainer) throw new Error(`Comments container for post ${postId} not found`);
-
-      commentsContainer.innerHTML = commentsHtml;
-    })
-    .catch((error) => {
-      console.error(error);
-    });
-}
-
-function renderComment(comment: Comment) {
-  const commentDate = new Date(comment.date);
-  const formattedDate = commentDate.toLocaleDateString('en-US', {
-    year: 'numeric',
-    month: 'short',
-    day: 'numeric'
-  });
-
-  const commentHtml = `
-    <div class="comment">
-      <p>${comment.content}</p>
-      <span>${formattedDate}</span>
-    </div>
-  `;
-
-  const commentsContainer = document.querySelector(`.commentsContainer_${comment.postId}`);
-  if (!commentsContainer) throw new Error(`Comments container for post ${comment.postId} not found`);
-
-  commentsContainer.innerHTML += commentHtml;
-}
 
   function handleGetPosts() {
     try {
@@ -232,4 +188,50 @@ function handleCreatePost(ev: any) {
     } catch (error) {
       console.error(error);
     }
+  }
+
+  function fetchCommentsForPost(postId: string) {
+    fetch(`/api/comments/get-comments?postId=${postId}`)
+      .then((res) => res.json())
+      .then(({ comments }) => {
+        if (!comments) throw new Error("No comments found");
+  
+        const commentsHtml = comments
+          .map((comment) => {
+            return renderComment(comment);
+          })
+          .join('');
+  
+        const postElement = document.querySelector(`#post_${postId}`);
+        if (!postElement) throw new Error(`Post element with id ${postId} not found`);
+  
+        const commentsContainer = postElement.querySelector('.commentsContainer');
+        if (!commentsContainer) throw new Error(`Comments container for post ${postId} not found`);
+  
+        commentsContainer.innerHTML = commentsHtml;
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  }
+  
+  function renderComment(comment: Comment) {
+    const commentDate = new Date(comment.date);
+    const formattedDate = commentDate.toLocaleDateString('en-US', {
+      year: 'numeric',
+      month: 'short',
+      day: 'numeric'
+    });
+  
+    const commentHtml = `
+      <div class="comment">
+        <p>${comment.content}</p>
+        <span>${formattedDate}</span>
+      </div>
+    `;
+  
+    const commentsContainer = document.querySelector(`.commentsContainer_${comment.postId}`);
+    if (!commentsContainer) throw new Error(`Comments container for post ${comment.postId} not found`);
+  
+    commentsContainer.innerHTML += commentHtml;
   }
