@@ -132,38 +132,38 @@ function renderPost(post: Post) {
   }
   }
 //comments not working still
-// function handleCreateComment(postId: string) {
-//   try {
-//     const commentInput = document.querySelector(
-//       `#commentInput_${postId}`
-//     ) as HTMLInputElement;
-//     if (!commentInput) {
-//       throw new Error("Comment input not found");
-//     }
+function handleCreateComment(postId: string) {
+  try {
+    const commentInput = document.querySelector(
+      `#commentInput_${postId}`
+    ) as HTMLInputElement;
+    if (!commentInput) {
+      throw new Error("Comment input not found");
+    }
 
-//     const comment = commentInput.value;
-//     if (!comment) {
-//       throw new Error("No comment");
-//     }
+    const comment = commentInput.value;
+    if (!comment) {
+      throw new Error("No comment");
+    }
 
-//     const newComment = { postId, content: comment };
-//     fetch("/api/comments/create-comment", {
-//       method: "POST",
-//       headers: {
-//         Accept: "application/json",
-//         "Content-Type": "application/json",
-//         Authorization: `Bearer <user>`,
-//       },
-//       body: JSON.stringify(newComment),
-//     })
-//       .then((res) => res.json())
-//       .then((data) => {
-//         console.log(data);
-//       })
-//       .catch((error) => {
-//         console.error(error);
-//       });
-//   } catch (error) {
-//     console.error(error);
-//   }
-// }
+    const newComment = { postId, content: comment };
+    fetch("/api/comments/create-comment", {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+        Authorization: `Bearer <user>`,
+      },
+      body: JSON.stringify(newComment),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  } catch (error) {
+    console.error(error);
+  }
+}

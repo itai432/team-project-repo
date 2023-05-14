@@ -5,10 +5,10 @@ const secret = process.env.JWT_SECRET;
 export const createComment = async (req: any, res: any) => {
     try {
       const { postId, content, date } = req.body;
-      const { token } = req.cookies;
+      const { user } = req.cookies;
       if (!secret) throw new Error("No secret");
   
-      const decoded = jwt.decode(token, secret);
+      const decoded = jwt.decode(user, secret);
       const userId = decoded.userId;
   
       const commentDB = await CommentsModel.create({ user: userId, post: postId, content, date });
