@@ -32,25 +32,28 @@ function renderProfileInfo(user) {
 }
 function handleGetUserPosts() {
     try {
-        fetch("/api/posts/get-posts")
+        fetch("/api/posts/get-posts-of-user", {
+            method: "GET",
+            headers: {
+                Accept: "application/json",
+                "Content-Type": "application/json"
+            }
+        })
             .then(function (res) { return res.json(); })
             .then(function (_a) {
             var posts = _a.posts;
             if (!posts)
-                throw new Error("didnt find Posts");
-            var html = posts
-                .map(function (posts) {
-                return renderUserPosts(posts);
-            });
+                throw new Error("Posts not found");
+            posts.forEach(function (post) { return renderUserPosts(post); });
         });
     }
     catch (error) {
         console.error(error);
     }
 }
-function renderUserPosts(posts) {
+function renderUserPosts(post) {
     try {
-        var html = "\n        <div class=\"mainPagePost\">\n        <img src=\"" + posts.content + "\" alt=\"" + posts.header + "\">\n        <h3>" + posts.header + "</h3>\n          </div>\n      ";
+        var html = "\n        <div class=\"mainPagePost\">\n          <img src=\"" + post.content + "\" alt=\"" + post.header + "\">\n          <h3>" + post.header + "</h3>\n        </div>\n      ";
         var postsUserRoot = document.querySelector("#postsUserRoot");
         if (!postsUserRoot)
             throw new Error("postsUserRoot not found");

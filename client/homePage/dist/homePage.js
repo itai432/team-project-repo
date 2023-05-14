@@ -43,7 +43,6 @@ function reanderPopUpCreatePost() {
         var createPostBtn = createPostRoot.querySelector("button");
         if (!createPostBtn)
             throw new Error("createPostBtn not found");
-        createPostBtn.style.display = "none";
         createPostRoot.innerHTML += html;
     }
     catch (error) {
@@ -62,8 +61,6 @@ function closeCreatePostPopup() {
 ;
 function handleCreatePost(ev) {
     try {
-        ev.preventDefault();
-        console.log(ev.target.elements);
         var header = ev.target.elements.header.value;
         var content = ev.target.elements.content.value;
         var date = new Date();

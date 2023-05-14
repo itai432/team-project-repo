@@ -62,3 +62,18 @@ export const createPost = async (req: any, res: any) => {
       res.status(500).send(error);
     }
   };
+
+  export const getPostsOfUser = async (req: any, res: any) => {
+    try {
+      const { user } = req.cookies;
+      if (!secret) throw new Error("No secret");
+  
+      const decoded = jwt.decode(user, secret);
+      const userId = decoded.userId;
+  
+      const posts = await PostsModel.find({ user: userId });
+      res.send({ posts });
+    } catch (error: any) {
+      res.status(500).send(error);
+    }
+  };

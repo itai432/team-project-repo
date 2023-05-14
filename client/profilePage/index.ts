@@ -53,29 +53,30 @@ function handleGetProfileInfo() {
 
   function handleGetUserPosts() {
     try {
-      
-      fetch("/api/posts/get-posts")
+      fetch("/api/posts/get-posts-of-user", {
+        method: "GET",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+      })
         .then((res) => res.json())
         .then(({ posts }) => {
-          if (!posts) throw new Error("didnt find Posts");
-          const html = posts
-          .map((posts) => {
-            return   renderUserPosts(posts);
-          })
-        
+          if (!posts) throw new Error("Posts not found");
+          posts.forEach((post) => renderUserPosts(post));
         });
     } catch (error) {
       console.error(error);
     }
   }
   
-  function renderUserPosts(posts:Post) {
+  function renderUserPosts(post: Post) {
     try {
       const html = `
         <div class="mainPagePost">
-        <img src="${posts.content}" alt="${posts.header}">
-        <h3>${posts.header}</h3>
-          </div>
+          <img src="${post.content}" alt="${post.header}">
+          <h3>${post.header}</h3>
+        </div>
       `;
       const postsUserRoot = document.querySelector("#postsUserRoot");
       if (!postsUserRoot) throw new Error("postsUserRoot not found");
@@ -84,4 +85,3 @@ function handleGetProfileInfo() {
       console.error(error);
     }
   }
-

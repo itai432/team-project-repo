@@ -82,7 +82,6 @@ function renderPost(post: Post) {
       `;
       const createPostBtn = createPostRoot.querySelector("button");
       if (!createPostBtn) throw new Error("createPostBtn not found");
-      createPostBtn.style.display = "none";
       createPostRoot.innerHTML += html;
     } catch (error) {
       console.error(error);
@@ -102,8 +101,6 @@ function renderPost(post: Post) {
   
   function handleCreatePost(ev:any){
     try {
-      ev.preventDefault();
-      console.log(ev.target.elements);
       const header = ev.target.elements.header.value;
       const content = ev.target.elements.content.value;
       const date = new Date();
