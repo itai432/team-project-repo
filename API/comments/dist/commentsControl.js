@@ -41,16 +41,16 @@ var commentsModel_1 = require("./commentsModel");
 var jwt_simple_1 = require("jwt-simple");
 var secret = process.env.JWT_SECRET;
 exports.createComment = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var _a, postId, content, date, token, decoded, userId, commentDB, error_1;
+    var _a, postId, content, date, user, decoded, userId, commentDB, error_1;
     return __generator(this, function (_b) {
         switch (_b.label) {
             case 0:
                 _b.trys.push([0, 2, , 3]);
                 _a = req.body, postId = _a.postId, content = _a.content, date = _a.date;
-                token = req.cookies.token;
+                user = req.cookies.user;
                 if (!secret)
                     throw new Error("No secret");
-                decoded = jwt_simple_1["default"].decode(token, secret);
+                decoded = jwt_simple_1["default"].decode(user, secret);
                 userId = decoded.userId;
                 return [4 /*yield*/, commentsModel_1["default"].create({ user: userId, post: postId, content: content, date: date })];
             case 1:
