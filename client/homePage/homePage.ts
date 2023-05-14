@@ -12,13 +12,19 @@ interface Post {
     date: Date,
 }
 
+interface Comment {
+  _id: string,
+  postId: string,
+  content: string,
+  date: Date,
+}
 
 function renderPost(post: Post) {
   try {
     const postDate = new Date(post.date);
-    const formattedDate = postDate.toLocaleDateString('en-US', { 
-      year: 'numeric', 
-      month: 'short', 
+    const formattedDate = postDate.toLocaleDateString('en-US', {
+      year: 'numeric',
+      month: 'short',
       day: 'numeric'
     });
 
@@ -28,9 +34,10 @@ function renderPost(post: Post) {
         <h1>${post.header}</h1>
         <p>${formattedDate}</p>
         <div>
-          <input placeholder="Add Comment" type="text" id="commentInput_${post._id}"> 
-          <button onclick="handleCreateComment('${post._id}')" >Add Comment</button>
+          <input placeholder="Add Comment" type="text" id="commentInput_${post._id}">
+          <button onclick="handleCreateComment('${post._id}')">Add Comment</button>
         </div>
+        <div class="commentsContainer_${post._id}"></div>
       </div>
     `;
     const postRoot = document.querySelector("#postRoot");
@@ -39,6 +46,53 @@ function renderPost(post: Post) {
   } catch (error) {
     console.error(error);
   }
+}
+
+
+function fetchCommentsForPost(postId: string) {
+  fetch(`/api/comments/get-comments?postId=${postId}`)
+    .then((res) => res.json())
+    .then(({ comments }) => {
+      if (!comments) throw new Error("No comments found");
+
+      const commentsHtml = comments
+        .map((comment) => {
+          return renderComment(comment);
+        })
+        .join('');
+
+      const postElement = document.querySelector(`#post_${postId}`);
+      if (!postElement) throw new Error(`Post element with id ${postId} not found`);
+
+      const commentsContainer = postElement.querySelector('.commentsContainer');
+      if (!commentsContainer) throw new Error(`Comments container for post ${postId} not found`);
+
+      commentsContainer.innerHTML = commentsHtml;
+    })
+    .catch((error) => {
+      console.error(error);
+    });
+}
+
+function renderComment(comment: Comment) {
+  const commentDate = new Date(comment.date);
+  const formattedDate = commentDate.toLocaleDateString('en-US', {
+    year: 'numeric',
+    month: 'short',
+    day: 'numeric'
+  });
+
+  const commentHtml = `
+    <div class="comment">
+      <p>${comment.content}</p>
+      <span>${formattedDate}</span>
+    </div>
+  `;
+
+  const commentsContainer = document.querySelector(`.commentsContainer_${comment.postId}`);
+  if (!commentsContainer) throw new Error(`Comments container for post ${comment.postId} not found`);
+
+  commentsContainer.innerHTML += commentHtml;
 }
 
   function handleGetPosts() {
@@ -83,6 +137,7 @@ function renderPost(post: Post) {
       const createPostBtn = createPostRoot.querySelector("button");
       if (!createPostBtn) throw new Error("createPostBtn not found");
       createPostRoot.innerHTML += html;
+      createPostBtn.style.display = "block"
     } catch (error) {
       console.error(error);
     }
@@ -92,73 +147,46 @@ function renderPost(post: Post) {
   
     if (createPostRoot) {
       createPostRoot.innerHTML = "";
-      const addPostBtn = document.querySelector("#createPostRoot") as HTMLButtonElement;
+      const addPostBtn = document.querySelector("#createPostBtn") as HTMLButtonElement;
       if (addPostBtn) addPostBtn.style.display = "block";
     }
-  };
-  
-  
-  
-  function handleCreatePost(ev:any){
-    try {
-      const header = ev.target.elements.header.value;
-      const content = ev.target.elements.content.value;
-      const date = new Date();
-
-      if (!header) throw new Error("No header");
-      if (!content) throw new Error("No content");
-      if (!date) throw new Error("No date");
-
-
-      const newPost: any = {content,header,date: date.toString()};
-      fetch("/api/posts/create-post", {
-          method: "POST",
-          headers: {
-            Accept: "application/json",
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(newPost),
-        })
-          .then((res) => res.json())
-          .then((data) => {
-            console.log(data);
-          })
-          .catch((error) => {
-            console.error(error);
-          });
-
-  } catch (error) {
-      console.error(error)
   }
-  }
-//comments not working still
-function handleCreateComment(postId: string) {
+  
+  
+  
+function handleCreatePost(ev: any) {
   try {
-    const commentInput = document.querySelector(
-      `#commentInput_${postId}`
-    ) as HTMLInputElement;
-    if (!commentInput) {
-      throw new Error("Comment input not found");
-    }
+    ev.preventDefault();
+    const header = ev.target.elements.header.value;
+    const content = ev.target.elements.content.value;
+    const date = new Date();
 
-    const comment = commentInput.value;
-    if (!comment) {
-      throw new Error("No comment");
-    }
+    if (!header) throw new Error("No header");
+    if (!content) throw new Error("No content");
+    if (!date) throw new Error("No date");
 
-    const newComment = { postId, content: comment };
-    fetch("/api/comments/create-comment", {
+    const newPost: any = { content, header, date: date };
+    fetch("/api/posts/create-post", {
       method: "POST",
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json",
-        Authorization: `Bearer <user>`,
       },
-      body: JSON.stringify(newComment),
+      body: JSON.stringify(newPost),
     })
       .then((res) => res.json())
       .then((data) => {
         console.log(data);
+        renderPost({
+          _id: data.post._id,
+          header: header,
+          content: content,
+          date: date,
+        });
+        ev.target.reset();
+        closeCreatePostPopup();
+        const addPostBtn = document.querySelector("#createPostBtn") as HTMLButtonElement;
+        if (addPostBtn) addPostBtn.style.display = "block";
       })
       .catch((error) => {
         console.error(error);
@@ -167,3 +195,41 @@ function handleCreateComment(postId: string) {
     console.error(error);
   }
 }
+
+  function handleCreateComment(postId: string) {
+    try {
+      const commentInput = document.querySelector(
+        `#commentInput_${postId}`
+      ) as HTMLInputElement;
+      if (!commentInput) {
+        throw new Error("Comment input not found");
+      }
+  
+      const comment = commentInput.value;
+      if (!comment) {
+        throw new Error("No comment");
+      }
+  
+      const newComment = { postId, content: comment };
+      fetch("/api/comments/create-comment", {
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+          Authorization: `Bearer <user>`,
+        },
+        body: JSON.stringify(newComment),
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          console.log(data);
+          renderComment({ postId, content: comment, date: new Date().toString() });
+          commentInput.value = "";
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+    } catch (error) {
+      console.error(error);
+    }
+  }
