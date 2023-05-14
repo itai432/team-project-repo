@@ -36,7 +36,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 exports.__esModule = true;
-exports.getPosts = exports.editPost = exports.deletePost = exports.createPost = void 0;
+exports.getPostsOfUser = exports.getPosts = exports.editPost = exports.deletePost = exports.createPost = void 0;
 var postsModel_1 = require("./postsModel");
 var jwt_simple_1 = require("jwt-simple");
 var secret = process.env.JWT_SECRET;
@@ -127,6 +127,30 @@ exports.getPosts = function (req, res) { return __awaiter(void 0, void 0, void 0
             case 2:
                 error_4 = _a.sent();
                 res.status(500).send(error_4);
+                return [3 /*break*/, 3];
+            case 3: return [2 /*return*/];
+        }
+    });
+}); };
+exports.getPostsOfUser = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    var user, decoded, userId, posts, error_5;
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0:
+                _a.trys.push([0, 2, , 3]);
+                user = req.cookies.user;
+                if (!secret)
+                    throw new Error("No secret");
+                decoded = jwt_simple_1["default"].decode(user, secret);
+                userId = decoded.userId;
+                return [4 /*yield*/, postsModel_1["default"].find({ user: userId })];
+            case 1:
+                posts = _a.sent();
+                res.send({ posts: posts });
+                return [3 /*break*/, 3];
+            case 2:
+                error_5 = _a.sent();
+                res.status(500).send(error_5);
                 return [3 /*break*/, 3];
             case 3: return [2 /*return*/];
         }
