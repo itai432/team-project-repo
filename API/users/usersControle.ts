@@ -88,3 +88,16 @@ export const getUserById  = async (req: any, res: any) => {
 };
 
 
+export const updateUserName = async (req: any, res: any) => {
+  try {
+    const { userId, username, email } = req.query;
+    const userDB = await UserModel.findByIdAndUpdate(
+      { _id: userId },
+      { username , email }
+    );
+    res.status(201).send({ ok: true, userDB });
+  } catch (error) {
+    console.error(error);
+    res.status(500).send({Error: Error.Messages})
+  }
+};

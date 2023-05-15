@@ -36,7 +36,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 exports.__esModule = true;
-exports.getUserById = exports.deleteUser = exports.login = exports.createUser = exports.getUsers = void 0;
+exports.updateUserName = exports.getUserById = exports.deleteUser = exports.login = exports.createUser = exports.getUsers = void 0;
 var usersModel_1 = require("./usersModel");
 var jwt_simple_1 = require("jwt-simple");
 var mongoose_1 = require("mongoose");
@@ -161,6 +161,27 @@ exports.getUserById = function (req, res) { return __awaiter(void 0, void 0, voi
                 error_5 = _a.sent();
                 console.error(error_5);
                 res.status(500).send({ error: error_5.message });
+                return [3 /*break*/, 3];
+            case 3: return [2 /*return*/];
+        }
+    });
+}); };
+exports.updateUserName = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    var _a, userId, username, email, userDB, error_6;
+    return __generator(this, function (_b) {
+        switch (_b.label) {
+            case 0:
+                _b.trys.push([0, 2, , 3]);
+                _a = req.query, userId = _a.userId, username = _a.username, email = _a.email;
+                return [4 /*yield*/, usersModel_1["default"].findByIdAndUpdate({ _id: userId }, { username: username, email: email })];
+            case 1:
+                userDB = _b.sent();
+                res.status(201).send({ ok: true, userDB: userDB });
+                return [3 /*break*/, 3];
+            case 2:
+                error_6 = _b.sent();
+                console.error(error_6);
+                res.status(500).send({ Error: mongoose_1.Error.Messages });
                 return [3 /*break*/, 3];
             case 3: return [2 /*return*/];
         }

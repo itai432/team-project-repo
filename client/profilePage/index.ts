@@ -85,3 +85,77 @@ function handleGetProfileInfo() {
       console.error(error);
     }
   }
+
+
+  function reanderPopUpUpdateUser() {
+    try {
+      const updateUserRoot = document.querySelector("#updateUserRoot");
+      if (!updateUserRoot) throw new Error("updateUserRoot not found");
+      const html = `
+        <form onsubmit="handleupdateUser(event)" class="updateUserContainer">
+        <button type="button" class="updateUserContainer__CloseBtn" onclick="closeupdateUserPopup()">&times;</button>
+        <div class="updateUserContainer__updateUserHeader"></div>
+        <div>
+          <label for="username">username:</label>
+          <input type="text" id="username" name="username" class="updateUserContainer__HeaderInput" required>
+        </div>
+        <div>
+          <label for="email">email:</label>
+          <input type="email" id="email" name="email" class="updateUserContainer__ContentInput" required>
+        </div>
+        <div>
+          <button type="submit" class="updateUserContainer__SubmitBtn" onclick="handleUpdateUserName(event)">update</button>
+        </div>
+      </form>
+        `;
+      const updateUserBtn = updateUserRoot.querySelector("button");
+      if (!updateUserBtn) throw new Error("updateUserBtn not found");
+      updateUserRoot.innerHTML += html;
+      updateUserBtn.style.display = "block";
+    } catch (error) {
+      console.error(error);
+    }
+  }
+  function closeupdateUserPopup() {
+    const updateUserRoot = document.querySelector("#updateUserRoot");
+  
+    if (updateUserRoot) {
+      updateUserRoot.innerHTML = "";
+      const addPostBtn = document.querySelector(
+        "#updateUserBtn"
+      ) as HTMLButtonElement;
+      if (addPostBtn) addPostBtn.style.display = "block";
+    }
+  }
+
+
+
+  function handleUpdateUserName(ev: any ) {
+    try {
+      ev.preventDefault();
+      const username = ev.target.elements.username.value;
+      const email = ev.target.elements.email.value;
+      console.log(username,email);
+
+      const newUser: any = { username, email };
+
+      fetch('/api/users/update-user-name', {
+        method: 'PATCH',
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+        },
+      
+        body: JSON.stringify({ newUser }),
+      })
+        .then((res) => res.json())
+        .then(({ date }) => {
+          console.log(date);
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+    } catch (error) {
+      console.error(error);
+    }
+  }
