@@ -90,14 +90,27 @@ export const getUserById  = async (req: any, res: any) => {
 
 export const updateUserName = async (req: any, res: any) => {
   try {
-    const { userId, username, email } = req.query;
+    const { userId } = req.query;
+    const { username, email } = req.body;
+
+    if (!userId) {
+      return res.status(400).send({ error: "userId is required" });
+    }
+
     const userDB = await UserModel.findByIdAndUpdate(
-      { _id: userId },
-      { username , email }
+      userId,
+      { $set: { username, email } },
+      { new: true }
     );
-    res.status(201).send({ ok: true, userDB });
+
+    if (!userDB) {
+      return res.status(404).send({ error: "User not found" });
+    }
+
+    res.status(200).send({ ok: true, user: userDB });
   } catch (error) {
     console.error(error);
-    res.status(500).send({Error: Error.Messages})
+    res.status(500).send({ error: "Internal server error" });
   }
 };
+

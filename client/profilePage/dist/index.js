@@ -68,7 +68,7 @@ function reanderPopUpUpdateUser() {
         var updateUserRoot = document.querySelector("#updateUserRoot");
         if (!updateUserRoot)
             throw new Error("updateUserRoot not found");
-        var html = "\n        <form onsubmit=\"handleupdateUser(event)\" class=\"updateUserContainer\">\n        <button type=\"button\" class=\"updateUserContainer__CloseBtn\" onclick=\"closeupdateUserPopup()\">&times;</button>\n        <div class=\"updateUserContainer__updateUserHeader\"></div>\n        <div>\n          <label for=\"username\">username:</label>\n          <input type=\"text\" id=\"username\" name=\"username\" class=\"updateUserContainer__HeaderInput\" required>\n        </div>\n        <div>\n          <label for=\"email\">email:</label>\n          <input type=\"email\" id=\"email\" name=\"email\" class=\"updateUserContainer__ContentInput\" required>\n        </div>\n        <div>\n          <button type=\"submit\" class=\"updateUserContainer__SubmitBtn\" onclick=\"handleUpdateUserName(event)\">update</button>\n        </div>\n      </form>\n        ";
+        var html = "\n        <form onsubmit=\"handleupdateUser(event)\" class=\"updateUserContainer\">\n        <button type=\"button\" class=\"updateUserContainer__CloseBtn\" onclick=\"closeupdateUserPopup()\">&times;</button>\n        <div class=\"updateUserContainer__updateUserHeader\"></div>\n        <div>\n          <label for=\"username\">username:</label>\n          <input type=\"text\" id=\"username\" name=\"username\" class=\"updateUserContainer__HeaderInput\" >\n        </div>\n        <div>\n          <label for=\"email\">email:</label>\n          <input type=\"email\" id=\"email\" name=\"email\" class=\"updateUserContainer__ContentInput\" >\n        </div>\n        <div>\n          <button type=\"submit\" class=\"updateUserContainer__SubmitBtn\" onclick=\"handleUpdateUserName(event)\">update</button>\n        </div>\n      </form>\n        ";
         var updateUserBtn = updateUserRoot.querySelector("button");
         if (!updateUserBtn)
             throw new Error("updateUserBtn not found");
@@ -88,20 +88,21 @@ function closeupdateUserPopup() {
             addPostBtn.style.display = "block";
     }
 }
-function handleUpdateUserName(ev) {
+function handleUpdateUserName(ev, userId) {
     try {
         ev.preventDefault();
-        var username = ev.target.elements.username.value;
-        var email = ev.target.elements.email.value;
-        console.log(username, email);
+        var usernameInput = document.querySelector("#username");
+        var emailInput = document.querySelector("#email");
+        var username = usernameInput.value;
+        var email = emailInput.value;
         var newUser = { username: username, email: email };
-        fetch('/api/users/update-user-name', {
-            method: 'PATCH',
+        fetch("/api/users/update-user-name?userId=" + userId, {
+            method: "PATCH",
             headers: {
-                Accept: 'application/json',
-                'Content-Type': 'application/json'
+                Accept: "application/json",
+                "Content-Type": "application/json"
             },
-            body: JSON.stringify({ newUser: newUser })
+            body: JSON.stringify(newUser)
         })
             .then(function (res) { return res.json(); })
             .then(function (_a) {

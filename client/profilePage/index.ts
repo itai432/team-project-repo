@@ -97,11 +97,11 @@ function handleGetProfileInfo() {
         <div class="updateUserContainer__updateUserHeader"></div>
         <div>
           <label for="username">username:</label>
-          <input type="text" id="username" name="username" class="updateUserContainer__HeaderInput" required>
+          <input type="text" id="username" name="username" class="updateUserContainer__HeaderInput" >
         </div>
         <div>
           <label for="email">email:</label>
-          <input type="email" id="email" name="email" class="updateUserContainer__ContentInput" required>
+          <input type="email" id="email" name="email" class="updateUserContainer__ContentInput" >
         </div>
         <div>
           <button type="submit" class="updateUserContainer__SubmitBtn" onclick="handleUpdateUserName(event)">update</button>
@@ -129,24 +129,23 @@ function handleGetProfileInfo() {
   }
 
 
-
-  function handleUpdateUserName(ev: any ) {
+  function handleUpdateUserName(ev: any, userId: string) {
     try {
       ev.preventDefault();
-      const username = ev.target.elements.username.value;
-      const email = ev.target.elements.email.value;
-      console.log(username,email);
-
+      const usernameInput = document.querySelector("#username") as HTMLInputElement;
+      const emailInput = document.querySelector("#email") as HTMLInputElement;
+      const username = usernameInput.value;
+      const email = emailInput.value;
+  
       const newUser: any = { username, email };
-
-      fetch('/api/users/update-user-name', {
-        method: 'PATCH',
+  
+      fetch(`/api/users/update-user-name?userId=${userId}`, {
+        method: "PATCH",
         headers: {
-          Accept: 'application/json',
-          'Content-Type': 'application/json',
+          Accept: "application/json",
+          "Content-Type": "application/json",
         },
-      
-        body: JSON.stringify({ newUser }),
+        body: JSON.stringify(newUser),
       })
         .then((res) => res.json())
         .then(({ date }) => {
@@ -159,3 +158,4 @@ function handleGetProfileInfo() {
       console.error(error);
     }
   }
+  

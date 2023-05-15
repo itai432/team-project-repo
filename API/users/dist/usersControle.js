@@ -167,21 +167,28 @@ exports.getUserById = function (req, res) { return __awaiter(void 0, void 0, voi
     });
 }); };
 exports.updateUserName = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var _a, userId, username, email, userDB, error_6;
+    var userId, _a, username, email, userDB, error_6;
     return __generator(this, function (_b) {
         switch (_b.label) {
             case 0:
                 _b.trys.push([0, 2, , 3]);
-                _a = req.query, userId = _a.userId, username = _a.username, email = _a.email;
-                return [4 /*yield*/, usersModel_1["default"].findByIdAndUpdate({ _id: userId }, { username: username, email: email })];
+                userId = req.query.userId;
+                _a = req.body, username = _a.username, email = _a.email;
+                if (!userId) {
+                    return [2 /*return*/, res.status(400).send({ error: "userId is required" })];
+                }
+                return [4 /*yield*/, usersModel_1["default"].findByIdAndUpdate(userId, { $set: { username: username, email: email } }, { "new": true })];
             case 1:
                 userDB = _b.sent();
-                res.status(201).send({ ok: true, userDB: userDB });
+                if (!userDB) {
+                    return [2 /*return*/, res.status(404).send({ error: "User not found" })];
+                }
+                res.status(200).send({ ok: true, user: userDB });
                 return [3 /*break*/, 3];
             case 2:
                 error_6 = _b.sent();
                 console.error(error_6);
-                res.status(500).send({ Error: mongoose_1.Error.Messages });
+                res.status(500).send({ error: "Internal server error" });
                 return [3 /*break*/, 3];
             case 3: return [2 /*return*/];
         }
