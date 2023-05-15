@@ -53,9 +53,12 @@ export const editComment = async (req: any, res: any) => {
 
 export const getComments = async (req: any, res: any) => {
   try {
-    const comments = await CommentsModel.find({});
+    const { postId } = req.query;
+    console.log(postId)
+    const comments = await CommentsModel.find({post:postId});
     res.send({ comments });
   } catch (error: any) {
     res.status(500).send(error);
   }
 };
+
