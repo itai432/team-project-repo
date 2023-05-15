@@ -36,7 +36,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 exports.__esModule = true;
-exports.getPostsOfUser = exports.getPosts = exports.editPost = exports.deletePost = exports.createPost = void 0;
+exports.updatePost = exports.getPostsOfUser = exports.getPosts = exports.editPost = exports.deletePost = exports.createPost = void 0;
 var postsModel_1 = require("./postsModel");
 var jwt_simple_1 = require("jwt-simple");
 var secret = process.env.JWT_SECRET;
@@ -151,6 +151,33 @@ exports.getPostsOfUser = function (req, res) { return __awaiter(void 0, void 0, 
             case 2:
                 error_5 = _a.sent();
                 res.status(500).send(error_5);
+                return [3 /*break*/, 3];
+            case 3: return [2 /*return*/];
+        }
+    });
+}); };
+exports.updatePost = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    var _a, header, content, postId, postDB, error_6;
+    return __generator(this, function (_b) {
+        switch (_b.label) {
+            case 0:
+                _b.trys.push([0, 2, , 3]);
+                _a = req.body, header = _a.header, content = _a.content, postId = _a.postId;
+                if (!postId) {
+                    return [2 /*return*/, res.status(400).send({ error: "postId is required" })];
+                }
+                return [4 /*yield*/, postsModel_1["default"].findByIdAndUpdate(postId, { $set: { header: header, content: content } }, { "new": true })];
+            case 1:
+                postDB = _b.sent();
+                if (!postDB) {
+                    return [2 /*return*/, res.status(404).send({ error: "User not found" })];
+                }
+                res.status(200).send({ ok: true, post: postDB });
+                return [3 /*break*/, 3];
+            case 2:
+                error_6 = _b.sent();
+                console.error(error_6);
+                res.status(500).send({ error: "Internal server error" });
                 return [3 /*break*/, 3];
             case 3: return [2 /*return*/];
         }
