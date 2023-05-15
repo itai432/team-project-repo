@@ -217,3 +217,88 @@ body {
     }
   }
 
+
+  #updateUserForm {
+    display: none;
+    margin-top: 2%;
+  }
+  
+  #updateUserForm.visible {
+    display: block;
+  }
+  
+  .updateUserContainer {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
+    z-index: 9999;
+  }
+  
+  .updateUserContainer::before {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 9998;
+  }
+  
+  .updateUserContainer__updateUserHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+  
+  .updateUserContainer__updateUserHeader h2 {
+    font-size: 24px;
+    font-weight: bold;
+    margin: 0;
+  }
+  
+  .updateUserContainer__updateUserHeader button {
+    background-color: transparent;
+    border: none;
+    font-size: 24px;
+    font-weight: bold;
+    cursor: pointer;
+  }
+  
+  .updateUserContainer__updateUserHeader button:hover {
+    color: #aaa;
+  }
+  
+  .updateUserContainer label {
+    display: block;
+    margin-bottom: 5px;
+  }
+  
+  .updateUserContainer input {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+  }
+  
+  .CreatePostContainer button[type="submit"] {
+    background-color: rgb(19, 121, 255);
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+  }
+  
+  .CreatePostContainer button[type="submit"]:hover {
+    background-color: rgb(19, 121, 255);
+  }

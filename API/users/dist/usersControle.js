@@ -36,7 +36,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 exports.__esModule = true;
-exports.getUserById = exports.deleteUser = exports.login = exports.createUser = exports.getUsers = void 0;
+exports.updateUserName = exports.getUserById = exports.deleteUser = exports.login = exports.createUser = exports.getUsers = void 0;
 var usersModel_1 = require("./usersModel");
 var jwt_simple_1 = require("jwt-simple");
 var mongoose_1 = require("mongoose");
@@ -161,6 +161,34 @@ exports.getUserById = function (req, res) { return __awaiter(void 0, void 0, voi
                 error_5 = _a.sent();
                 console.error(error_5);
                 res.status(500).send({ error: error_5.message });
+                return [3 /*break*/, 3];
+            case 3: return [2 /*return*/];
+        }
+    });
+}); };
+exports.updateUserName = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    var userId, _a, username, email, userDB, error_6;
+    return __generator(this, function (_b) {
+        switch (_b.label) {
+            case 0:
+                _b.trys.push([0, 2, , 3]);
+                userId = req.query.userId;
+                _a = req.body, username = _a.username, email = _a.email;
+                if (!userId) {
+                    return [2 /*return*/, res.status(400).send({ error: "userId is required" })];
+                }
+                return [4 /*yield*/, usersModel_1["default"].findByIdAndUpdate(userId, { $set: { username: username, email: email } }, { "new": true })];
+            case 1:
+                userDB = _b.sent();
+                if (!userDB) {
+                    return [2 /*return*/, res.status(404).send({ error: "User not found" })];
+                }
+                res.status(200).send({ ok: true, user: userDB });
+                return [3 /*break*/, 3];
+            case 2:
+                error_6 = _b.sent();
+                console.error(error_6);
+                res.status(500).send({ error: "Internal server error" });
                 return [3 /*break*/, 3];
             case 3: return [2 /*return*/];
         }
