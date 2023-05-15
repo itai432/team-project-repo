@@ -114,12 +114,14 @@ exports.editComment = function (req, res) { return __awaiter(void 0, void 0, voi
     });
 }); };
 exports.getComments = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var comments, error_4;
+    var postId, comments, error_4;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
                 _a.trys.push([0, 2, , 3]);
-                return [4 /*yield*/, commentsModel_1["default"].find({})];
+                postId = req.query.postId;
+                console.log(postId);
+                return [4 /*yield*/, commentsModel_1["default"].find({ post: postId })];
             case 1:
                 comments = _a.sent();
                 res.send({ comments: comments });
