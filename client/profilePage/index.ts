@@ -42,6 +42,9 @@ function handleGetProfileInfo() {
           <p>Email: ${user.email}</p>
           <p>Birthday: ${user.birthday}</p>
         </div>
+        <div class="main__container__updateUser" id="updateUserRoot">
+        <button onclick="reanderPopUpUpdateUser('${user._id}')">Edit Profile</button>
+      </div>
       `;
       const profileInfoRoot = document.querySelector("#profileInfoRoot");
       if (!profileInfoRoot) throw new Error("profileInfoRoot not found");
@@ -87,7 +90,7 @@ function handleGetProfileInfo() {
   }
 
 
-  function reanderPopUpUpdateUser() {
+  function reanderPopUpUpdateUser(userId:string) {
     try {
       const updateUserRoot = document.querySelector("#updateUserRoot");
       if (!updateUserRoot) throw new Error("updateUserRoot not found");
@@ -104,7 +107,7 @@ function handleGetProfileInfo() {
           <input type="email" id="email" name="email" class="updateUserContainer__ContentInput" >
         </div>
         <div>
-          <button type="submit" class="updateUserContainer__SubmitBtn" onclick="handleUpdateUserName(event)">update</button>
+          <button type="submit" class="updateUserContainer__SubmitBtn" onclick="handleUpdateUserName(event,'${userId}')">update</button>
         </div>
       </form>
         `;
@@ -137,7 +140,7 @@ function handleGetProfileInfo() {
       const username = usernameInput.value;
       const email = emailInput.value;
   
-      const newUser: any = { username, email };
+      const newUser: any = { username, email, userId };
   
       fetch(`/api/users/update-user-name?userId=${userId}`, {
         method: "PATCH",
@@ -148,8 +151,7 @@ function handleGetProfileInfo() {
         body: JSON.stringify(newUser),
       })
         .then((res) => res.json())
-        .then(({ date }) => {
-          console.log(date);
+        .then(({ user }) => {
         })
         .catch((error) => {
           console.error(error);

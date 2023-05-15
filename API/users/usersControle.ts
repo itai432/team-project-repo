@@ -90,8 +90,7 @@ export const getUserById  = async (req: any, res: any) => {
 
 export const updateUserName = async (req: any, res: any) => {
   try {
-    const { userId } = req.query;
-    const { username, email } = req.body;
+    const { username, email , userId } = req.body;
 
     if (!userId) {
       return res.status(400).send({ error: "userId is required" });
