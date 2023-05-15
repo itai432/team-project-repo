@@ -20,7 +20,7 @@ function handleGetProfileInfo() {
 }
 function renderProfileInfo(user) {
     try {
-        var html = "\n        <div class=\"profileInfo\">\n          <h3>" + user.username + "</h3>\n          <p>Email: " + user.email + "</p>\n          <p>Birthday: " + user.birthday + "</p>\n        </div>\n      ";
+        var html = "\n        <div class=\"profileInfo\">\n          <h3>" + user.username + "</h3>\n          <p>Email: " + user.email + "</p>\n          <p>Birthday: " + user.birthday + "</p>\n        </div>\n        <div class=\"main__container__updateUser\" id=\"updateUserRoot\">\n        <button onclick=\"reanderPopUpUpdateUser('" + user._id + "')\">Edit Profile</button>\n      </div>\n      ";
         var profileInfoRoot = document.querySelector("#profileInfoRoot");
         if (!profileInfoRoot)
             throw new Error("profileInfoRoot not found");
@@ -63,12 +63,12 @@ function renderUserPosts(post) {
         console.error(error);
     }
 }
-function reanderPopUpUpdateUser() {
+function reanderPopUpUpdateUser(userId) {
     try {
         var updateUserRoot = document.querySelector("#updateUserRoot");
         if (!updateUserRoot)
             throw new Error("updateUserRoot not found");
-        var html = "\n        <form onsubmit=\"handleupdateUser(event)\" class=\"updateUserContainer\">\n        <button type=\"button\" class=\"updateUserContainer__CloseBtn\" onclick=\"closeupdateUserPopup()\">&times;</button>\n        <div class=\"updateUserContainer__updateUserHeader\"></div>\n        <div>\n          <label for=\"username\">username:</label>\n          <input type=\"text\" id=\"username\" name=\"username\" class=\"updateUserContainer__HeaderInput\" >\n        </div>\n        <div>\n          <label for=\"email\">email:</label>\n          <input type=\"email\" id=\"email\" name=\"email\" class=\"updateUserContainer__ContentInput\" >\n        </div>\n        <div>\n          <button type=\"submit\" class=\"updateUserContainer__SubmitBtn\" onclick=\"handleUpdateUserName(event)\">update</button>\n        </div>\n      </form>\n        ";
+        var html = "\n        <form onsubmit=\"handleupdateUser(event)\" class=\"updateUserContainer\">\n        <button type=\"button\" class=\"updateUserContainer__CloseBtn\" onclick=\"closeupdateUserPopup()\">&times;</button>\n        <div class=\"updateUserContainer__updateUserHeader\"></div>\n        <div>\n          <label for=\"username\">username:</label>\n          <input type=\"text\" id=\"username\" name=\"username\" class=\"updateUserContainer__HeaderInput\" >\n        </div>\n        <div>\n          <label for=\"email\">email:</label>\n          <input type=\"email\" id=\"email\" name=\"email\" class=\"updateUserContainer__ContentInput\" >\n        </div>\n        <div>\n          <button type=\"submit\" class=\"updateUserContainer__SubmitBtn\" onclick=\"handleUpdateUserName(event,'" + userId + "')\">update</button>\n        </div>\n      </form>\n        ";
         var updateUserBtn = updateUserRoot.querySelector("button");
         if (!updateUserBtn)
             throw new Error("updateUserBtn not found");
@@ -95,7 +95,7 @@ function handleUpdateUserName(ev, userId) {
         var emailInput = document.querySelector("#email");
         var username = usernameInput.value;
         var email = emailInput.value;
-        var newUser = { username: username, email: email };
+        var newUser = { username: username, email: email, userId: userId };
         fetch("/api/users/update-user-name?userId=" + userId, {
             method: "PATCH",
             headers: {
@@ -106,8 +106,7 @@ function handleUpdateUserName(ev, userId) {
         })
             .then(function (res) { return res.json(); })
             .then(function (_a) {
-            var date = _a.date;
-            console.log(date);
+            var user = _a.user;
         })["catch"](function (error) {
             console.error(error);
         });
