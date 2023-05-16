@@ -42,7 +42,7 @@ function renderPost(post, user) {
             month: "short",
             day: "numeric"
         });
-        var html = "\n      <div id=\"post_" + post._id + "\" class=\"mainPagePost\">\n        <img src=\"" + post.content + "\" alt=\"" + post.header + "\">\n        <h1>" + post.header + "</h1>\n        <p>Posted by " + user.username + " on " + formattedDate + "</p>\n        <div>\n          <input placeholder=\"Add Comment\" type=\"text\" id=\"commentInput_" + post._id + "\">\n          <button onclick=\"handleCreateComment('" + post._id + "')\">Add Comment</button>\n        </div>\n        <div  id=\"commentContainer_" + post._id + "\"></div>\n      </div>\n    ";
+        var html = "\n      <div id=\"post_" + post._id + "\" class=\"mainPagePost post\">\n        <img src=\"" + post.content + "\" alt=\"" + post.header + "\">\n        <h1>" + post.header + "</h1>\n        <p>Posted by " + user.username + " on " + formattedDate + "</p>\n        <div class=\"addCommentContainer\">\n          <input placeholder=\"Add Comment\" type=\"text\" id=\"commentInput_" + post._id + "\">\n          <button onclick=\"handleCreateComment('" + post._id + "')\">Add Comment</button>\n        </div>\n        <div  class=\"containerClass\" id=\"commentContainer_" + post._id + "\"></div>\n      </div>\n    ";
         var postRoot = document.querySelector("#postRoot");
         if (!postRoot)
             throw new Error("postRoot not found");
