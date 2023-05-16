@@ -77,3 +77,28 @@ export const createPost = async (req: any, res: any) => {
       res.status(500).send(error);
     }
   };
+
+export const updatePost = async (req: any, res: any) => {
+  try {
+    const { header, content, postId } = req.body;
+
+    if (!postId) {
+      return res.status(400).send({ error: "postId is required" });
+    }
+
+    const postDB = await PostsModel.findByIdAndUpdate(
+      postId,
+      { $set: { header, content, } },
+      { new: true }
+    );
+
+    if (!postDB) {
+      return res.status(404).send({ error: "User not found" });
+    }
+
+    res.status(200).send({ ok: true, post: postDB });
+  } catch (error) {
+    console.error(error);
+    res.status(500).send({ error: "Internal server error" });
+  }
+};

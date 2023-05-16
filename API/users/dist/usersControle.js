@@ -167,13 +167,12 @@ exports.getUserById = function (req, res) { return __awaiter(void 0, void 0, voi
     });
 }); };
 exports.updateUserName = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var userId, _a, username, email, userDB, error_6;
+    var _a, username, email, userId, userDB, error_6;
     return __generator(this, function (_b) {
         switch (_b.label) {
             case 0:
                 _b.trys.push([0, 2, , 3]);
-                userId = req.query.userId;
-                _a = req.body, username = _a.username, email = _a.email;
+                _a = req.body, username = _a.username, email = _a.email, userId = _a.userId;
                 if (!userId) {
                     return [2 /*return*/, res.status(400).send({ error: "userId is required" })];
                 }
