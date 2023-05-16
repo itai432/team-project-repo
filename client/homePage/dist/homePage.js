@@ -34,7 +34,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
-function renderPost(post) {
+function renderPost(post, user) {
     try {
         var postDate = new Date(post.date);
         var formattedDate = postDate.toLocaleDateString("en-US", {
@@ -42,7 +42,7 @@ function renderPost(post) {
             month: "short",
             day: "numeric"
         });
-        var html = "\n      <div id=\"post_" + post._id + "\" class=\"mainPagePost\">\n        <img src=\"" + post.content + "\" alt=\"" + post.header + "\">\n        <h1>" + post.header + "</h1>\n        <p>" + formattedDate + "</p>\n        <div>\n          <input placeholder=\"Add Comment\" type=\"text\" id=\"commentInput_" + post._id + "\">\n          <button onclick=\"handleCreateComment('" + post._id + "')\">Add Comment</button>\n        </div>\n        <div  id=\"commentContainer_" + post._id + "\"></div>\n      </div>\n    ";
+        var html = "\n      <div id=\"post_" + post._id + "\" class=\"mainPagePost\">\n        <img src=\"" + post.content + "\" alt=\"" + post.header + "\">\n        <h1>" + post.header + "</h1>\n        <p>Posted by " + user.username + " on " + formattedDate + "</p>\n        <div>\n          <input placeholder=\"Add Comment\" type=\"text\" id=\"commentInput_" + post._id + "\">\n          <button onclick=\"handleCreateComment('" + post._id + "')\">Add Comment</button>\n        </div>\n        <div  id=\"commentContainer_" + post._id + "\"></div>\n      </div>\n    ";
         var postRoot = document.querySelector("#postRoot");
         if (!postRoot)
             throw new Error("postRoot not found");
@@ -54,11 +54,11 @@ function renderPost(post) {
 }
 function handleGetPosts() {
     return __awaiter(this, void 0, void 0, function () {
-        var res, posts, html, error_1;
+        var res, posts, _i, posts_1, post, user, error_1;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
-                    _a.trys.push([0, 3, , 4]);
+                    _a.trys.push([0, 7, , 8]);
                     return [4 /*yield*/, fetch("/api/posts/get-posts")];
                 case 1:
                     res = _a.sent();
@@ -67,19 +67,26 @@ function handleGetPosts() {
                     posts = (_a.sent()).posts;
                     if (!posts)
                         throw new Error("didnt find Posts");
-                    html = posts.map(function (posts) {
-                        return renderPost(posts);
-                    });
-                    posts.forEach(function (post) {
-                        console.log(post);
-                        fetchCommentsForPost(post._id);
-                    });
-                    return [3 /*break*/, 4];
+                    _i = 0, posts_1 = posts;
+                    _a.label = 3;
                 case 3:
+                    if (!(_i < posts_1.length)) return [3 /*break*/, 6];
+                    post = posts_1[_i];
+                    return [4 /*yield*/, fetchUserById(post.userId)];
+                case 4:
+                    user = _a.sent();
+                    renderPost(post, user);
+                    fetchCommentsForPost(post._id);
+                    _a.label = 5;
+                case 5:
+                    _i++;
+                    return [3 /*break*/, 3];
+                case 6: return [3 /*break*/, 8];
+                case 7:
                     error_1 = _a.sent();
                     console.error(error_1);
-                    return [3 /*break*/, 4];
-                case 4: return [2 /*return*/];
+                    return [3 /*break*/, 8];
+                case 8: return [2 /*return*/];
             }
         });
     });
@@ -225,4 +232,29 @@ function renderComment(comment, postId) {
     });
     var commentHtml = "\n    <div class=\"comment\">\n      <p>" + comment.content + "</p>\n      <span>" + formattedDate + "</span>\n    </div>\n  ";
     return commentHtml;
+}
+function fetchUserById(userId) {
+    return __awaiter(this, void 0, Promise, function () {
+        var res, user, error_2;
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0:
+                    _a.trys.push([0, 3, , 4]);
+                    return [4 /*yield*/, fetch("/api/users/get-user-by-id?id=" + userId)];
+                case 1:
+                    res = _a.sent();
+                    return [4 /*yield*/, res.json()];
+                case 2:
+                    user = (_a.sent()).user;
+                    if (!user)
+                        throw new Error("User not found");
+                    return [2 /*return*/, user];
+                case 3:
+                    error_2 = _a.sent();
+                    console.error(error_2);
+                    throw error_2;
+                case 4: return [2 /*return*/];
+            }
+        });
+    });
 }

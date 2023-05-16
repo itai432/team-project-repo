@@ -18,7 +18,7 @@ interface Comment {
   date: Date;
 }
 
-function renderPost(post: Post) {
+function renderPost(post: Post, user: User) {
   try {
     const postDate = new Date(post.date);
     const formattedDate = postDate.toLocaleDateString("en-US", {
@@ -31,7 +31,7 @@ function renderPost(post: Post) {
       <div id="post_${post._id}" class="mainPagePost">
         <img src="${post.content}" alt="${post.header}">
         <h1>${post.header}</h1>
-        <p>${formattedDate}</p>
+        <p>Posted by ${user.username} on ${formattedDate}</p>
         <div>
           <input placeholder="Add Comment" type="text" id="commentInput_${post._id}">
           <button onclick="handleCreateComment('${post._id}')">Add Comment</button>
@@ -53,17 +53,16 @@ async function handleGetPosts() {
     const { posts } = await res.json();
 
     if (!posts) throw new Error("didnt find Posts");
-    const html = posts.map((posts) => {
-      return renderPost(posts);
-    });
-    posts.forEach(post => {
-      console.log(post)
-      fetchCommentsForPost(post._id)
-    });
+    for (const post of posts) {
+      const user = await fetchUserById(post.userId);
+      renderPost(post, user);
+      fetchCommentsForPost(post._id);
+    }
   } catch (error) {
     console.error(error);
   }
 }
+
 
 function reanderPopUpCreatePost() {
   try {
@@ -238,4 +237,18 @@ function renderComment(comment: Comment, postId: string) {
   `;
 
   return commentHtml;
+}
+
+async function fetchUserById(userId: string): Promise<User> {
+  try {
+    const res = await fetch(`/api/users/get-user-by-id?id=${userId}`);
+    const { user } = await res.json();
+
+    if (!user) throw new Error("User not found");
+
+    return user;
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
 }
