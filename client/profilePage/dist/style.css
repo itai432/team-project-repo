@@ -200,6 +200,83 @@ body {
 #postsUserRoot .mainPagePost:hover h3 {
   opacity: 1;
 }
+#postsUserRoot .mainPagePost:hover .main__container__updatePost {
+  opacity: 1;
+}
+#postsUserRoot .mainPagePost .main__container__updatePost {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  opacity: 0;
+  transition: opacity 0.5s ease;
+}
+#postsUserRoot .mainPagePost .main__container__updatePost button {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  font-size: 1.5rem;
+  color: white;
+}
+#postsUserRoot .mainPagePost .main__container__updatePost button:hover {
+  color: #0080ff;
+}
+#postsUserRoot .mainPagePost .main__container__updatePost svg {
+  width: 1.5rem;
+  height: 1.5rem;
+}
+
+.updatePostPopUp {
+  background-color: white;
+  border-radius: 10px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  width: 500px;
+  padding: 20px;
+}
+.updatePostPopUp h2 {
+  margin: 0;
+  font-size: 1.5rem;
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 20px;
+}
+.updatePostPopUp form {
+  display: flex;
+  flex-direction: column;
+}
+.updatePostPopUp form label {
+  font-size: 1.2rem;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+.updatePostPopUp form input[type=text],
+.updatePostPopUp form textarea {
+  padding: 10px;
+  font-size: 1.2rem;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  margin-bottom: 20px;
+}
+.updatePostPopUp form button[type=submit],
+.updatePostPopUp form button[type=button] {
+  background-color: #2ecc71;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  padding: 10px;
+  font-size: 1.2rem;
+  cursor: pointer;
+  margin-top: 20px;
+  transition: opacity 0.2s ease;
+}
+.updatePostPopUp form button[type=submit]:hover,
+.updatePostPopUp form button[type=button]:hover {
+  opacity: 0.8;
+}
+.updatePostPopUp form button[type=submit][type=button],
+.updatePostPopUp form button[type=button][type=button] {
+  background-color: #e74c3c;
+  margin-left: 10px;
+}
 
 #updateUserForm {
   display: none;
