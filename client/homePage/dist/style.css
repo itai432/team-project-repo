@@ -124,15 +124,12 @@ body {
 }
 
 .main__postsContainer {
-  background-color: white;
-  border: 1px solid #e6e6e6;
-  border-radius: 3px;
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
-  margin: 20px auto;
   max-width: 600px;
   width: 100%;
-  display: flex;
-  flex-direction: column;
+}
+
+.mainPagePost {
+  border: 2px solid black;
 }
 
 .main__postsContainer h1 {
@@ -167,9 +164,8 @@ body {
   cursor: pointer;
   font-size: 1.4rem;
   font-weight: 600;
-  margin: 10px;
-  padding: 12px;
   width: 100%;
+  align-items: center;
 }
 
 .main__postsContainer button:hover {
@@ -208,10 +204,8 @@ body {
   cursor: pointer;
 }
 
-.main__postsContainer {
-  display: flex;
-  flex-direction: column;
-  gap: 2%;
+.addCommentContainer {
+  object-fit: contain;
 }
 
 .post {
@@ -221,7 +215,14 @@ body {
   padding: 2%;
   display: flex;
   flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 30px;
   gap: 2%;
+}
+
+.containerClass {
+  margin-right: auto;
 }
 
 .post__header {
@@ -302,11 +303,12 @@ body {
 .CreatePostContainer button[type=submit] {
   background-color: #1379ff;
   color: #fff;
-  padding: 10px 20px;
+  padding: 20px;
   border: none;
   border-radius: 5px;
   font-size: 16px;
   cursor: pointer;
+  object-fit: contain;
 }
 
 .CreatePostContainer button[type=submit]:hover {

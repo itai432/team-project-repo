@@ -28,15 +28,15 @@ function renderPost(post: Post, user: User) {
     });
 
     const html = `
-      <div id="post_${post._id}" class="mainPagePost">
+      <div id="post_${post._id}" class="mainPagePost post">
         <img src="${post.content}" alt="${post.header}">
         <h1>${post.header}</h1>
         <p>Posted by ${user.username} on ${formattedDate}</p>
-        <div>
+        <div class="addCommentContainer">
           <input placeholder="Add Comment" type="text" id="commentInput_${post._id}">
           <button onclick="handleCreateComment('${post._id}')">Add Comment</button>
         </div>
-        <div  id="commentContainer_${post._id}"></div>
+        <div  class="containerClass" id="commentContainer_${post._id}"></div>
       </div>
     `;
     const postRoot = document.querySelector("#postRoot");
