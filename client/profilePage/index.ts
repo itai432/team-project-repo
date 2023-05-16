@@ -150,7 +150,7 @@ function handleGetProfileInfo() {
           <img src="${post.content}" alt="${post.header}">
           <h3>${post.header}</h3>
           <div class="main__container__updatePost" id="updatePostRoot_${post._id}">
-            <button onclick="reanderPopUpUpdatePost('${post._id}')">Edit Post</button>
+            <button class="editPostIcon" onclick="reanderPopUpUpdatePost('${post._id}')"></button>
           </div>
         </div>
       `;

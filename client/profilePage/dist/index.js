@@ -105,7 +105,7 @@ function handleGetUserPosts() {
 }
 function renderUserPosts(post) {
     try {
-        var html = "\n        <div class=\"mainPagePost\">\n          <img src=\"" + post.content + "\" alt=\"" + post.header + "\">\n          <h3>" + post.header + "</h3>\n          <div class=\"main__container__updatePost\" id=\"updatePostRoot_" + post._id + "\">\n            <button onclick=\"reanderPopUpUpdatePost('" + post._id + "')\">Edit Post</button>\n          </div>\n        </div>\n      ";
+        var html = "\n        <div class=\"mainPagePost\">\n          <img src=\"" + post.content + "\" alt=\"" + post.header + "\">\n          <h3>" + post.header + "</h3>\n          <div class=\"main__container__updatePost\" id=\"updatePostRoot_" + post._id + "\">\n            <button class=\"editPostIcon\" onclick=\"reanderPopUpUpdatePost('" + post._id + "')\"></button>\n          </div>\n        </div>\n      ";
         var postsUserRoot = document.querySelector("#postsUserRoot");
         if (!postsUserRoot)
             throw new Error("postsUserRoot not found");
