@@ -1,7 +1,7 @@
 import express from "express";
 const router = express.Router();
 
-import { createPost , deletePost , editPost, getPosts, getPostsOfUser, updatePost } from "./PostControl";
+import { createPost , deletePost , editPost, getPosts, getPostsOfUser, updatePost } from "./postControl";
 
 router
   .get("/get-posts",getPosts)

@@ -197,7 +197,6 @@ function fetchCommentsForPost(postId: string) {
     .then((res) => res.json())
     .then(({ comments }) => {
       if (!comments) throw new Error("No comments found");
-      console.log(comments);
       const commentsHtml = comments
         .map((comment) => {
           return renderComment(comment, postId);

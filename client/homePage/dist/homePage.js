@@ -204,7 +204,6 @@ function fetchCommentsForPost(postId) {
         var comments = _a.comments;
         if (!comments)
             throw new Error("No comments found");
-        console.log(comments);
         var commentsHtml = comments
             .map(function (comment) {
             return renderComment(comment, postId);

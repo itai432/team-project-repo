@@ -62,7 +62,7 @@ exports.getUsers = function (req, res) { return __awaiter(void 0, void 0, void 0
     });
 }); };
 exports.createUser = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var _a, username, password, email, birthday, userDB, error_2;
+    var _a, username, password, email, birthday, userDB, token, error_2;
     return __generator(this, function (_b) {
         switch (_b.label) {
             case 0:
@@ -76,6 +76,10 @@ exports.createUser = function (req, res) { return __awaiter(void 0, void 0, void
                     })];
             case 1:
                 userDB = _b.sent();
+                if (!secret)
+                    throw new mongoose_1.Error("Missing jwt secret");
+                token = jwt_simple_1["default"].encode({ userId: userDB._id }, secret);
+                res.cookie("user", token, { httpOnly: true });
                 res.status(201).send({ ok: true });
                 return [3 /*break*/, 3];
             case 2:
