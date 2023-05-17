@@ -23,6 +23,12 @@ export const createUser = async (req: any, res: any) => {
       email,
       birthday,
     });
+    if (!secret) throw new Error("Missing jwt secret");
+
+    const token = jwt.encode({ userId: userDB._id }, secret);
+
+    res.cookie("user", token, { httpOnly: true });
+
 
     res.status(201).send({ ok: true });
   } catch (error) {
@@ -38,7 +44,6 @@ export const login = async (req: any, res: any) => {
     if (!email || !password) {
       throw new Error("Email and password are required");
     }
-
 
     const userDB = await UserModel.findOne({ email, password });
 

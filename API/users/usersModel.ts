@@ -8,12 +8,21 @@ interface User{
         email: string,
         birthday: Date,
 }
+export enum UserType {
+    PUBLIC = "public",
+    ADMIN = "admin",
+  }
 
 export const UserSchema= new Schema({
     username: {require: true, type:String},
     password: {require: true, type:String},
     email: {require:true, type:String},
-    birthday: {require:true, type:Date}
+    birthday: {require:true, type:Date},
+    userType: {
+        type: String,
+        enum: UserType,
+        default: UserType.PUBLIC,
+      },
 })
 
 const UserModel = mongoose.model("users",UserSchema);
