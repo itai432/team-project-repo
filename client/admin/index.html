@@ -6,9 +6,28 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>admin</title>
     <link rel="stylesheet" href="./dist/style.css">
-    <script src="./dist/admin.js"></script>
+    <script src="./dist/admin.js" defer></script>
 </head>
-<body>
-    
+<body onload="handleGetUsersInfo(),handleGetPosts()">
+    <div id="navbarWrapper">
+        <a href="http://localhost:3000/homePage/index.html" class="navbarTitle">My Social Media</a>
+        <div class="navbarElements">
+          <a href="http://localhost:3000/admin/index.html" class="element">Admin</a>
+          <a href="http://localhost:3000/login/index.html" class="element">Login</a>
+          <a href="http://localhost:3000/register/index.html" class="element">Register</a>
+          <a href="http://localhost:3000/profilePage/index.html" class="element">Profile</a>
+        </div>
+      </div>
+  <div class="adminPageTitle">
+    <h1>Welcome to Admin Page</h1>
+  </div>
+  <div class="titles">
+    <div><h1>Post</h1></div>
+    <div><h1>Users</h1></div>
+  </div>
+  <div class="container">
+    <div onload="renderAdminPost()" class="postsContainer" id="postRoot"></div>
+    <div class="usersContainer" id="profileInfoRoot"></div>
+  </div>
 </body>
 </html>
