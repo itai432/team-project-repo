@@ -127,7 +127,6 @@ function handleCreatePost(ev: any) {
     })
       .then((res) => res.json())
       .then((data) => {
-        console.log(data);
         renderPost({
           _id: data.post._id,
           header: header,
@@ -175,7 +174,6 @@ function handleCreateComment(postId: string) {
     })
       .then((res) => res.json())
       .then((data) => {
-        console.log(data);
         renderComment({
           postId,
           content: comment,
