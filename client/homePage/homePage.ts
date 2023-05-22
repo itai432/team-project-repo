@@ -11,11 +11,11 @@ interface Post {
   date: Date;
 }
 
-interface Comment {
-  _id: string;
+interface IComment {
+  _id?: string;
   postId: string;
   content: string;
-  date: Date;
+  date?: string;
 }
 
 function renderPost(post: Post, user: User) {
@@ -107,10 +107,11 @@ function closeCreatePostPopup() {
 
 function handleCreatePost(ev: any) {
   try {
-    ev.preventDefault();
+    ev.preventDefault()
     const header = ev.target.elements.header.value;
     const content = ev.target.elements.content.value;
     const date = new Date();
+  
 
     if (!header) throw new Error("No header");
     if (!content) throw new Error("No content");
@@ -132,7 +133,7 @@ function handleCreatePost(ev: any) {
           header: header,
           content: content,
           date: date,
-        });
+        },);
         ev.target.reset();
         closeCreatePostPopup();
         const addPostBtn = document.querySelector(
@@ -162,7 +163,9 @@ function handleCreateComment(postId: string) {
       throw new Error("No comment");
     }
 
-    const newComment = { postId, content: comment };
+    const currentDate = new Date();
+
+    const newComment = { postId, content: comment, currentDate};
     fetch("/api/comments/create-comment", {
       method: "POST",
       headers: {
@@ -174,11 +177,7 @@ function handleCreateComment(postId: string) {
     })
       .then((res) => res.json())
       .then((data) => {
-        renderComment({
-          postId,
-          content: comment,
-          date: Date,
-        }, postId);
+        renderComment(newComment, postId, currentDate.toString());
         commentInput.value = "";
         fetchCommentsForPost(postId);
       })
@@ -191,13 +190,14 @@ function handleCreateComment(postId: string) {
 }
 
 function fetchCommentsForPost(postId: string) {
+
   fetch(`/api/comments/get-comments?postId=${postId}`)
-    .then((res) => res.json())
+    .then((res) => res.json() )
     .then(({ comments }) => {
       if (!comments) throw new Error("No comments found");
       const commentsHtml = comments
         .map((comment) => {
-          return renderComment(comment, postId);
+          return renderComment(comment, postId, comment.currentDate);
         })
         .join("");
 
@@ -218,8 +218,8 @@ function fetchCommentsForPost(postId: string) {
     });
 }
 
-function renderComment(comment: Comment, postId: string) {
-  const commentDate = new Date(comment.date);
+function renderComment(comment: IComment, postId: string, date: string) {
+  const commentDate = new Date(date);
   const formattedDate = commentDate.toLocaleDateString("en-US", {
     year: "numeric",
     month: "short",

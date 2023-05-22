@@ -164,11 +164,12 @@ function handleCreateComment(postId) {
         if (!commentInput_1) {
             throw new Error("Comment input not found");
         }
-        var comment_1 = commentInput_1.value;
-        if (!comment_1) {
+        var comment = commentInput_1.value;
+        if (!comment) {
             throw new Error("No comment");
         }
-        var newComment = { postId: postId, content: comment_1 };
+        var currentDate_1 = new Date();
+        var newComment_1 = { postId: postId, content: comment, currentDate: currentDate_1 };
         fetch("/api/comments/create-comment", {
             method: "POST",
             headers: {
@@ -176,15 +177,11 @@ function handleCreateComment(postId) {
                 "Content-Type": "application/json",
                 Authorization: "Bearer <user>"
             },
-            body: JSON.stringify(newComment)
+            body: JSON.stringify(newComment_1)
         })
             .then(function (res) { return res.json(); })
             .then(function (data) {
-            renderComment({
-                postId: postId,
-                content: comment_1,
-                date: Date
-            }, postId);
+            renderComment(newComment_1, postId, currentDate_1.toString());
             commentInput_1.value = "";
             fetchCommentsForPost(postId);
         })["catch"](function (error) {
@@ -204,7 +201,7 @@ function fetchCommentsForPost(postId) {
             throw new Error("No comments found");
         var commentsHtml = comments
             .map(function (comment) {
-            return renderComment(comment, postId);
+            return renderComment(comment, postId, comment.currentDate);
         })
             .join("");
         var postElement = document.querySelector("#post_" + postId);
@@ -220,8 +217,8 @@ function fetchCommentsForPost(postId) {
         console.error(error);
     });
 }
-function renderComment(comment, postId) {
-    var commentDate = new Date(comment.date);
+function renderComment(comment, postId, date) {
+    var commentDate = new Date(date);
     var formattedDate = commentDate.toLocaleDateString("en-US", {
         year: "numeric",
         month: "short",

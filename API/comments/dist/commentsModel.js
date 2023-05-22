@@ -13,7 +13,7 @@ var CommentSchema = new mongoose_1.Schema({
         required: true
     },
     content: String,
-    date: Date
+    currentDate: String
 });
 var CommentsModel = mongoose_1["default"].model("comments", CommentSchema);
 exports["default"] = CommentsModel;
