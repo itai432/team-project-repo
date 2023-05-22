@@ -14,7 +14,7 @@ interface Comment {
     required: true;
   };
   content: string;
-  date: Date;
+  currentDate: Date;
 }
 
 const CommentSchema = new Schema<Comment>({
@@ -29,7 +29,7 @@ const CommentSchema = new Schema<Comment>({
     required: true,
   },
   content: String,
-  date: Date,
+  currentDate: String,
 });
 
 const CommentsModel = mongoose.model<Comment>("comments", CommentSchema);
