@@ -9,6 +9,7 @@ interface Post {
   header: string;
   content: string;
   date: Date;
+  user:string;
 }
 
 interface IComment {
@@ -18,7 +19,7 @@ interface IComment {
   date?: string;
 }
 
-function renderPost(post: Post, user: User) {
+async function renderPost(post: Post) {
   try {
     const postDate = new Date(post.date);
     const formattedDate = postDate.toLocaleDateString("en-US", {
@@ -26,6 +27,8 @@ function renderPost(post: Post, user: User) {
       month: "short",
       day: "numeric",
     });
+
+    const user = await fetchUserById(post.user);
 
     const html = `
       <div id="post_${post._id}" class="mainPagePost post">
@@ -36,9 +39,10 @@ function renderPost(post: Post, user: User) {
           <input placeholder="Add Comment" type="text" id="commentInput_${post._id}">
           <button onclick="handleCreateComment('${post._id}')">Add Comment</button>
         </div>
-        <div  class="containerClass" id="commentContainer_${post._id}"></div>
+        <div class="containerClass" id="commentContainer_${post._id}"></div>
       </div>
     `;
+
     const postRoot = document.querySelector("#postRoot");
     if (!postRoot) throw new Error("postRoot not found");
     postRoot.innerHTML += html;
@@ -54,15 +58,13 @@ async function handleGetPosts() {
 
     if (!posts) throw new Error("didnt find Posts");
     for (const post of posts) {
-      const user = await fetchUserById(post.userId);
-      renderPost(post, user);
+      await renderPost(post);
       fetchCommentsForPost(post._id);
     }
   } catch (error) {
     console.error(error);
   }
 }
-
 
 function reanderPopUpCreatePost() {
   try {
@@ -93,6 +95,7 @@ function reanderPopUpCreatePost() {
     console.error(error);
   }
 }
+
 function closeCreatePostPopup() {
   const createPostRoot = document.querySelector("#createPostRoot");
 
@@ -105,13 +108,12 @@ function closeCreatePostPopup() {
   }
 }
 
-function handleCreatePost(ev: any) {
+async function handleCreatePost(ev: any) {
   try {
-    ev.preventDefault()
+    ev.preventDefault();
     const header = ev.target.elements.header.value;
     const content = ev.target.elements.content.value;
     const date = new Date();
-  
 
     if (!header) throw new Error("No header");
     if (!content) throw new Error("No content");
@@ -128,12 +130,14 @@ function handleCreatePost(ev: any) {
     })
       .then((res) => res.json())
       .then((data) => {
+        const { post } = data;
         renderPost({
-          _id: data.post._id,
+          _id: post._id,
           header: header,
           content: content,
           date: date,
-        },);
+          user: post.user,
+        });
         ev.target.reset();
         closeCreatePostPopup();
         const addPostBtn = document.querySelector(
