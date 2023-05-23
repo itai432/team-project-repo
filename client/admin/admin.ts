@@ -1,3 +1,4 @@
+
 interface User {
     username: string;
     password: string;
@@ -9,11 +10,13 @@ interface User {
     header: string;
     content: string;
     date: Date;
+    user:string;
   }
   
   
-  function renderAdminPost(post: Post, user: User) {
+  async function renderAdminPost  (post: Post) {
     try {
+      const user = await fetchUserById(post.user);
       const postDate = new Date(post.date);
       const formattedDate = postDate.toLocaleDateString("en-US", {
         year: "numeric",
@@ -24,10 +27,9 @@ interface User {
       const html = `
         <div id="post_${post._id}" class="mainPagePost post">
           <img src="${post.content}" alt="${post.header}">
-
           <h1>${post.header}</h1>
-
           <p>Posted by ${user.username} on ${formattedDate}</p>
+          <button onclick="handleDeletePost('${post._id}')">Delete</button>
         </div>
       `;
       const postRoot = document.querySelector("#postRoot");
@@ -46,7 +48,7 @@ interface User {
       if (!posts) throw new Error("didnt find Posts");
       for (const post of posts) {
         const user = await fetchUserById(post.userId);
-        renderAdminPost(post, user);
+        renderAdminPost(post);
       }
     } catch (error) {
       console.error(error);
@@ -111,3 +113,45 @@ interface User {
         console.error(error);
       }
     }
+function handleDeletePost(postId) {
+  // Perform an HTTP request to delete the post on the server
+  fetch(`/api/posts/delete-post?id=${postId}`, {
+    method: "DELETE",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ _id: postId }),
+  })
+    .then((response) => response.json())
+    .then((data) => {
+      if (data.ok) {
+        fetchPostsAndRender();
+        
+      } else {
+        console.error(data.error);
+      }
+    })
+    .catch((error) => {
+      console.error(error);
+    });
+}
+function fetchPostsAndRender() {
+  fetch("/api/posts/get-posts", {
+    method: "GET",
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+    },
+  })
+    .then((response) => response.json())
+    .then((posts) => {
+      if (posts) {
+        renderAdminPost(posts);
+      } else {
+        console.error("error");
+      }
+    })
+    .catch((error:any) => {
+      console.error(error);
+    });
+}

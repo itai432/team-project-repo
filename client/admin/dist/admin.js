@@ -34,27 +34,40 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
-function renderAdminPost(post, user) {
-    try {
-        var postDate = new Date(post.date);
-        var formattedDate = postDate.toLocaleDateString("en-US", {
-            year: "numeric",
-            month: "short",
-            day: "numeric"
+function renderAdminPost(post) {
+    return __awaiter(this, void 0, void 0, function () {
+        var user, postDate, formattedDate, html, postRoot, error_1;
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0:
+                    _a.trys.push([0, 2, , 3]);
+                    return [4 /*yield*/, fetchUserById(post.user)];
+                case 1:
+                    user = _a.sent();
+                    postDate = new Date(post.date);
+                    formattedDate = postDate.toLocaleDateString("en-US", {
+                        year: "numeric",
+                        month: "short",
+                        day: "numeric"
+                    });
+                    html = "\n        <div id=\"post_" + post._id + "\" class=\"mainPagePost post\">\n          <img src=\"" + post.content + "\" alt=\"" + post.header + "\">\n          <h1>" + post.header + "</h1>\n          <p>Posted by " + user.username + " on " + formattedDate + "</p>\n          <button onclick=\"handleDeletePost('" + post._id + "')\">Delete</button>\n        </div>\n      ";
+                    postRoot = document.querySelector("#postRoot");
+                    if (!postRoot)
+                        throw new Error("postRoot not found");
+                    postRoot.innerHTML += html;
+                    return [3 /*break*/, 3];
+                case 2:
+                    error_1 = _a.sent();
+                    console.error(error_1);
+                    return [3 /*break*/, 3];
+                case 3: return [2 /*return*/];
+            }
         });
-        var html = "\n        <div id=\"post_" + post._id + "\" class=\"mainPagePost post\">\n          <img src=\"" + post.content + "\" alt=\"" + post.header + "\">\n\n          <h1>" + post.header + "</h1>\n\n          <p>Posted by " + user.username + " on " + formattedDate + "</p>\n        </div>\n      ";
-        var postRoot = document.querySelector("#postRoot");
-        if (!postRoot)
-            throw new Error("postRoot not found");
-        postRoot.innerHTML += html;
-    }
-    catch (error) {
-        console.error(error);
-    }
+    });
 }
 function handleGetPosts() {
     return __awaiter(this, void 0, void 0, function () {
-        var res, posts, _i, posts_1, post, user, error_1;
+        var res, posts, _i, posts_1, post, user, error_2;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
@@ -75,15 +88,15 @@ function handleGetPosts() {
                     return [4 /*yield*/, fetchUserById(post.userId)];
                 case 4:
                     user = _a.sent();
-                    renderAdminPost(post, user);
+                    renderAdminPost(post);
                     _a.label = 5;
                 case 5:
                     _i++;
                     return [3 /*break*/, 3];
                 case 6: return [3 /*break*/, 8];
                 case 7:
-                    error_1 = _a.sent();
-                    console.error(error_1);
+                    error_2 = _a.sent();
+                    console.error(error_2);
                     return [3 /*break*/, 8];
                 case 8: return [2 /*return*/];
             }
@@ -92,7 +105,7 @@ function handleGetPosts() {
 }
 function fetchUserById(userId) {
     return __awaiter(this, void 0, Promise, function () {
-        var res, user, error_2;
+        var res, user, error_3;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
@@ -107,9 +120,9 @@ function fetchUserById(userId) {
                         throw new Error("User not found");
                     return [2 /*return*/, user];
                 case 3:
-                    error_2 = _a.sent();
-                    console.error(error_2);
-                    throw error_2;
+                    error_3 = _a.sent();
+                    console.error(error_3);
+                    throw error_3;
                 case 4: return [2 /*return*/];
             }
         });
@@ -151,4 +164,45 @@ function renderUsersInfo(users) {
     catch (error) {
         console.error(error);
     }
+}
+function handleDeletePost(postId) {
+    // Perform an HTTP request to delete the post on the server
+    fetch("/api/posts/delete-post?id=" + postId, {
+        method: "DELETE",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ _id: postId })
+    })
+        .then(function (response) { return response.json(); })
+        .then(function (data) {
+        if (data.ok) {
+            fetchPostsAndRender();
+        }
+        else {
+            console.error(data.error);
+        }
+    })["catch"](function (error) {
+        console.error(error);
+    });
+}
+function fetchPostsAndRender() {
+    fetch("/api/posts/get-posts", {
+        method: "GET",
+        headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json"
+        }
+    })
+        .then(function (response) { return response.json(); })
+        .then(function (posts) {
+        if (posts) {
+            renderAdminPost(posts);
+        }
+        else {
+            console.error("error");
+        }
+    })["catch"](function (error) {
+        console.error(error);
+    });
 }
