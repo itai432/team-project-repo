@@ -34,27 +34,40 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
-function renderPost(post, user) {
-    try {
-        var postDate = new Date(post.date);
-        var formattedDate = postDate.toLocaleDateString("en-US", {
-            year: "numeric",
-            month: "short",
-            day: "numeric"
+function renderPost(post) {
+    return __awaiter(this, void 0, void 0, function () {
+        var postDate, formattedDate, user, html, postRoot, error_1;
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0:
+                    _a.trys.push([0, 2, , 3]);
+                    postDate = new Date(post.date);
+                    formattedDate = postDate.toLocaleDateString("en-US", {
+                        year: "numeric",
+                        month: "short",
+                        day: "numeric"
+                    });
+                    return [4 /*yield*/, fetchUserById(post.user)];
+                case 1:
+                    user = _a.sent();
+                    html = "\n      <div id=\"post_" + post._id + "\" class=\"mainPagePost post\">\n        <img src=\"" + post.content + "\" alt=\"" + post.header + "\">\n        <h1>" + post.header + "</h1>\n        <p>Posted by " + user.username + " on " + formattedDate + "</p>\n        <div class=\"addCommentContainer\">\n          <input placeholder=\"Add Comment\" type=\"text\" id=\"commentInput_" + post._id + "\">\n          <button onclick=\"handleCreateComment('" + post._id + "')\">Add Comment</button>\n        </div>\n        <div class=\"containerClass\" id=\"commentContainer_" + post._id + "\"></div>\n      </div>\n    ";
+                    postRoot = document.querySelector("#postRoot");
+                    if (!postRoot)
+                        throw new Error("postRoot not found");
+                    postRoot.innerHTML += html;
+                    return [3 /*break*/, 3];
+                case 2:
+                    error_1 = _a.sent();
+                    console.error(error_1);
+                    return [3 /*break*/, 3];
+                case 3: return [2 /*return*/];
+            }
         });
-        var html = "\n      <div id=\"post_" + post._id + "\" class=\"mainPagePost post\">\n        <img src=\"" + post.content + "\" alt=\"" + post.header + "\">\n        <h1>" + post.header + "</h1>\n        <p>Posted by " + user.username + " on " + formattedDate + "</p>\n        <div class=\"addCommentContainer\">\n          <input placeholder=\"Add Comment\" type=\"text\" id=\"commentInput_" + post._id + "\">\n          <button onclick=\"handleCreateComment('" + post._id + "')\">Add Comment</button>\n        </div>\n        <div  class=\"containerClass\" id=\"commentContainer_" + post._id + "\"></div>\n      </div>\n    ";
-        var postRoot = document.querySelector("#postRoot");
-        if (!postRoot)
-            throw new Error("postRoot not found");
-        postRoot.innerHTML += html;
-    }
-    catch (error) {
-        console.error(error);
-    }
+    });
 }
 function handleGetPosts() {
     return __awaiter(this, void 0, void 0, function () {
-        var res, posts, _i, posts_1, post, user, error_1;
+        var res, posts, _i, posts_1, post, error_2;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
@@ -72,10 +85,9 @@ function handleGetPosts() {
                 case 3:
                     if (!(_i < posts_1.length)) return [3 /*break*/, 6];
                     post = posts_1[_i];
-                    return [4 /*yield*/, fetchUserById(post.userId)];
+                    return [4 /*yield*/, renderPost(post)];
                 case 4:
-                    user = _a.sent();
-                    renderPost(post, user);
+                    _a.sent();
                     fetchCommentsForPost(post._id);
                     _a.label = 5;
                 case 5:
@@ -83,8 +95,8 @@ function handleGetPosts() {
                     return [3 /*break*/, 3];
                 case 6: return [3 /*break*/, 8];
                 case 7:
-                    error_1 = _a.sent();
-                    console.error(error_1);
+                    error_2 = _a.sent();
+                    console.error(error_2);
                     return [3 /*break*/, 8];
                 case 8: return [2 /*return*/];
             }
@@ -117,46 +129,54 @@ function closeCreatePostPopup() {
     }
 }
 function handleCreatePost(ev) {
-    try {
-        ev.preventDefault();
-        var header_1 = ev.target.elements.header.value;
-        var content_1 = ev.target.elements.content.value;
-        var date_1 = new Date();
-        if (!header_1)
-            throw new Error("No header");
-        if (!content_1)
-            throw new Error("No content");
-        if (!date_1)
-            throw new Error("No date");
-        var newPost = { content: content_1, header: header_1, date: date_1 };
-        fetch("/api/posts/create-post", {
-            method: "POST",
-            headers: {
-                Accept: "application/json",
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify(newPost)
-        })
-            .then(function (res) { return res.json(); })
-            .then(function (data) {
-            renderPost({
-                _id: data.post._id,
-                header: header_1,
-                content: content_1,
-                date: date_1
-            });
-            ev.target.reset();
-            closeCreatePostPopup();
-            var addPostBtn = document.querySelector("#createPostBtn");
-            if (addPostBtn)
-                addPostBtn.style.display = "block";
-        })["catch"](function (error) {
-            console.error(error);
+    return __awaiter(this, void 0, void 0, function () {
+        var header_1, content_1, date_1, newPost;
+        return __generator(this, function (_a) {
+            try {
+                ev.preventDefault();
+                header_1 = ev.target.elements.header.value;
+                content_1 = ev.target.elements.content.value;
+                date_1 = new Date();
+                if (!header_1)
+                    throw new Error("No header");
+                if (!content_1)
+                    throw new Error("No content");
+                if (!date_1)
+                    throw new Error("No date");
+                newPost = { content: content_1, header: header_1, date: date_1 };
+                fetch("/api/posts/create-post", {
+                    method: "POST",
+                    headers: {
+                        Accept: "application/json",
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify(newPost)
+                })
+                    .then(function (res) { return res.json(); })
+                    .then(function (data) {
+                    var post = data.post;
+                    renderPost({
+                        _id: post._id,
+                        header: header_1,
+                        content: content_1,
+                        date: date_1,
+                        user: post.user
+                    });
+                    ev.target.reset();
+                    closeCreatePostPopup();
+                    var addPostBtn = document.querySelector("#createPostBtn");
+                    if (addPostBtn)
+                        addPostBtn.style.display = "block";
+                })["catch"](function (error) {
+                    console.error(error);
+                });
+            }
+            catch (error) {
+                console.error(error);
+            }
+            return [2 /*return*/];
         });
-    }
-    catch (error) {
-        console.error(error);
-    }
+    });
 }
 function handleCreateComment(postId) {
     try {
@@ -229,7 +249,7 @@ function renderComment(comment, postId, date) {
 }
 function fetchUserById(userId) {
     return __awaiter(this, void 0, Promise, function () {
-        var res, user, error_2;
+        var res, user, error_3;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
@@ -244,9 +264,9 @@ function fetchUserById(userId) {
                         throw new Error("User not found");
                     return [2 /*return*/, user];
                 case 3:
-                    error_2 = _a.sent();
-                    console.error(error_2);
-                    throw error_2;
+                    error_3 = _a.sent();
+                    console.error(error_3);
+                    throw error_3;
                 case 4: return [2 /*return*/];
             }
         });
