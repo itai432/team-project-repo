@@ -12,7 +12,6 @@ body {
   align-items: center;
   text-align: center;
   font-family: "Comfortaa", cursive;
-  background-image: url(https://images5.alphacoders.com/113/1138652.jpg);
   background-size: cover;
   background-position: center;
 }
@@ -52,7 +51,7 @@ body::before {
   display: flex;
   align-items: center;
   justify-content: space-around;
-  width: 20rem;
+  width: 30rem;
 }
 
 .element {
