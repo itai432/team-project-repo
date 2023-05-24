@@ -36,7 +36,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 exports.__esModule = true;
-exports.updateUserName = exports.getUserById = exports.deleteUser = exports.login = exports.createUser = exports.getUsers = void 0;
+exports.logout = exports.updateUserName = exports.getUserById = exports.deleteUser = exports.login = exports.createUser = exports.getUsers = void 0;
 var usersModel_1 = require("./usersModel");
 var jwt_simple_1 = require("jwt-simple");
 var mongoose_1 = require("mongoose");
@@ -109,7 +109,7 @@ exports.login = function (req, res) { return __awaiter(void 0, void 0, void 0, f
                 if (!secret)
                     throw new mongoose_1.Error("Missing jwt secret");
                 token = jwt_simple_1["default"].encode({ userId: userDB._id }, secret);
-                res.cookie("user", token, { httpOnly: true });
+                res.cookie("user", token, { maxAge: 5000000000, httpOnly: true });
                 res.status(201).send({ ok: true });
                 return [3 /*break*/, 3];
             case 2:
@@ -197,3 +197,14 @@ exports.updateUserName = function (req, res) { return __awaiter(void 0, void 0, 
         }
     });
 }); };
+exports.logout = function (req, res) {
+    try {
+        res.clearCookie('user');
+        res.send('Cookie deleted');
+        res.status(200).send({ ok: true });
+    }
+    catch (error) {
+        console.error(error);
+        res.status(500).send({ error: "Internal server error" });
+    }
+};

@@ -9,10 +9,21 @@ html {
 }
 
 body {
-  background-color: #f7f7f7;
   align-items: center;
   text-align: center;
   font-family: "Comfortaa", cursive;
+  background-image: url(https://images5.alphacoders.com/113/1138652.jpg);
+  background-size: cover;
+  background-position: center;
+}
+
+body::before {
+  content: "";
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.4);
 }
 
 #navbarWrapper {
