@@ -34,6 +34,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
+var _this = this;
 function renderAdminPost(post) {
     return __awaiter(this, void 0, void 0, function () {
         var user, postDate, formattedDate, html, postRoot, error_1;
@@ -150,6 +151,7 @@ function handleGetUsersInfo() {
     });
 }
 function renderUsersInfo(users) {
+    // Modify the function parameter name
     try {
         // Loop through each user object in the `users` array
         var userElements = users.map(function (user) {
@@ -176,33 +178,45 @@ function handleDeletePost(postId) {
     })
         .then(function (response) { return response.json(); })
         .then(function (data) {
-        if (data.ok) {
-            fetchPostsAndRender();
-        }
-        else {
-            console.error(data.error);
-        }
+        getPostsAfterDelete();
     })["catch"](function (error) {
         console.error(error);
     });
 }
-function fetchPostsAndRender() {
-    fetch("/api/posts/get-posts", {
-        method: "GET",
-        headers: {
-            Accept: "application/json",
-            "Content-Type": "application/json"
+var getPostsAfterDelete = function () { return __awaiter(_this, void 0, void 0, function () {
+    var res, posts, html, postRoot;
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0: return [4 /*yield*/, fetch("/api/posts/get-posts")];
+            case 1:
+                res = _a.sent();
+                return [4 /*yield*/, res.json()];
+            case 2:
+                posts = (_a.sent()).posts;
+                html = "";
+                postRoot = document.querySelector("#postRoot");
+                if (!postRoot)
+                    throw new Error("postRoot not found");
+                postRoot.innerHTML = html;
+                if (posts)
+                    posts.map(function (post) {
+                        renderPostsAfterDelete(post);
+                    });
+                return [2 /*return*/];
         }
-    })
-        .then(function (response) { return response.json(); })
-        .then(function (posts) {
-        if (posts) {
-            renderAdminPost(posts);
-        }
-        else {
-            console.error("error");
-        }
-    })["catch"](function (error) {
-        console.error(error);
     });
-}
+}); };
+var renderPostsAfterDelete = function (post) {
+    console.log(post);
+    var postDate = new Date(post.date);
+    var formattedDate = postDate.toLocaleDateString("en-US", {
+        year: "numeric",
+        month: "short",
+        day: "numeric"
+    });
+    var html = "\n      <div id=\"post_" + post._id + "\" class=\"mainPagePost post\">\n        <img src=\"" + post.content + "\" alt=\"" + post.header + "\">\n        <h1>" + post.header + "</h1>\n        <div>Posted on " + formattedDate + "</div>\n        <button onclick=\"handleDeletePost('" + post._id + "')\">Delete</button>\n      </div>\n    ";
+    var postRoot = document.querySelector("#postRoot");
+    if (!postRoot)
+        throw new Error("postRoot not found");
+    postRoot.innerHTML += html;
+};

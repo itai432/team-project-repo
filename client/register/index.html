@@ -1,56 +1,95 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Register</title>
-    <link rel="stylesheet" href="./dist/registerStyle.css">
+    <link rel="stylesheet" href="./dist/registerStyle.css" />
     <!-- google fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Comfortaa&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Comfortaa&display=swap"
+      rel="stylesheet"
+    />
     <!-- google fonts -->
     <script src="./dist/register.js" defer></script>
-</head>
-<body>
-    
+  </head>
+  <body>
     <div id="navbarWrapper">
-        <a href="http://localhost:3000/homePage/index.html" class="navbarTitle">My Social Media</a>
-        <div class="navbarElements">
-          <a href="http://localhost:3000/admin/index.html" class="element">Admin</a>
-          <a href="http://localhost:3000/login/index.html" class="element">Login</a>
-          <a href="http://localhost:3000/register/index.html" class="element">Register</a>
-          <a href="http://localhost:3000/profilePage/index.html" class="element">Profile</a>
-        </div>
+      <a href="http://localhost:3000/homePage/index.html" class="navbarTitle"
+        >My Social Media</a
+      >
+      <div class="navbarElements">
+        <a href="#" onclick="logout()" class="element">Logout</a>
+        <a href="http://localhost:3000/admin/index.html" class="element"
+          >Admin</a
+        >
+        <a href="http://localhost:3000/login/index.html" class="element"
+          >Login</a
+        >
+        <a href="http://localhost:3000/register/index.html" class="element"
+          >Register</a
+        >
+        <a href="http://localhost:3000/profilePage/index.html" class="element"
+          >Profile</a
+        >
       </div>
-    <form onsubmit="handleCreateUser(event)" class="RegisterContainer">
-        <div class="RegisterContainer__RegisterHeader"></div>
+    </div>
+
+    <!-- register form -->
+    <div id="registerWrapper">
+      <form onsubmit="handleCreateUser(event)" class="RegisterContainer">
         <div>
-            <label for="username">Username:</label>
-            <input type="text" id="username" name="username" class="RegisterContainer__UserNameInput" required>
+          <label for="username">Username:</label>
+          <input
+            type="text"
+            id="username"
+            name="username"
+            class="RegisterContainer__UserNameInput"
+            required
+          />
         </div>
         <div>
-            <label for="password">Password:</label>
-            <input type="password" id="password" name="password" class="RegisterContainer__PasswordInput" required>
+          <label for="password">Password:</label>
+          <input
+            type="password"
+            id="password"
+            name="password"
+            class="RegisterContainer__PasswordInput"
+            required
+          />
         </div>
         <div>
-            <label for="email">Email:</label>
-            <input type="email" id="email" name="email" class="RegisterContainer__EmailInput" required>
+          <label for="email">Email:</label>
+          <input
+            type="email"
+            id="email"
+            name="email"
+            class="RegisterContainer__EmailInput"
+            required
+          />
         </div>
         <div>
-            <label for="birthday">Birthday:</label>
-            <input type="date" id="birthday" name="birthday" class="RegisterContainer__BirthDayInput" required>
+          <label for="birthday">Birthday:</label>
+          <input
+            type="date"
+            id="birthday"
+            name="birthday"
+            class="RegisterContainer__BirthDayInput"
+            required
+          />
         </div>
-        <div>
-            <button type="submit" class="RegisterContainer__SubmitBtn">Register</button>
-        </div>
-        <div>
-            <button type="button" class="RegisterContainer__LoginBtn">
-                      <a href="http://localhost:3000/login/index.html" class="element">Login</a>
-            </button>
-        </div>
-    </form>
-    
-</body>
+        <button type="submit" class="RegisterContainer__SubmitBtn">
+          Register
+        </button>
+        <button type="button" class="RegisterContainer__LoginBtn">
+          <a href="http://localhost:3000/login/index.html" class="element"
+            >Login</a
+          >
+        </button>
+      </form>
+    </div>
+  </body>
 </html>

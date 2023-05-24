@@ -1,24 +1,33 @@
 body {
+  margin: 0;
+  align-items: center;
   font-family: "Comfortaa", cursive;
   background-image: url(https://images5.alphacoders.com/113/1138652.jpg);
   background-size: cover;
   background-position: center;
-  height: 100vh;
 }
 
+#registerWrapper{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 95vh;
+  padding: 2rem 0 2rem 0;
+}
 
 .RegisterContainer {
   display: flex;
+  justify-content: center;
+  text-align: center;
   flex-direction: column;
   align-items: center;
   background-color: #1379ff;
   border: 3px solid rgb(0, 0, 0);
   border-radius: 5px;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-  margin: 10% auto;
-  max-width: 500px;
+  width: 28rem;
   padding-top: 30%;
-  padding:  20px;
+  padding: 20px;
 
   &__RegisterHeader {
     font-size: 24px;
@@ -57,7 +66,7 @@ body {
       background-color: #0062cc;
     }
   }
-};
+}
 
 #navbarWrapper {
   display: flex;
@@ -86,7 +95,7 @@ body {
   display: flex;
   align-items: center;
   justify-content: space-around;
-  width: 30rem;
+  width: 35rem;
 }
 
 .element {

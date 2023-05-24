@@ -51,7 +51,7 @@ body::before {
   display: flex;
   align-items: center;
   justify-content: space-around;
-  width: 30rem;
+  width: 35rem;
 }
 
 .element {
