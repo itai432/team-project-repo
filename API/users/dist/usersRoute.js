@@ -8,5 +8,6 @@ router
     .post("/create-user", usersControle_1.createUser)
     .patch("/update-user-name", usersControle_1.updateUserName)
     .post("/login", usersControle_1.login)
+    .get("/logout", usersControle_1.logout)
     .get("/get-user-by-id", usersControle_1.getUserById)["delete"]("/delete-user", usersControle_1.deleteUser);
 exports["default"] = router;

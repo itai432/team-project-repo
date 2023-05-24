@@ -41,7 +41,7 @@ function renderAdminPost(post) {
             switch (_a.label) {
                 case 0:
                     _a.trys.push([0, 2, , 3]);
-                    return [4 /*yield*/, fetchUserById(post.user)];
+                    return [4 /*yield*/, fetchAdminUserById(post.user)];
                 case 1:
                     user = _a.sent();
                     postDate = new Date(post.date);
@@ -65,7 +65,7 @@ function renderAdminPost(post) {
         });
     });
 }
-function handleGetPosts() {
+function handleAdminGetPosts() {
     return __awaiter(this, void 0, void 0, function () {
         var res, posts, _i, posts_1, post, user, error_2;
         return __generator(this, function (_a) {
@@ -85,7 +85,7 @@ function handleGetPosts() {
                 case 3:
                     if (!(_i < posts_1.length)) return [3 /*break*/, 6];
                     post = posts_1[_i];
-                    return [4 /*yield*/, fetchUserById(post.userId)];
+                    return [4 /*yield*/, fetchAdminUserById(post.userId)];
                 case 4:
                     user = _a.sent();
                     renderAdminPost(post);
@@ -103,7 +103,7 @@ function handleGetPosts() {
         });
     });
 }
-function fetchUserById(userId) {
+function fetchAdminUserById(userId) {
     return __awaiter(this, void 0, Promise, function () {
         var res, user, error_3;
         return __generator(this, function (_a) {

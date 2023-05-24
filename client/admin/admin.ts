@@ -16,7 +16,7 @@ interface User {
   
   async function renderAdminPost  (post: Post) {
     try {
-      const user = await fetchUserById(post.user);
+      const user = await fetchAdminUserById(post.user);
       const postDate = new Date(post.date);
       const formattedDate = postDate.toLocaleDateString("en-US", {
         year: "numeric",
@@ -40,21 +40,21 @@ interface User {
     }
   }
   
-  async function handleGetPosts() {
+  async function handleAdminGetPosts() {
     try {
       const res = await fetch("/api/posts/get-posts");
       const { posts } = await res.json();
   
       if (!posts) throw new Error("didnt find Posts");
       for (const post of posts) {
-        const user = await fetchUserById(post.userId);
+        const user = await fetchAdminUserById(post.userId);
         renderAdminPost(post);
       }
     } catch (error) {
       console.error(error);
     }
   }
-    async function fetchUserById(userId: string): Promise<User> {
+    async function fetchAdminUserById(userId: string): Promise<User> {
       try {
         const res = await fetch(`/api/users/get-user-by-id?id=${userId}`);
         const { user } = await res.json();

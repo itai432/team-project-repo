@@ -1,11 +1,23 @@
 body {
   font-family: "Comfortaa", cursive;
+  background-image: url(https://images5.alphacoders.com/113/1138652.jpg);
+  background-size: cover;
+  background-position: center;
+  height: 100vh;
 }
 
 .RegisterContainer {
   display: flex;
   flex-direction: column;
   align-items: center;
+  background-color: #1379ff;
+  border: 3px solid black;
+  border-radius: 5px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  margin: 10% auto;
+  max-width: 500px;
+  padding-top: 30%;
+  padding: 20px;
 }
 .RegisterContainer__RegisterHeader {
   font-size: 24px;
@@ -17,7 +29,7 @@ body {
   margin-bottom: 16px;
   width: 100%;
   padding: 8px;
-  border: 1px solid #ccc;
+  border: 2px solid black;
   border-radius: 4px;
   font-size: 16px;
 }
@@ -30,9 +42,91 @@ body {
   background-color: #007bff;
   color: #fff;
   font-size: 16px;
+  border: 2px solid black;
   cursor: pointer;
   transition: background-color 0.3s;
 }
 .RegisterContainer__SubmitBtn:hover, .RegisterContainer__LoginBtn:hover {
   background-color: #0062cc;
+}
+
+#navbarWrapper {
+  display: flex;
+  align-items: center;
+  box-shadow: 0px 2px 4px -1px rgba(0, 0, 0, 0.2), 0px 4px 5px 0px rgba(0, 0, 0, 0.14), 0px 1px 10px 0px rgba(0, 0, 0, 0.12);
+  height: 5rem;
+  background-color: #1379ff;
+  color: white;
+  justify-content: space-between;
+  position: static;
+  width: 100%;
+  z-index: 1;
+}
+
+.navbarTitle {
+  font-size: 2rem;
+  padding: 0 0 0 2rem;
+  cursor: pointer;
+  text-decoration: none;
+  color: white;
+}
+
+.navbarElements {
+  font-size: 1.3rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  width: 20rem;
+}
+
+.element {
+  text-decoration: none;
+  color: white;
+}
+
+.welcomeText {
+  padding: 8rem 0 2rem 0;
+  font-size: 2rem;
+}
+
+.welcomeSubText {
+  font-size: 1.4rem;
+  padding-bottom: 2rem;
+}
+
+.header {
+  background-color: #ff5700;
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 2%;
+}
+
+.header__nav {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1%;
+}
+
+.header__navLeft {
+  display: flex;
+  align-items: center;
+}
+
+.header__logo {
+  font-size: 2.5vw;
+  font-weight: bold;
+  color: #fff;
+  text-decoration: none;
+}
+
+.header__navRight .header__link {
+  color: #fff;
+  text-decoration: none;
+  margin-left: 2%;
+  font-size: 1.5vw;
 }

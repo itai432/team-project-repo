@@ -14,6 +14,15 @@
     <script src="./dist/login.js" defer></script>
   </head>
   <body>
+    <div id="navbarWrapper">
+      <a href="http://localhost:3000/homePage/index.html" class="navbarTitle">My Social Media</a>
+      <div class="navbarElements">
+        <a href="http://localhost:3000/admin/index.html" class="element">Admin</a>
+        <a href="http://localhost:3000/login/index.html" class="element">Login</a>
+        <a href="http://localhost:3000/register/index.html" class="element">Register</a>
+        <a href="http://localhost:3000/profilePage/index.html" class="element">Profile</a>
+      </div>
+    </div>
     <form onsubmit="handleLogin(event)" class="LoginContainer">
         <h1 class="LoginContainer__hederContainer">Login</h1>
         <div class="LoginContainer__UserInput">
@@ -37,12 +46,11 @@
           />
         </div>
       
-        <div class="LoginContainer__LoginBtn"><button type="submit">Login</button></div>
-        <div class="LoginContainer__RegisterBtn"><button>
-                <a href="http://localhost:3000/register/index.html" class="element">register</a>
-        </button>
-      </div>
-        <div class="LoginContainer__ForgotPasswordBtn">Forgot Password</div>
+  <button class="LoginContainer__LoginBtn" type="submit">Login</button>
+  <div class="LoginContainer__RegisterBtn">
+    <a href="http://localhost:3000/register/index.html" class="element">Register</a>
+  </div>
+  <div class="LoginContainer__ForgotPasswordBtn">Forgot Password</div>
       </form>
         </body>
 </html>

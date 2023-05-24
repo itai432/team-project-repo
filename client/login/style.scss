@@ -1,15 +1,25 @@
 body {
   background-color: #f2f2f2;
   font-family: "Comfortaa", cursive;
+  background-image: url(https://images5.alphacoders.com/113/1138652.jpg);
+  background-size: cover;
+  background-position: center;
+  height: 100vh;
+}
+$primary-color: #007bff;
+$secondary-color: #0069d9;
+$tertiary-color: #005cbf;
+
 
   .LoginContainer {
     background-color: #fff;
     border: 1px solid #ccc;
     border-radius: 5px;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-    margin: 0 auto;
+    margin: 10% auto;
     max-width: 500px;
-    padding: 20px;
+    padding-top: 30%;
+    padding:  20px;
 
     &__hederContainer {
       color: #333;
@@ -44,10 +54,56 @@ body {
       }
     }
 
-    &__LoginBtn,
-    &__RegisterBtn,
+    &__LoginBtn {
+      background-color: $primary-color;
+      border-radius: 3px;
+      border: none;
+      color: #fff;
+      cursor: pointer;
+      font-size: 16px;
+      padding: 10px;
+      text-align: center;
+      width: 100%;
+      transition: background-color 0.2s;
+  
+      &:hover {
+        background-color: $secondary-color;
+      }
+  
+      &:active {
+        background-color: $tertiary-color;
+      }
+  
+      &:not(:last-child) {
+        margin-right: 10px;
+      }
+    }
+  
+    &__RegisterBtn {
+      a.element {
+        background-color: $primary-color;
+        border-radius: 3px;
+        color: #fff;
+        cursor: pointer;
+        display: block;
+        font-size: 16px;
+        padding: 10px;
+        text-align: center;
+        text-decoration: none;
+        transition: background-color 0.2s;
+  
+        &:hover {
+          background-color: $secondary-color;
+        }
+  
+        &:active {
+          background-color: $tertiary-color;
+        }
+      }
+    }
+  
     &__ForgotPasswordBtn {
-      background-color: #007bff;
+      background-color: $primary-color;
       border-radius: 3px;
       color: #fff;
       cursor: pointer;
@@ -55,19 +111,16 @@ body {
       padding: 10px;
       text-align: center;
       transition: background-color 0.2s;
-
+  
       &:hover {
-        background-color: #0069d9;
+        background-color: $secondary-color;
       }
-
+  
       &:active {
-        background-color: #005cbf;
-      }
-
-      &:not(:last-child) {
-        margin-right: 10px;
+        background-color: $tertiary-color;
       }
     }
+
   }
 
   @media (max-width: 600px) {
@@ -104,4 +157,86 @@ body {
       }
     }
   }
+
+
+#navbarWrapper {
+  display: flex;
+  align-items: center;
+  box-shadow: 0px 2px 4px -1px rgba(0, 0, 0, 0.2),
+    0px 4px 5px 0px rgba(0, 0, 0, 0.14), 0px 1px 10px 0px rgba(0, 0, 0, 0.12);
+  height: 5rem;
+  background-color: rgb(19, 121, 255);
+  color: white;
+  justify-content: space-between;
+  position: static;
+  width: 100%;
+  z-index: 1;
+}
+
+.navbarTitle {
+  font-size: 2rem;
+  padding: 0 0 0 2rem;
+  cursor: pointer;
+  text-decoration: none;
+  color: white;
+}
+
+.navbarElements {
+  font-size: 1.3rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  width: 20rem;
+}
+
+.element {
+  text-decoration: none;
+  color: white;
+}
+
+.welcomeText {
+  padding: 8rem 0 2rem 0;
+  font-size: 2rem;
+}
+
+.welcomeSubText {
+  font-size: 1.4rem;
+  padding-bottom: 2rem;
+}
+
+.header {
+  background-color: #ff5700;
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 2%;
+}
+
+.header__nav {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1%;
+}
+
+.header__navLeft {
+  display: flex;
+  align-items: center;
+}
+
+.header__logo {
+  font-size: 2.5vw;
+  font-weight: bold;
+  color: #fff;
+  text-decoration: none;
+}
+
+.header__navRight .header__link {
+  color: #fff;
+  text-decoration: none;
+  margin-left: 2%;
+  font-size: 1.5vw;
 }

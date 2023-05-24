@@ -53,7 +53,7 @@ export const login = async (req: any, res: any) => {
 
     const token = jwt.encode({ userId: userDB._id }, secret);
 
-    res.cookie("user", token, { httpOnly: true });
+    res.cookie("user", token, { maxAge: 5000000000 , httpOnly: true  });
 
     res.status(201).send({ ok: true });
   } catch (error: any) {
@@ -118,3 +118,16 @@ export const updateUserName = async (req: any, res: any) => {
   }
 };
 
+export const logout = (req: any, res: any) => {
+  try {
+    res.clearCookie('user');
+    res.send('Cookie deleted');
+
+    res.status(200).send({ ok: true});
+
+  } catch (error) {
+    console.error(error);
+    res.status(500).send({ error: "Internal server error" });
+
+  }
+};
