@@ -22,13 +22,17 @@ export const createUser = async (req: any, res: any) => {
       password,
       email,
       birthday,
+      userType: "user", 
     });
+
     if (!secret) throw new Error("Missing jwt secret");
 
-    const token = jwt.encode({ userId: userDB._id }, secret);
+    const token = jwt.encode(
+      { userId: userDB._id, userType: userDB.userType }, 
+      secret
+    );
 
     res.cookie("user", token, { httpOnly: true });
-
 
     res.status(201).send({ ok: true });
   } catch (error) {
@@ -51,9 +55,12 @@ export const login = async (req: any, res: any) => {
 
     if (!secret) throw new Error("Missing jwt secret");
 
-    const token = jwt.encode({ userId: userDB._id }, secret);
+    const token = jwt.encode(
+      { userId: userDB._id, userType: userDB.userType },
+      secret
+    );
 
-    res.cookie("user", token, { maxAge: 5000000000 , httpOnly: true  });
+    res.cookie("user", token, { maxAge: 5000000000, httpOnly: true });
 
     res.status(201).send({ ok: true });
   } catch (error: any) {
@@ -61,6 +68,7 @@ export const login = async (req: any, res: any) => {
     res.status(500).send({ error: error.message });
   }
 };
+
 export const deleteUser = async (res: any, req: any) => {
   try {
     const { _id } = req.body;
