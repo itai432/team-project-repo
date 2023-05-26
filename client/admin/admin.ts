@@ -24,7 +24,7 @@ async function renderAdminPost(post: IPost) {
     const html = `
         <div id="post_${post._id}" class="mainPagePost post">
           <img src="${post.content}" alt="${post.header}">
-          <div>${post.header}</div>
+          <div class="postTitle">${post.header}</div>
           <p>Posted by ${user.username} on ${formattedDate}</p>
           <button onclick="handleDeletePost('${post._id}')">Delete</button>
         </div>
@@ -149,7 +149,7 @@ const renderPostsAfterDelete = (post: IPost) => {
   const html = `
       <div id="post_${post._id}" class="mainPagePost post">
         <img src="${post.content}" alt="${post.header}">
-        <div>${post.header}</div>
+        <div class="postTitle">${post.header}</div>
         <div>Posted on ${formattedDate}</div>
         <button onclick="handleDeletePost('${post._id}')">Delete</button>
       </div>

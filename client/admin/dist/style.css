@@ -17,10 +17,11 @@ body {
 }
 
 .postsContainer {
+  overflow: auto;
   background-color: #041d3e;
   padding-top: 2%;
   width: 40%;
-  height: 60vh;
+  height: 65vh;
   overflow: auto;
 }
 .postsContainer p {
@@ -34,11 +35,17 @@ body {
   height: 20%;
 }
 
+.postsContainer::-webkit-scrollbar {
+  display: none;
+  /* Hide the scrollbar */
+}
+
 .usersContainer {
-  background-color: #5fa5ff;
+  overflow: auto;
+  background-color: #041d3e;
   padding-top: 2%;
   width: 40%;
-  height: 60vh;
+  height: 65vh;
   overflow: auto;
 }
 .usersContainer p {
@@ -52,6 +59,11 @@ body {
   height: 20%;
 }
 
+.usersContainer::-webkit-scrollbar {
+  display: none;
+  /* Hide the scrollbar */
+}
+
 .mainPagePost {
   display: flex;
   flex-direction: column;
@@ -59,7 +71,8 @@ body {
   border-radius: 25px;
 }
 
-.post, .profileInfo {
+.post,
+.profileInfo {
   padding: 4px;
   margin: 10px;
   border: 1px solid #ccc;
@@ -171,4 +184,10 @@ body {
   font-size: 2.5vw;
   color: #fff;
   opacity: 0.8;
+}
+
+.postTitle {
+  font-size: 1.3rem;
+  padding: 1rem 0 0 0;
+  font-weight: bold;
 }

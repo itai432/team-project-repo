@@ -51,7 +51,7 @@ function renderAdminPost(post) {
                         month: "short",
                         day: "numeric"
                     });
-                    html = "\n        <div id=\"post_" + post._id + "\" class=\"mainPagePost post\">\n          <img src=\"" + post.content + "\" alt=\"" + post.header + "\">\n          <div>" + post.header + "</div>\n          <p>Posted by " + user.username + " on " + formattedDate + "</p>\n          <button onclick=\"handleDeletePost('" + post._id + "')\">Delete</button>\n        </div>\n      ";
+                    html = "\n        <div id=\"post_" + post._id + "\" class=\"mainPagePost post\">\n          <img src=\"" + post.content + "\" alt=\"" + post.header + "\">\n          <div class=\"postTitle\">" + post.header + "</div>\n          <p>Posted by " + user.username + " on " + formattedDate + "</p>\n          <button onclick=\"handleDeletePost('" + post._id + "')\">Delete</button>\n        </div>\n      ";
                     postRoot = document.querySelector("#postRoot");
                     if (!postRoot)
                         throw new Error("postRoot not found");
@@ -210,7 +210,7 @@ var renderPostsAfterDelete = function (post) {
         month: "short",
         day: "numeric"
     });
-    var html = "\n      <div id=\"post_" + post._id + "\" class=\"mainPagePost post\">\n        <img src=\"" + post.content + "\" alt=\"" + post.header + "\">\n        <div>" + post.header + "</div>\n        <div>Posted on " + formattedDate + "</div>\n        <button onclick=\"handleDeletePost('" + post._id + "')\">Delete</button>\n      </div>\n    ";
+    var html = "\n      <div id=\"post_" + post._id + "\" class=\"mainPagePost post\">\n        <img src=\"" + post.content + "\" alt=\"" + post.header + "\">\n        <div class=\"postTitle\">" + post.header + "</div>\n        <div>Posted on " + formattedDate + "</div>\n        <button onclick=\"handleDeletePost('" + post._id + "')\">Delete</button>\n      </div>\n    ";
     var postRoot = document.querySelector("#postRoot");
     if (!postRoot)
         throw new Error("postRoot not found");
