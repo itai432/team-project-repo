@@ -24,7 +24,7 @@ async function renderAdminPost(post: IPost) {
     const html = `
         <div id="post_${post._id}" class="mainPagePost post">
           <img src="${post.content}" alt="${post.header}">
-          <h1>${post.header}</h1>
+          <div>${post.header}</div>
           <p>Posted by ${user.username} on ${formattedDate}</p>
           <button onclick="handleDeletePost('${post._id}')">Delete</button>
         </div>
@@ -64,7 +64,6 @@ async function fetchAdminUserById(userId: string): Promise<User> {
   }
 }
 
-
 function handleGetUsersInfo() {
   fetch("/api/users/get-users", {
     method: "GET",
@@ -80,7 +79,7 @@ function handleGetUsersInfo() {
       return response.json();
     })
     .then((data) => {
-      renderUsersInfo(data.users); 
+      renderUsersInfo(data.users);
     })
     .catch((error) => {
       console.error("Error fetching user data:", error);
@@ -95,6 +94,7 @@ function renderUsersInfo(users) {
               <h3>${user.username}</h3>
               <p>Email: ${user.email}</p><br></br>
               <p>Birthday: ${user.birthday}</p>
+              <button onclick="deleteUser('${user._id}')">Delete</button>
             </div>
           `;
     });
@@ -108,6 +108,7 @@ function renderUsersInfo(users) {
   }
 }
 
+//Deleting posts
 function handleDeletePost(postId) {
   fetch(`/api/posts/delete-post?id=${postId}`, {
     method: "DELETE",
@@ -118,7 +119,7 @@ function handleDeletePost(postId) {
   })
     .then((response) => response.json())
     .then((data) => {
-      getPostsAfterDelete()
+      getPostsAfterDelete();
     })
     .catch((error) => {
       console.error(error);
@@ -128,18 +129,17 @@ function handleDeletePost(postId) {
 const getPostsAfterDelete = async () => {
   const res = await fetch("/api/posts/get-posts");
   const { posts } = await res.json();
-  const html = ``
+  const html = ``;
   const postRoot = document.querySelector("#postRoot");
   if (!postRoot) throw new Error("postRoot not found");
   postRoot.innerHTML = html;
-  if(posts)
-  posts.map((post) => {
-    renderPostsAfterDelete(post)
-  })
-}
+  if (posts)
+    posts.map((post) => {
+      renderPostsAfterDelete(post);
+    });
+};
 
 const renderPostsAfterDelete = (post: IPost) => {
-  console.log(post)
   const postDate = new Date(post.date);
   const formattedDate = postDate.toLocaleDateString("en-US", {
     year: "numeric",
@@ -149,7 +149,7 @@ const renderPostsAfterDelete = (post: IPost) => {
   const html = `
       <div id="post_${post._id}" class="mainPagePost post">
         <img src="${post.content}" alt="${post.header}">
-        <h1>${post.header}</h1>
+        <div>${post.header}</div>
         <div>Posted on ${formattedDate}</div>
         <button onclick="handleDeletePost('${post._id}')">Delete</button>
       </div>
@@ -157,5 +157,44 @@ const renderPostsAfterDelete = (post: IPost) => {
   const postRoot = document.querySelector("#postRoot");
   if (!postRoot) throw new Error("postRoot not found");
   postRoot.innerHTML += html;
-}
+};
 
+// deleting users
+
+const deleteUser = async (userId) => {
+  const html = ``;
+  const profileInfoRoot = document.querySelector("#profileInfoRoot");
+  if (!profileInfoRoot) throw new Error("profileInfoRoot not found");
+  profileInfoRoot.innerHTML = html;
+  fetch(`/api/users/delete-user?id=${userId}`, {
+    method: "DELETE",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ _id: userId }),
+  })
+    .then((response) => response.json())
+    .then(({ users }) => {
+      console.log(users);
+      if (users) {
+        users.map((user) => {
+          renderUsersAfetrDelete(user);
+        });
+      }
+    })
+    .catch((error) => {
+      console.error(error);
+    });
+};
+
+const renderUsersAfetrDelete = (user) => {
+  const html = `<div class="profileInfo">
+ <h3>${user.username}</h3>
+ <p>Email: ${user.email}</p><br></br>
+ <p>Birthday: ${user.birthday}</p>
+ <button onclick="deleteUser('${user._id}')">Delete</button>
+</div>`;
+  const profileInfoRoot = document.querySelector("#profileInfoRoot");
+  if (!profileInfoRoot) throw new Error("profileInfoRoot not found");
+  profileInfoRoot.innerHTML += html;
+};

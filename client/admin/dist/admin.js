@@ -51,7 +51,7 @@ function renderAdminPost(post) {
                         month: "short",
                         day: "numeric"
                     });
-                    html = "\n        <div id=\"post_" + post._id + "\" class=\"mainPagePost post\">\n          <img src=\"" + post.content + "\" alt=\"" + post.header + "\">\n          <h1>" + post.header + "</h1>\n          <p>Posted by " + user.username + " on " + formattedDate + "</p>\n          <button onclick=\"handleDeletePost('" + post._id + "')\">Delete</button>\n        </div>\n      ";
+                    html = "\n        <div id=\"post_" + post._id + "\" class=\"mainPagePost post\">\n          <img src=\"" + post.content + "\" alt=\"" + post.header + "\">\n          <div>" + post.header + "</div>\n          <p>Posted by " + user.username + " on " + formattedDate + "</p>\n          <button onclick=\"handleDeletePost('" + post._id + "')\">Delete</button>\n        </div>\n      ";
                     postRoot = document.querySelector("#postRoot");
                     if (!postRoot)
                         throw new Error("postRoot not found");
@@ -152,7 +152,7 @@ function handleGetUsersInfo() {
 function renderUsersInfo(users) {
     try {
         var userElements = users.map(function (user) {
-            return "\n            <div class=\"profileInfo\">\n              <h3>" + user.username + "</h3>\n              <p>Email: " + user.email + "</p><br></br>\n              <p>Birthday: " + user.birthday + "</p>\n            </div>\n          ";
+            return "\n            <div class=\"profileInfo\">\n              <h3>" + user.username + "</h3>\n              <p>Email: " + user.email + "</p><br></br>\n              <p>Birthday: " + user.birthday + "</p>\n              <button onclick=\"deleteUser('" + user._id + "')\">Delete</button>\n            </div>\n          ";
         });
         var html = userElements.join("");
         var profileInfoRoot = document.querySelector("#profileInfoRoot");
@@ -164,6 +164,7 @@ function renderUsersInfo(users) {
         console.error(error);
     }
 }
+//Deleting posts
 function handleDeletePost(postId) {
     fetch("/api/posts/delete-post?id=" + postId, {
         method: "DELETE",
@@ -203,16 +204,53 @@ var getPostsAfterDelete = function () { return __awaiter(_this, void 0, void 0, 
     });
 }); };
 var renderPostsAfterDelete = function (post) {
-    console.log(post);
     var postDate = new Date(post.date);
     var formattedDate = postDate.toLocaleDateString("en-US", {
         year: "numeric",
         month: "short",
         day: "numeric"
     });
-    var html = "\n      <div id=\"post_" + post._id + "\" class=\"mainPagePost post\">\n        <img src=\"" + post.content + "\" alt=\"" + post.header + "\">\n        <h1>" + post.header + "</h1>\n        <div>Posted on " + formattedDate + "</div>\n        <button onclick=\"handleDeletePost('" + post._id + "')\">Delete</button>\n      </div>\n    ";
+    var html = "\n      <div id=\"post_" + post._id + "\" class=\"mainPagePost post\">\n        <img src=\"" + post.content + "\" alt=\"" + post.header + "\">\n        <div>" + post.header + "</div>\n        <div>Posted on " + formattedDate + "</div>\n        <button onclick=\"handleDeletePost('" + post._id + "')\">Delete</button>\n      </div>\n    ";
     var postRoot = document.querySelector("#postRoot");
     if (!postRoot)
         throw new Error("postRoot not found");
     postRoot.innerHTML += html;
+};
+// deleting users
+var deleteUser = function (userId) { return __awaiter(_this, void 0, void 0, function () {
+    var html, profileInfoRoot;
+    return __generator(this, function (_a) {
+        html = "";
+        profileInfoRoot = document.querySelector("#profileInfoRoot");
+        if (!profileInfoRoot)
+            throw new Error("profileInfoRoot not found");
+        profileInfoRoot.innerHTML = html;
+        fetch("/api/users/delete-user?id=" + userId, {
+            method: "DELETE",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({ _id: userId })
+        })
+            .then(function (response) { return response.json(); })
+            .then(function (_a) {
+            var users = _a.users;
+            console.log(users);
+            if (users) {
+                users.map(function (user) {
+                    renderUsersAfetrDelete(user);
+                });
+            }
+        })["catch"](function (error) {
+            console.error(error);
+        });
+        return [2 /*return*/];
+    });
+}); };
+var renderUsersAfetrDelete = function (user) {
+    var html = "<div class=\"profileInfo\">\n <h3>" + user.username + "</h3>\n <p>Email: " + user.email + "</p><br></br>\n <p>Birthday: " + user.birthday + "</p>\n <button onclick=\"deleteUser('" + user._id + "')\">Delete</button>\n</div>";
+    var profileInfoRoot = document.querySelector("#profileInfoRoot");
+    if (!profileInfoRoot)
+        throw new Error("profileInfoRoot not found");
+    profileInfoRoot.innerHTML += html;
 };
