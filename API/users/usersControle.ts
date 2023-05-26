@@ -22,7 +22,7 @@ export const createUser = async (req: any, res: any) => {
       password,
       email,
       birthday,
-      userType: "user", 
+      userType: "public", 
     });
 
     if (!secret) throw new Error("Missing jwt secret");
@@ -69,15 +69,17 @@ export const login = async (req: any, res: any) => {
   }
 };
 
-export const deleteUser = async (res: any, req: any) => {
+
+export const deleteUser = async ( req: any, res: any) => {
   try {
-    const { _id } = req.body;
+    const {_id} = req.socket._httpMessage.req.body
+    console.log(_id)
+
     const deleteUser = await UserModel.deleteOne({ _id });
     const users = await UserModel.find({});
-    res.status(201).send({ ok: true });
-  } catch (error) {
+    res.send({users})
+  } catch (error:any) {
     console.error(error);
-    res.status(500).send({ Error: Error.Messages });
   }
 };
 

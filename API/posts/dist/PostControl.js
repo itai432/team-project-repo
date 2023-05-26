@@ -73,6 +73,7 @@ exports.deletePost = function (req, res) { return __awaiter(void 0, void 0, void
             case 0:
                 _a.trys.push([0, 3, , 4]);
                 _id = req.body._id;
+                console.log(req);
                 return [4 /*yield*/, postsModel_1["default"].deleteOne({ _id: _id })];
             case 1:
                 deletePost_1 = _a.sent();
