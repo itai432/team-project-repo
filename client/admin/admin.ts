@@ -64,7 +64,7 @@ async function fetchAdminUserById(userId: string): Promise<User> {
   }
 }
 
-//user
+
 function handleGetUsersInfo() {
   fetch("/api/users/get-users", {
     method: "GET",
@@ -80,7 +80,7 @@ function handleGetUsersInfo() {
       return response.json();
     })
     .then((data) => {
-      renderUsersInfo(data.users); // Access the `users` array from `data`
+      renderUsersInfo(data.users); 
     })
     .catch((error) => {
       console.error("Error fetching user data:", error);
@@ -88,9 +88,7 @@ function handleGetUsersInfo() {
 }
 
 function renderUsersInfo(users) {
-  // Modify the function parameter name
   try {
-    // Loop through each user object in the `users` array
     const userElements = users.map((user) => {
       return `
             <div class="profileInfo">
@@ -101,7 +99,7 @@ function renderUsersInfo(users) {
           `;
     });
 
-    const html = userElements.join(""); // Join the user elements into a single string
+    const html = userElements.join("");
     const profileInfoRoot = document.querySelector("#profileInfoRoot");
     if (!profileInfoRoot) throw new Error("profileInfoRoot not found");
     profileInfoRoot.innerHTML = html;
@@ -111,7 +109,6 @@ function renderUsersInfo(users) {
 }
 
 function handleDeletePost(postId) {
-  // Perform an HTTP request to delete the post on the server
   fetch(`/api/posts/delete-post?id=${postId}`, {
     method: "DELETE",
     headers: {
