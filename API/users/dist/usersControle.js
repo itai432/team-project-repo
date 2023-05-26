@@ -72,13 +72,14 @@ exports.createUser = function (req, res) { return __awaiter(void 0, void 0, void
                         username: username,
                         password: password,
                         email: email,
-                        birthday: birthday
+                        birthday: birthday,
+                        userType: "user"
                     })];
             case 1:
                 userDB = _b.sent();
                 if (!secret)
                     throw new mongoose_1.Error("Missing jwt secret");
-                token = jwt_simple_1["default"].encode({ userId: userDB._id }, secret);
+                token = jwt_simple_1["default"].encode({ userId: userDB._id, userType: userDB.userType }, secret);
                 res.cookie("user", token, { httpOnly: true });
                 res.status(201).send({ ok: true });
                 return [3 /*break*/, 3];
@@ -108,7 +109,7 @@ exports.login = function (req, res) { return __awaiter(void 0, void 0, void 0, f
                     throw new mongoose_1.Error("Username or password are incorrect");
                 if (!secret)
                     throw new mongoose_1.Error("Missing jwt secret");
-                token = jwt_simple_1["default"].encode({ userId: userDB._id }, secret);
+                token = jwt_simple_1["default"].encode({ userId: userDB._id, userType: userDB.userType }, secret);
                 res.cookie("user", token, { maxAge: 5000000000, httpOnly: true });
                 res.status(201).send({ ok: true });
                 return [3 /*break*/, 3];

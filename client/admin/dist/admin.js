@@ -129,7 +129,6 @@ function fetchAdminUserById(userId) {
         });
     });
 }
-//user
 function handleGetUsersInfo() {
     fetch("/api/users/get-users", {
         method: "GET",
@@ -145,19 +144,17 @@ function handleGetUsersInfo() {
         return response.json();
     })
         .then(function (data) {
-        renderUsersInfo(data.users); // Access the `users` array from `data`
+        renderUsersInfo(data.users);
     })["catch"](function (error) {
         console.error("Error fetching user data:", error);
     });
 }
 function renderUsersInfo(users) {
-    // Modify the function parameter name
     try {
-        // Loop through each user object in the `users` array
         var userElements = users.map(function (user) {
             return "\n            <div class=\"profileInfo\">\n              <h3>" + user.username + "</h3>\n              <p>Email: " + user.email + "</p><br></br>\n              <p>Birthday: " + user.birthday + "</p>\n            </div>\n          ";
         });
-        var html = userElements.join(""); // Join the user elements into a single string
+        var html = userElements.join("");
         var profileInfoRoot = document.querySelector("#profileInfoRoot");
         if (!profileInfoRoot)
             throw new Error("profileInfoRoot not found");
@@ -168,7 +165,6 @@ function renderUsersInfo(users) {
     }
 }
 function handleDeletePost(postId) {
-    // Perform an HTTP request to delete the post on the server
     fetch("/api/posts/delete-post?id=" + postId, {
         method: "DELETE",
         headers: {
