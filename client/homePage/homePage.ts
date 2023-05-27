@@ -89,7 +89,7 @@ function reanderPopUpCreatePost() {
       `;
     const createPostBtn = createPostRoot.querySelector("button");
     if (!createPostBtn) throw new Error("createPostBtn not found");
-    createPostRoot.innerHTML += html;
+    createPostRoot.innerHTML += html ,`<button onclick="reanderPopUpCreatePost()" id="">ADD POST</button>`;
     createPostBtn.style.display = "block";
   } catch (error) {
     console.error(error);
@@ -100,7 +100,7 @@ function closeCreatePostPopup() {
   const createPostRoot = document.querySelector("#createPostRoot");
 
   if (createPostRoot) {
-    createPostRoot.innerHTML = "";
+    createPostRoot.innerHTML = `<button onclick="reanderPopUpCreatePost()" id="">ADD POST</button>`;
     const addPostBtn = document.querySelector(
       "#createPostBtn"
     ) as HTMLButtonElement;

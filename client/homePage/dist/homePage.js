@@ -112,7 +112,7 @@ function reanderPopUpCreatePost() {
         var createPostBtn = createPostRoot.querySelector("button");
         if (!createPostBtn)
             throw new Error("createPostBtn not found");
-        createPostRoot.innerHTML += html;
+        createPostRoot.innerHTML += html, "<button onclick=\"reanderPopUpCreatePost()\" id=\"\">ADD POST</button>";
         createPostBtn.style.display = "block";
     }
     catch (error) {
@@ -122,7 +122,7 @@ function reanderPopUpCreatePost() {
 function closeCreatePostPopup() {
     var createPostRoot = document.querySelector("#createPostRoot");
     if (createPostRoot) {
-        createPostRoot.innerHTML = "";
+        createPostRoot.innerHTML = "<button onclick=\"reanderPopUpCreatePost()\" id=\"\">ADD POST</button>";
         var addPostBtn = document.querySelector("#createPostBtn");
         if (addPostBtn)
             addPostBtn.style.display = "block";
