@@ -218,6 +218,8 @@ body {
   grid-gap: 20px;
 }
 #postsUserRoot .mainPagePost {
+  width: 30rem;
+  height: 30rem;
   position: relative;
   overflow: hidden;
   border-radius: 10px;

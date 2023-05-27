@@ -12,29 +12,55 @@ interface IPost {
   user: string;
 }
 
-async function renderAdminPost(post: IPost) {
+const checkIsAdmin = async () => {
   try {
-    const user = await fetchAdminUserById(post.user);
-    const postDate = new Date(post.date);
-    const formattedDate = postDate.toLocaleDateString("en-US", {
-      year: "numeric",
-      month: "short",
-      day: "numeric",
+    const response = await fetch("/api/users/admin", {
+      method: "GET",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
     });
-    const html = `
-        <div id="post_${post._id}" class="mainPagePost post">
-          <img src="${post.content}" alt="${post.header}">
-          <div class="postTitle">${post.header}</div>
-          <p>Posted by ${user.username} on ${formattedDate}</p>
-          <button onclick="handleDeletePost('${post._id}')">Delete</button>
-        </div>
-      `;
-    const postRoot = document.querySelector("#postRoot");
-    if (!postRoot) throw new Error("postRoot not found");
-    postRoot.innerHTML += html;
+
+    if (response.ok) {
+      const data = await response.json();
+      localStorage.setItem("userType", data.decoded.userType)
+      return data.decoded.userType;
+    }
   } catch (error) {
-    console.error(error);
+    console.log("Error occurred:", error);
   }
+   }
+
+async function renderAdminPost(post: IPost) {
+  const userType = localStorage.getItem("userType")
+  if(userType === "admin"){
+    try {
+      const user = await fetchAdminUserById(post.user);
+      const postDate = new Date(post.date);
+      const formattedDate = postDate.toLocaleDateString("en-US", {
+        year: "numeric",
+        month: "short",
+        day: "numeric",
+      });
+      const html = `
+          <div id="post_${post._id}" class="mainPagePost post">
+            <img src="${post.content}" alt="${post.header}">
+            <div class="postTitle">${post.header}</div>
+            <p>Posted by ${user.username} on ${formattedDate}</p>
+            <button onclick="handleDeletePost('${post._id}')">Delete</button>
+          </div>
+        `;
+      const postRoot = document.querySelector("#postRoot");
+      if (!postRoot) throw new Error("postRoot not found");
+      postRoot.innerHTML += html;
+    } catch (error) {
+      console.error(error);
+    }
+  }
+ else{
+  alert("unauthorized")
+ }
 }
 
 async function handleAdminGetPosts() {
@@ -87,24 +113,30 @@ function handleGetUsersInfo() {
 }
 
 function renderUsersInfo(users) {
-  try {
-    const userElements = users.map((user) => {
-      return `
-            <div class="profileInfo">
-              <h3>${user.username}</h3>
-              <p>Email: ${user.email}</p><br></br>
-              <p>Birthday: ${user.birthday}</p>
-              <button onclick="deleteUser('${user._id}')">Delete</button>
-            </div>
-          `;
-    });
-
-    const html = userElements.join("");
-    const profileInfoRoot = document.querySelector("#profileInfoRoot");
-    if (!profileInfoRoot) throw new Error("profileInfoRoot not found");
-    profileInfoRoot.innerHTML = html;
-  } catch (error) {
-    console.error(error);
+  const userType = localStorage.getItem("userType")
+  if(userType === "admin"){
+    try {
+      const userElements = users.map((user) => {
+        return `
+              <div class="profileInfo">
+                <h3>${user.username}</h3>
+                <p>Email: ${user.email}</p><br></br>
+                <p>Birthday: ${user.birthday}</p>
+                <button onclick="deleteUser('${user._id}')">Delete</button>
+              </div>
+            `;
+      });
+  
+      const html = userElements.join("");
+      const profileInfoRoot = document.querySelector("#profileInfoRoot");
+      if (!profileInfoRoot) throw new Error("profileInfoRoot not found");
+      profileInfoRoot.innerHTML = html;
+    } catch (error) {
+      console.error(error);
+    }
+  }
+  else{
+    console.log("not admin")
   }
 }
 
@@ -173,9 +205,8 @@ const deleteUser = async (userId) => {
     },
     body: JSON.stringify({ _id: userId }),
   })
-    .then((response) => response.json())
+    .then((response) =>( response.json()))
     .then(({ users }) => {
-      console.log(users);
       if (users) {
         users.map((user) => {
           renderUsersAfetrDelete(user);

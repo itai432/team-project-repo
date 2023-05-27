@@ -53,6 +53,8 @@ function isAdmin(req, res, next) {
                 if (userType !== usersModel_1.UserType.ADMIN) {
                     throw new Error("Access denied. User is not an admin.");
                 }
+                console.log(userType);
+                res.send({ decoded: decoded });
                 next();
             }
             catch (error) {

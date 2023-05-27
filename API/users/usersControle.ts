@@ -73,8 +73,6 @@ export const login = async (req: any, res: any) => {
 export const deleteUser = async ( req: any, res: any) => {
   try {
     const {_id} = req.socket._httpMessage.req.body
-    console.log(_id)
-
     const deleteUser = await UserModel.deleteOne({ _id });
     const users = await UserModel.find({});
     res.send({users})

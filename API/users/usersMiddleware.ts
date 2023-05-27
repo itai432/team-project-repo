@@ -17,7 +17,8 @@ export async function isAdmin(req: any, res: any, next: any) {
     if (userType !== UserType.ADMIN) {
       throw new Error("Access denied. User is not an admin.");
     }
-
+    console.log(userType)
+    res.send({decoded})
     next();
   } catch (error: any) {
     console.error(error);

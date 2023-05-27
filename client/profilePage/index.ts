@@ -41,6 +41,7 @@ function handleGetProfileInfo() {
           <h3>${user.username}</h3>
           <p>Email: ${user.email}</p>
           <p>Birthday: ${user.birthday}</p>
+          
         </div>
         <div class="main__container__updateUser" id="updateUserRoot">
         <button onclick="reanderPopUpUpdateUser('${user._id}')">Edit Profile</button>
@@ -58,16 +59,17 @@ function handleGetProfileInfo() {
       const updateUserRoot = document.querySelector("#updateUserRoot");
       if (!updateUserRoot) throw new Error("updateUserRoot not found");
       const html = `
+      <div>If you don't want on of the fields to be changed, copy the exsiting value of the field</div>
         <form onsubmit="handleupdateUser(event)" class="updateUserContainer">
         <button type="button" class="updateUserContainer__CloseBtn" onclick="closeupdateUserPopup()">&times;</button>
         <div class="updateUserContainer__updateUserHeader"></div>
         <div>
           <label for="username">username:</label>
-          <input type="text" id="username" name="username" class="updateUserContainer__HeaderInput" >
+          <input type="text" id="username" name="username" class="updateUserContainer__HeaderInput" required>
         </div>
         <div>
           <label for="email">email:</label>
-          <input type="email" id="email" name="email" class="updateUserContainer__ContentInput" >
+          <input type="email" id="email" name="email" class="updateUserContainer__ContentInput" required>
         </div>
         <div>
           <button type="submit" class="updateUserContainer__SubmitBtn" onclick="handleUpdateUserName(event,'${userId}')">update</button>
@@ -76,7 +78,7 @@ function handleGetProfileInfo() {
         `;
       const updateUserBtn = updateUserRoot.querySelector("button");
       if (!updateUserBtn) throw new Error("updateUserBtn not found");
-      updateUserRoot.innerHTML += html;
+      updateUserRoot.innerHTML = html;
       updateUserBtn.style.display = "block";
     } catch (error) {
       console.error(error);
@@ -115,6 +117,8 @@ function handleGetProfileInfo() {
       })
         .then((res) => res.json())
         .then(({ user }) => {
+          console.log(user)
+          renderProfileInfo(user)
         })
         .catch((error) => {
           console.error(error);
@@ -162,6 +166,24 @@ function handleGetProfileInfo() {
     }
   }
 
+  function renderUserPostsAfterUpdate(post: Post) {
+    try {
+      const html = `
+        <div class="mainPagePost">
+          <img src="${post.content}" alt="${post.header}">
+          <h3>${post.header}</h3>
+          <div class="main__container__updatePost" id="updatePostRoot_${post._id}">
+            <button class="editPostIcon" onclick="reanderPopUpUpdatePost('${post._id}')"></button>
+          </div>
+        </div>
+      `;
+      const postsUserRoot = document.querySelector("#postsUserRoot");
+      if (!postsUserRoot) throw new Error("postsUserRoot not found");
+      postsUserRoot.innerHTML = html;
+    } catch (error) {
+      console.error(error);
+    }
+  }
 
 
 
@@ -198,7 +220,7 @@ function handleGetProfileInfo() {
     const updatePostRoot = document.querySelector(`#updatePostRoot_${postId}`);
   
     if (updatePostRoot) {
-      updatePostRoot.innerHTML = "";
+      updatePostRoot.innerHTML = `<button class="editPostIcon" onclick="reanderPopUpUpdatePost('${postId}')"></button>`
       const updatePostBtn = updatePostRoot.querySelector(
         "button"
       ) as HTMLButtonElement;
@@ -226,6 +248,7 @@ function handleGetProfileInfo() {
       })
         .then((res) => res.json())
         .then(({ post }) => {
+          renderUserPostsAfterUpdate(post)
         })
         .catch((error) => {
           console.error(error);

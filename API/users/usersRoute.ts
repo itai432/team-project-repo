@@ -6,9 +6,7 @@ import path from "path";
 const router = express.Router();
 
 router
-  .get("/admin", isAdmin, (req, res) => {
-    res.sendFile(path.join(__dirname, "admin", "index.html"));
-  })
+  .get("/admin", isAdmin)
   .get("/get-users", getUsers)
   .post("/create-user", createUser)
   .patch("/update-user-name", updateUserName)
