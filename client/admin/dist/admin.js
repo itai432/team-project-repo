@@ -35,15 +35,49 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 var _this = this;
+var checkIsAdmin = function () { return __awaiter(_this, void 0, void 0, function () {
+    var response, data, error_1;
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0:
+                _a.trys.push([0, 4, , 5]);
+                return [4 /*yield*/, fetch("/api/users/admin", {
+                        method: "GET",
+                        headers: {
+                            Accept: "application/json",
+                            "Content-Type": "application/json"
+                        }
+                    })];
+            case 1:
+                response = _a.sent();
+                if (!response.ok) return [3 /*break*/, 3];
+                return [4 /*yield*/, response.json()];
+            case 2:
+                data = _a.sent();
+                localStorage.setItem("userType", data.decoded.userType);
+                return [2 /*return*/, data.decoded.userType];
+            case 3: return [3 /*break*/, 5];
+            case 4:
+                error_1 = _a.sent();
+                console.log("Error occurred:", error_1);
+                return [3 /*break*/, 5];
+            case 5: return [2 /*return*/];
+        }
+    });
+}); };
 function renderAdminPost(post) {
     return __awaiter(this, void 0, void 0, function () {
-        var user, postDate, formattedDate, html, postRoot, error_1;
+        var userType, user, postDate, formattedDate, html, postRoot, error_2;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
-                    _a.trys.push([0, 2, , 3]);
-                    return [4 /*yield*/, fetchAdminUserById(post.user)];
+                    userType = localStorage.getItem("userType");
+                    if (!(userType === "admin")) return [3 /*break*/, 5];
+                    _a.label = 1;
                 case 1:
+                    _a.trys.push([1, 3, , 4]);
+                    return [4 /*yield*/, fetchAdminUserById(post.user)];
+                case 2:
                     user = _a.sent();
                     postDate = new Date(post.date);
                     formattedDate = postDate.toLocaleDateString("en-US", {
@@ -51,24 +85,28 @@ function renderAdminPost(post) {
                         month: "short",
                         day: "numeric"
                     });
-                    html = "\n        <div id=\"post_" + post._id + "\" class=\"mainPagePost post\">\n          <img src=\"" + post.content + "\" alt=\"" + post.header + "\">\n          <div class=\"postTitle\">" + post.header + "</div>\n          <p>Posted by " + user.username + " on " + formattedDate + "</p>\n          <button onclick=\"handleDeletePost('" + post._id + "')\">Delete</button>\n        </div>\n      ";
+                    html = "\n          <div id=\"post_" + post._id + "\" class=\"mainPagePost post\">\n            <img src=\"" + post.content + "\" alt=\"" + post.header + "\">\n            <div class=\"postTitle\">" + post.header + "</div>\n            <p>Posted by " + user.username + " on " + formattedDate + "</p>\n            <button onclick=\"handleDeletePost('" + post._id + "')\">Delete</button>\n          </div>\n        ";
                     postRoot = document.querySelector("#postRoot");
                     if (!postRoot)
                         throw new Error("postRoot not found");
                     postRoot.innerHTML += html;
-                    return [3 /*break*/, 3];
-                case 2:
-                    error_1 = _a.sent();
-                    console.error(error_1);
-                    return [3 /*break*/, 3];
-                case 3: return [2 /*return*/];
+                    return [3 /*break*/, 4];
+                case 3:
+                    error_2 = _a.sent();
+                    console.error(error_2);
+                    return [3 /*break*/, 4];
+                case 4: return [3 /*break*/, 6];
+                case 5:
+                    alert("unauthorized");
+                    _a.label = 6;
+                case 6: return [2 /*return*/];
             }
         });
     });
 }
 function handleAdminGetPosts() {
     return __awaiter(this, void 0, void 0, function () {
-        var res, posts, _i, posts_1, post, user, error_2;
+        var res, posts, _i, posts_1, post, user, error_3;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
@@ -96,8 +134,8 @@ function handleAdminGetPosts() {
                     return [3 /*break*/, 3];
                 case 6: return [3 /*break*/, 8];
                 case 7:
-                    error_2 = _a.sent();
-                    console.error(error_2);
+                    error_3 = _a.sent();
+                    console.error(error_3);
                     return [3 /*break*/, 8];
                 case 8: return [2 /*return*/];
             }
@@ -106,7 +144,7 @@ function handleAdminGetPosts() {
 }
 function fetchAdminUserById(userId) {
     return __awaiter(this, void 0, Promise, function () {
-        var res, user, error_3;
+        var res, user, error_4;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
@@ -121,9 +159,9 @@ function fetchAdminUserById(userId) {
                         throw new Error("User not found");
                     return [2 /*return*/, user];
                 case 3:
-                    error_3 = _a.sent();
-                    console.error(error_3);
-                    throw error_3;
+                    error_4 = _a.sent();
+                    console.error(error_4);
+                    throw error_4;
                 case 4: return [2 /*return*/];
             }
         });
@@ -150,18 +188,24 @@ function handleGetUsersInfo() {
     });
 }
 function renderUsersInfo(users) {
-    try {
-        var userElements = users.map(function (user) {
-            return "\n            <div class=\"profileInfo\">\n              <h3>" + user.username + "</h3>\n              <p>Email: " + user.email + "</p><br></br>\n              <p>Birthday: " + user.birthday + "</p>\n              <button onclick=\"deleteUser('" + user._id + "')\">Delete</button>\n            </div>\n          ";
-        });
-        var html = userElements.join("");
-        var profileInfoRoot = document.querySelector("#profileInfoRoot");
-        if (!profileInfoRoot)
-            throw new Error("profileInfoRoot not found");
-        profileInfoRoot.innerHTML = html;
+    var userType = localStorage.getItem("userType");
+    if (userType === "admin") {
+        try {
+            var userElements = users.map(function (user) {
+                return "\n              <div class=\"profileInfo\">\n                <h3>" + user.username + "</h3>\n                <p>Email: " + user.email + "</p><br></br>\n                <p>Birthday: " + user.birthday + "</p>\n                <button onclick=\"deleteUser('" + user._id + "')\">Delete</button>\n              </div>\n            ";
+            });
+            var html = userElements.join("");
+            var profileInfoRoot = document.querySelector("#profileInfoRoot");
+            if (!profileInfoRoot)
+                throw new Error("profileInfoRoot not found");
+            profileInfoRoot.innerHTML = html;
+        }
+        catch (error) {
+            console.error(error);
+        }
     }
-    catch (error) {
-        console.error(error);
+    else {
+        console.log("not admin");
     }
 }
 //Deleting posts
@@ -232,10 +276,9 @@ var deleteUser = function (userId) { return __awaiter(_this, void 0, void 0, fun
             },
             body: JSON.stringify({ _id: userId })
         })
-            .then(function (response) { return response.json(); })
+            .then(function (response) { return (response.json()); })
             .then(function (_a) {
             var users = _a.users;
-            console.log(users);
             if (users) {
                 users.map(function (user) {
                     renderUsersAfetrDelete(user);

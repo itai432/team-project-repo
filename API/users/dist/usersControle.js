@@ -129,7 +129,6 @@ exports.deleteUser = function (req, res) { return __awaiter(void 0, void 0, void
             case 0:
                 _a.trys.push([0, 3, , 4]);
                 _id = req.socket._httpMessage.req.body._id;
-                console.log(_id);
                 return [4 /*yield*/, usersModel_1["default"].deleteOne({ _id: _id })];
             case 1:
                 deleteUser_1 = _a.sent();

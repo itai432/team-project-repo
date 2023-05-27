@@ -20,7 +20,7 @@ function handleGetProfileInfo() {
 }
 function renderProfileInfo(user) {
     try {
-        var html = "\n        <div class=\"profileInfo\">\n          <h3>" + user.username + "</h3>\n          <p>Email: " + user.email + "</p>\n          <p>Birthday: " + user.birthday + "</p>\n        </div>\n        <div class=\"main__container__updateUser\" id=\"updateUserRoot\">\n        <button onclick=\"reanderPopUpUpdateUser('" + user._id + "')\">Edit Profile</button>\n      </div>\n      ";
+        var html = "\n        <div class=\"profileInfo\">\n          <h3>" + user.username + "</h3>\n          <p>Email: " + user.email + "</p>\n          <p>Birthday: " + user.birthday + "</p>\n          \n        </div>\n        <div class=\"main__container__updateUser\" id=\"updateUserRoot\">\n        <button onclick=\"reanderPopUpUpdateUser('" + user._id + "')\">Edit Profile</button>\n      </div>\n      ";
         var profileInfoRoot = document.querySelector("#profileInfoRoot");
         if (!profileInfoRoot)
             throw new Error("profileInfoRoot not found");
@@ -35,11 +35,11 @@ function reanderPopUpUpdateUser(userId) {
         var updateUserRoot = document.querySelector("#updateUserRoot");
         if (!updateUserRoot)
             throw new Error("updateUserRoot not found");
-        var html = "\n        <form onsubmit=\"handleupdateUser(event)\" class=\"updateUserContainer\">\n        <button type=\"button\" class=\"updateUserContainer__CloseBtn\" onclick=\"closeupdateUserPopup()\">&times;</button>\n        <div class=\"updateUserContainer__updateUserHeader\"></div>\n        <div>\n          <label for=\"username\">username:</label>\n          <input type=\"text\" id=\"username\" name=\"username\" class=\"updateUserContainer__HeaderInput\" >\n        </div>\n        <div>\n          <label for=\"email\">email:</label>\n          <input type=\"email\" id=\"email\" name=\"email\" class=\"updateUserContainer__ContentInput\" >\n        </div>\n        <div>\n          <button type=\"submit\" class=\"updateUserContainer__SubmitBtn\" onclick=\"handleUpdateUserName(event,'" + userId + "')\">update</button>\n        </div>\n      </form>\n        ";
+        var html = "\n      <div>If you don't want on of the fields to be changed, copy the exsiting value of the field</div>\n        <form onsubmit=\"handleupdateUser(event)\" class=\"updateUserContainer\">\n        <button type=\"button\" class=\"updateUserContainer__CloseBtn\" onclick=\"closeupdateUserPopup()\">&times;</button>\n        <div class=\"updateUserContainer__updateUserHeader\"></div>\n        <div>\n          <label for=\"username\">username:</label>\n          <input type=\"text\" id=\"username\" name=\"username\" class=\"updateUserContainer__HeaderInput\" required>\n        </div>\n        <div>\n          <label for=\"email\">email:</label>\n          <input type=\"email\" id=\"email\" name=\"email\" class=\"updateUserContainer__ContentInput\" required>\n        </div>\n        <div>\n          <button type=\"submit\" class=\"updateUserContainer__SubmitBtn\" onclick=\"handleUpdateUserName(event,'" + userId + "')\">update</button>\n        </div>\n      </form>\n        ";
         var updateUserBtn = updateUserRoot.querySelector("button");
         if (!updateUserBtn)
             throw new Error("updateUserBtn not found");
-        updateUserRoot.innerHTML += html;
+        updateUserRoot.innerHTML = html;
         updateUserBtn.style.display = "block";
     }
     catch (error) {
@@ -74,6 +74,8 @@ function handleUpdateUserName(ev, userId) {
             .then(function (res) { return res.json(); })
             .then(function (_a) {
             var user = _a.user;
+            console.log(user);
+            renderProfileInfo(user);
         })["catch"](function (error) {
             console.error(error);
         });
@@ -115,6 +117,18 @@ function renderUserPosts(post) {
         console.error(error);
     }
 }
+function renderUserPostsAfterUpdate(post) {
+    try {
+        var html = "\n        <div class=\"mainPagePost\">\n          <img src=\"" + post.content + "\" alt=\"" + post.header + "\">\n          <h3>" + post.header + "</h3>\n          <div class=\"main__container__updatePost\" id=\"updatePostRoot_" + post._id + "\">\n            <button class=\"editPostIcon\" onclick=\"reanderPopUpUpdatePost('" + post._id + "')\"></button>\n          </div>\n        </div>\n      ";
+        var postsUserRoot = document.querySelector("#postsUserRoot");
+        if (!postsUserRoot)
+            throw new Error("postsUserRoot not found");
+        postsUserRoot.innerHTML = html;
+    }
+    catch (error) {
+        console.error(error);
+    }
+}
 function reanderPopUpUpdatePost(postId) {
     try {
         var updatePostRoot = document.querySelector("#updatePostRoot_" + postId);
@@ -134,7 +148,7 @@ function reanderPopUpUpdatePost(postId) {
 function closeupdatePostPopup(postId) {
     var updatePostRoot = document.querySelector("#updatePostRoot_" + postId);
     if (updatePostRoot) {
-        updatePostRoot.innerHTML = "";
+        updatePostRoot.innerHTML = "<button class=\"editPostIcon\" onclick=\"reanderPopUpUpdatePost('" + postId + "')\"></button>";
         var updatePostBtn = updatePostRoot.querySelector("button");
         if (updatePostBtn)
             updatePostBtn.style.display = "block";
@@ -159,6 +173,7 @@ function handleUpdateUserPost(ev, postId) {
             .then(function (res) { return res.json(); })
             .then(function (_a) {
             var post = _a.post;
+            renderUserPostsAfterUpdate(post);
         })["catch"](function (error) {
             console.error(error);
         });
