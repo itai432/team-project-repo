@@ -73,7 +73,7 @@ exports.createUser = function (req, res) { return __awaiter(void 0, void 0, void
                         password: password,
                         email: email,
                         birthday: birthday,
-                        userType: "user"
+                        userType: "public"
                     })];
             case 1:
                 userDB = _b.sent();
@@ -122,25 +122,25 @@ exports.login = function (req, res) { return __awaiter(void 0, void 0, void 0, f
         }
     });
 }); };
-exports.deleteUser = function (res, req) { return __awaiter(void 0, void 0, void 0, function () {
+exports.deleteUser = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
     var _id, deleteUser_1, users, error_4;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
                 _a.trys.push([0, 3, , 4]);
-                _id = req.body._id;
+                _id = req.socket._httpMessage.req.body._id;
+                console.log(_id);
                 return [4 /*yield*/, usersModel_1["default"].deleteOne({ _id: _id })];
             case 1:
                 deleteUser_1 = _a.sent();
                 return [4 /*yield*/, usersModel_1["default"].find({})];
             case 2:
                 users = _a.sent();
-                res.status(201).send({ ok: true });
+                res.send({ users: users });
                 return [3 /*break*/, 4];
             case 3:
                 error_4 = _a.sent();
                 console.error(error_4);
-                res.status(500).send({ Error: mongoose_1.Error.Messages });
                 return [3 /*break*/, 4];
             case 4: return [2 /*return*/];
         }

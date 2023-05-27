@@ -23,7 +23,7 @@ export const createPost = async (req: any, res: any) => {
   export const deletePost = async (req: any, res: any) => {
     try {
       const { _id } = req.body;
-  
+      console.log(req)
       const deletePost = await PostsModel.deleteOne({ _id });
       const posts = await PostsModel.find({});
   

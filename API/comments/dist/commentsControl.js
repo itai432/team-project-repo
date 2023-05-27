@@ -46,7 +46,6 @@ exports.createComment = function (req, res) { return __awaiter(void 0, void 0, v
         switch (_b.label) {
             case 0:
                 _b.trys.push([0, 2, , 3]);
-                console.log(req.body);
                 _a = req.body, postId = _a.postId, content = _a.content, currentDate = _a.currentDate;
                 user = req.cookies.user;
                 if (!secret)
@@ -121,7 +120,6 @@ exports.getComments = function (req, res) { return __awaiter(void 0, void 0, voi
             case 0:
                 _a.trys.push([0, 2, , 3]);
                 postId = req.query.postId;
-                console.log(postId);
                 return [4 /*yield*/, commentsModel_1["default"].find({ post: postId })];
             case 1:
                 comments = _a.sent();

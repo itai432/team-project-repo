@@ -141,13 +141,52 @@ body {
   margin-bottom: 40px;
 }
 
-.main__container__editProfile {
-  width: 100%;
+.updateUserContainer {
   display: flex;
-  justify-content: center;
+  flex-direction: row;
+  background-color: #88c1fa;
+  align-items: center;
+  justify-content: space-between;
 }
 
-.main__container__editProfile button {
+.updateUserContainer__CloseBtn {
+  font-size: 1.2rem;
+  padding: 5px 10px;
+  background-color: #1379ff;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  position: absolute;
+  top: 10px;
+  right: 10px;
+}
+
+.updateUserContainer__CloseBtn:hover {
+  background-color: #5fa5ff;
+}
+
+.updateUserContainer__updateUserHeader {
+  margin-top: 20px;
+  font-size: 1.2rem;
+  font-weight: bold;
+}
+
+.updateUserContainer label {
+  font-weight: bold;
+}
+
+.updateUserContainer__HeaderInput,
+.updateUserContainer__ContentInput {
+  margin-bottom: 10px;
+  padding: 5px;
+  width: 200px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+}
+
+.updateUserContainer__SubmitBtn {
   font-size: 1.2rem;
   padding: 10px 20px;
   background-color: #1379ff;
@@ -158,7 +197,18 @@ body {
   transition: background-color 0.3s ease;
 }
 
-.main__container__editProfile button:hover {
+#updateUserRoot button {
+  font-size: 1.2rem;
+  padding: 10px 20px;
+  background-color: #1379ff;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.updateUserContainer__SubmitBtn:hover {
   background-color: #5fa5ff;
 }
 
@@ -212,13 +262,12 @@ body {
 }
 #postsUserRoot .mainPagePost .main__container__updatePost button {
   background-color: transparent;
-  border: 2px solid black;
   cursor: pointer;
   font-size: 1.5rem;
   color: white;
 }
 #postsUserRoot .mainPagePost .main__container__updatePost button:hover {
-  color: #0080ff;
+  color: #000000;
 }
 #postsUserRoot .mainPagePost .main__container__updatePost svg {
   width: 1.5rem;
@@ -235,50 +284,66 @@ body {
 }
 
 .updatePostContainer {
-  background-color: #00b7ff;
-  max-width: 250px;
+  display: flex;
+  flex-direction: column;
+  background-color: #4682b4;
   align-items: center;
   justify-content: center;
-  object-fit: contain;
-  text-align: center;
+  width: 100%;
+  height: 100%;
+  box-sizing: border-box;
+  padding: 20px;
 }
 
 .updatePostContainer__CloseBtn {
+  font-size: 1.2rem;
+  padding: 5px 10px;
+  background-color: #1379ff;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
   position: absolute;
   top: 10px;
   right: 10px;
-  font-size: 24px;
-  background-color: transparent;
-  border: none;
-  cursor: pointer;
+}
+
+.updatePostContainer__CloseBtn:hover {
+  background-color: #5fa5ff;
 }
 
 .updatePostContainer__updatePostHeader {
-  font-size: 18px;
+  margin-top: 20px;
+  font-size: 1.2rem;
   font-weight: bold;
-  margin-bottom: 10px;
 }
 
 .updatePostContainer label {
   font-weight: bold;
 }
 
-.updatePostContainer input[type=text],
-.updatePostContainer input[type=content] {
-  width: 100%;
-  padding: 8px;
+.updatePostContainer__HeaderInput,
+.updatePostContainer__ContentInput {
   margin-bottom: 10px;
+  padding: 5px;
+  width: 100%;
+  max-width: 300px;
+  border-radius: 5px;
   border: 1px solid #ccc;
-  border-radius: 4px;
-  box-sizing: border-box;
 }
 
 .updatePostContainer__SubmitBtn {
-  background-color: #4caf50;
-  color: #fff;
+  font-size: 1.2rem;
   padding: 10px 20px;
-  border: 2px solid black;
+  background-color: #1379ff;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
   cursor: pointer;
-  font-size: 16px;
-  border-radius: 4px;
+  transition: background-color 0.3s ease;
+}
+
+.updatePostContainer__SubmitBtn:hover {
+  background-color: #5fa5ff;
 }

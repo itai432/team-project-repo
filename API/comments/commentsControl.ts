@@ -4,7 +4,6 @@ const secret = process.env.JWT_SECRET;
 
 export const createComment = async (req: any, res: any) => {
     try {
-      console.log(req.body)
       const { postId, content, currentDate } = req.body;
       const { user } = req.cookies;
       if (!secret) throw new Error("No secret");
@@ -44,7 +43,7 @@ export const editComment = async (req: any, res: any) => {
       { new: true }
     );
     if (!commentDB) throw new Error("Could not find comment");
-
+    
     res.send({ comment: commentDB });
   } catch (error: any) {
     console.error(error);
@@ -55,7 +54,6 @@ export const editComment = async (req: any, res: any) => {
 export const getComments = async (req: any, res: any) => {
   try {
     const { postId } = req.query;
-    console.log(postId)
     const comments = await CommentsModel.find({post:postId});
     res.send({ comments });
   } catch (error: any) {
