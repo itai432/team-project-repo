@@ -297,3 +297,21 @@ var renderUsersAfetrDelete = function (user) {
         throw new Error("profileInfoRoot not found");
     profileInfoRoot.innerHTML += html;
 };
+function logout() {
+    fetch('/api/users/logout', {
+        method: 'GET',
+        credentials: 'same-origin'
+    })
+        .then(function (response) {
+        if (response.ok) {
+            document.cookie = 'user=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
+            window.location.href = 'http://localhost:3000/login/index.html';
+        }
+        else {
+            throw new Error('Logout request failed');
+        }
+    })["catch"](function (error) {
+        console.error(error);
+        // Handle the error
+    });
+}
