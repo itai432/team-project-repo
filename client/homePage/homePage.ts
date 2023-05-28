@@ -172,7 +172,7 @@ function handleCreateComment(postId: string) {
 
     const currentDate = new Date();
 
-    const newComment = { postId, content: comment, date: currentDate };
+    const newComment = { postId, content: comment, currentDate };
     fetch("/api/comments/create-comment", {
       method: "POST",
       headers: {
