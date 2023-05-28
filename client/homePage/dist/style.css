@@ -231,7 +231,16 @@ body::before {
   align-items: center;
 }
 .comment h3 {
+  display: flex;
+  flex-direction: column;
   cursor: pointer;
+  justify-content: flex-start;
+  align-items: start;
+}
+.comment p {
+  justify-content: flex-start;
+  display: flex;
+  align-items: start;
 }
 
 .post {
