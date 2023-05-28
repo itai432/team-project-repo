@@ -50,7 +50,7 @@ function renderPost(post) {
                     return [4 /*yield*/, fetchUserById(post.user)];
                 case 1:
                     user = _a.sent();
-                    html = "\n      <div id=\"post_" + post._id + "\" class=\"mainPagePost post\">\n        <img src=\"" + post.content + "\" alt=\"" + post.header + "\">\n        <h1>" + post.header + "</h1>\n        <p>Posted by " + user.username + " on " + formattedDate + "</p>\n        <div class=\"addCommentContainer\">\n          <input placeholder=\"Add Comment\" type=\"text\" id=\"commentInput_" + post._id + "\">\n          <button onclick=\"handleCreateComment('" + post._id + "')\">Add Comment</button>\n        </div>\n        <div class=\"containerClass\" id=\"commentContainer_" + post._id + "\"></div>\n      </div>\n    ";
+                    html = "\n      <div id=\"post_" + post._id + "\" class=\"mainPagePost post\">\n        <img src=\"" + post.content + "\" alt=\"" + post.header + "\">\n        <h1>" + post.header + "</h1>\n        <p>Posted by " + user.username + " on " + formattedDate + "</p>\n        <div class=\"addCommentContainer\">\n          <input placeholder=\"Add Comment\" type=\"text\" id=\"commentInput_" + post._id + "\">\n          <br></br>\n          <button onclick=\"handleCreateComment('" + post._id + "')\">Add Comment</button>\n          <br></br> \n        </div>\n        <div class=\"containerClass\" id=\"commentContainer_" + post._id + "\"></div>\n      </div>\n    ";
                     postRoot = document.querySelector("#postRoot");
                     if (!postRoot)
                         throw new Error("postRoot not found");
@@ -287,6 +287,5 @@ function logout() {
         }
     })["catch"](function (error) {
         console.error(error);
-        // Handle the error
     });
 }

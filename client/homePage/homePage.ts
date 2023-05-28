@@ -37,7 +37,9 @@ async function renderPost(post: Post) {
         <p>Posted by ${user.username} on ${formattedDate}</p>
         <div class="addCommentContainer">
           <input placeholder="Add Comment" type="text" id="commentInput_${post._id}">
+          <br></br>
           <button onclick="handleCreateComment('${post._id}')">Add Comment</button>
+          <br></br> 
         </div>
         <div class="containerClass" id="commentContainer_${post._id}"></div>
       </div>
@@ -269,6 +271,5 @@ function logout(){
     })
     .catch(error => {
       console.error(error);
-      // Handle the error
     });
 }

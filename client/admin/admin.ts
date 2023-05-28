@@ -140,7 +140,6 @@ function renderUsersInfo(users) {
   }
 }
 
-//Deleting posts
 function handleDeletePost(postId) {
   fetch(`/api/posts/delete-post?id=${postId}`, {
     method: "DELETE",
@@ -191,7 +190,6 @@ const renderPostsAfterDelete = (post: IPost) => {
   postRoot.innerHTML += html;
 };
 
-// deleting users
 
 const deleteUser = async (userId) => {
   const html = ``;
