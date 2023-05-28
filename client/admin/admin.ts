@@ -245,6 +245,5 @@ function logout(){
     })
     .catch(error => {
       console.error(error);
-      // Handle the error
     });
 }
