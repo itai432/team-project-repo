@@ -172,7 +172,7 @@ function handleCreateComment(postId: string) {
 
     const currentDate = new Date();
 
-    const newComment = { postId, content: comment, currentDate};
+    const newComment = { postId, content: comment, date: currentDate };
     fetch("/api/comments/create-comment", {
       method: "POST",
       headers: {
@@ -184,7 +184,8 @@ function handleCreateComment(postId: string) {
     })
       .then((res) => res.json())
       .then((data) => {
-        renderComment(newComment, postId, currentDate.toString());
+        const { comment, username } = data; 
+        renderComment(comment, postId, currentDate.toString(), username);
         commentInput.value = "";
         fetchCommentsForPost(postId);
       })
