@@ -192,7 +192,7 @@ function handleCreateComment(postId) {
             throw new Error("No comment");
         }
         var currentDate_1 = new Date();
-        var newComment = { postId: postId, content: comment, date: currentDate_1 };
+        var newComment = { postId: postId, content: comment, currentDate: currentDate_1 };
         fetch("/api/comments/create-comment", {
             method: "POST",
             headers: {
