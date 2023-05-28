@@ -255,6 +255,29 @@ body {
 #postsUserRoot .mainPagePost:hover .main__container__updatePost {
   opacity: 1;
 }
+#postsUserRoot .mainPagePost:hover .main__container__deletePost {
+  opacity: 1;
+}
+#postsUserRoot .mainPagePost .main__container__deletePost {
+  position: absolute;
+  top: 5%;
+  right: 80%;
+  opacity: 0;
+  transition: opacity 0.5s ease;
+}
+#postsUserRoot .mainPagePost .main__container__deletePost button {
+  background-color: transparent;
+  cursor: pointer;
+  font-size: 1.5rem;
+  color: white;
+}
+#postsUserRoot .mainPagePost .main__container__deletePost button:hover {
+  color: #000000;
+}
+#postsUserRoot .mainPagePost .main__container__deletePost svg {
+  width: 1.5rem;
+  height: 1.5rem;
+}
 #postsUserRoot .mainPagePost .main__container__updatePost {
   position: absolute;
   top: 5%;
@@ -274,6 +297,15 @@ body {
 #postsUserRoot .mainPagePost .main__container__updatePost svg {
   width: 1.5rem;
   height: 1.5rem;
+}
+
+.deletePostIcon {
+  background-image: url(https://logowik.com/content/uploads/images/trash-can7871.jpg);
+  background-size: cover;
+  background-position: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
 }
 
 .editPostIcon {

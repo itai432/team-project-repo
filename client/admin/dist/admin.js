@@ -85,7 +85,7 @@ function renderAdminPost(post) {
                         month: "short",
                         day: "numeric"
                     });
-                    html = "\n          <div id=\"post_" + post._id + "\" class=\"mainPagePost post\">\n            <img src=\"" + post.content + "\" alt=\"" + post.header + "\">\n            <div class=\"postTitle\">" + post.header + "</div>\n            <p>Posted by " + user.username + " on " + formattedDate + "</p>\n            <button onclick=\"handleDeletePost('" + post._id + "')\">Delete</button>\n          </div>\n        ";
+                    html = "\n          <div id=\"post_" + post._id + "\" class=\"mainPagePost post\">\n            <img src=\"" + post.content + "\" alt=\"" + post.header + "\">\n            <div class=\"postTitle\">" + post.header + "</div>\n            <p>Posted by " + user.username + " on " + formattedDate + "</p>\n            <button class=\"deletePostIcon\" onclick=\"handleDeletePost('" + post._id + "')\"></button>\n          </div>\n        ";
                     postRoot = document.querySelector("#postRoot");
                     if (!postRoot)
                         throw new Error("postRoot not found");
@@ -192,7 +192,7 @@ function renderUsersInfo(users) {
     if (userType === "admin") {
         try {
             var userElements = users.map(function (user) {
-                return "\n              <div class=\"profileInfo\">\n                <h3>" + user.username + "</h3>\n                <p>Email: " + user.email + "</p><br></br>\n                <p>Birthday: " + user.birthday + "</p>\n                <button onclick=\"deleteUser('" + user._id + "')\">Delete</button>\n              </div>\n            ";
+                return "\n              <div class=\"profileInfo\">\n                <h3>" + user.username + "</h3>\n                <p>Email: " + user.email + "</p><br></br>\n                <p>Birthday: " + user.birthday + "</p>\n                <button class=\"deletePostIcon\" onclick=\"deleteUser('" + user._id + "')\"></button>\n              </div>\n            ";
             });
             var html = userElements.join("");
             var profileInfoRoot = document.querySelector("#profileInfoRoot");
@@ -253,7 +253,7 @@ var renderPostsAfterDelete = function (post) {
         month: "short",
         day: "numeric"
     });
-    var html = "\n      <div id=\"post_" + post._id + "\" class=\"mainPagePost post\">\n        <img src=\"" + post.content + "\" alt=\"" + post.header + "\">\n        <div class=\"postTitle\">" + post.header + "</div>\n        <div>Posted on " + formattedDate + "</div>\n        <button onclick=\"handleDeletePost('" + post._id + "')\">Delete</button>\n      </div>\n    ";
+    var html = "\n      <div id=\"post_" + post._id + "\" class=\"mainPagePost post\">\n        <img src=\"" + post.content + "\" alt=\"" + post.header + "\">\n        <div class=\"postTitle\">" + post.header + "</div>\n        <div>Posted on " + formattedDate + "</div>\n        <button class=\"deletePostIcon\" onclick=\"handleDeletePost('" + post._id + "')\"></button>\n      </div>\n    ";
     var postRoot = document.querySelector("#postRoot");
     if (!postRoot)
         throw new Error("postRoot not found");
@@ -289,7 +289,7 @@ var deleteUser = function (userId) { return __awaiter(_this, void 0, void 0, fun
     });
 }); };
 var renderUsersAfetrDelete = function (user) {
-    var html = "<div class=\"profileInfo\">\n <h3>" + user.username + "</h3>\n <p>Email: " + user.email + "</p><br></br>\n <p>Birthday: " + user.birthday + "</p>\n <button onclick=\"deleteUser('" + user._id + "')\">Delete</button>\n</div>";
+    var html = "<div class=\"profileInfo\">\n <h3>" + user.username + "</h3>\n <p>Email: " + user.email + "</p><br></br>\n <p>Birthday: " + user.birthday + "</p>\n <button class=\"deletePostIcon\" onclick=\"deleteUser('" + user._id + "')\"></button>\n</div>";
     var profileInfoRoot = document.querySelector("#profileInfoRoot");
     if (!profileInfoRoot)
         throw new Error("profileInfoRoot not found");

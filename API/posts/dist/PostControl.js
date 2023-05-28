@@ -91,6 +91,25 @@ exports.deletePost = function (req, res) { return __awaiter(void 0, void 0, void
         }
     });
 }); };
+// export const deletePost = async (req: any, res: any) => {
+//   try {
+//     const { _id } = req.body;
+//     // Find the post
+//     const post = await PostsModel.findById(_id);
+//     if (!post) {
+//       return res.status(404).send({ error: "Post not found" });
+//     }
+//     const postId = post._id;
+//     // Delete the comments associated with the post
+//     await CommentsModel.deleteMany({ postId: postId });
+//     // Delete the post
+//     await PostsModel.findByIdAndDelete(_id);
+//     res.status(200).send({ message: "Post deleted successfully" });
+//   } catch (error: any) {
+//     console.error(error);
+//     res.status(500).send({ error: "Internal server error" });
+//   }
+// };
 exports.editPost = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
     var _a, postId, content, postDB, error_3;
     return __generator(this, function (_b) {
