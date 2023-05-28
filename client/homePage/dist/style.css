@@ -131,6 +131,7 @@ body::before {
 .main img {
   max-width: 25%;
   max-height: 25%;
+  border-radius: 1rem;
 }
 
 .main__postsContainer {
@@ -183,7 +184,7 @@ body::before {
   background-color: #0080f6;
 }
 
-@media screen and (min-width: 768px) {
+@media screen and (min-width: 600px) {
   .main__postsContainer {
     flex-direction: row;
   }

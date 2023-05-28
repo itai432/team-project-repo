@@ -31,6 +31,7 @@ body {
   display: block;
   font-size: 16px;
   margin-bottom: 5px;
+  text-align: center;
 }
 .LoginContainer__UserInput input[type=email],
 .LoginContainer__UserInput input[type=password], .LoginContainer__PasswordInput input[type=email],
@@ -48,6 +49,10 @@ body {
   border-color: #007bff;
   outline: none;
 }
+.LoginContainer__UserInput input, .LoginContainer__PasswordInput input {
+  max-width: 80%;
+  margin-left: 2rem;
+}
 .LoginContainer__LoginBtn {
   background-color: #007bff;
   border-radius: 3px;
@@ -59,6 +64,7 @@ body {
   text-align: center;
   width: 100%;
   transition: background-color 0.2s;
+  border-radius: 1rem;
 }
 .LoginContainer__LoginBtn:hover {
   background-color: #0069d9;
@@ -80,6 +86,7 @@ body {
   text-align: center;
   text-decoration: none;
   transition: background-color 0.2s;
+  border-radius: 1rem;
 }
 .LoginContainer__RegisterBtn a.element:hover {
   background-color: #0069d9;
@@ -96,6 +103,7 @@ body {
   padding: 10px;
   text-align: center;
   transition: background-color 0.2s;
+  border-radius: 1rem;
 }
 .LoginContainer__ForgotPasswordBtn:hover {
   background-color: #0069d9;
