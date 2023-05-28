@@ -241,9 +241,8 @@ function renderComment(comment: IComment, postId: string, date: string, username
 
   const commentHtml = `
     <div class="comment">
-      <p>${comment.content}</p>
-      <span>${formattedDate}</span>
-      <span>Commented by ${username}</span>
+    <h3>${username}<p>${comment.content}</p></h3>
+    <span>${formattedDate}</span>
     </div>
   `;
 

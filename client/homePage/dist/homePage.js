@@ -262,7 +262,7 @@ function renderComment(comment, postId, date, username) {
         month: "short",
         day: "numeric"
     });
-    var commentHtml = "\n    <div class=\"comment\">\n      <p>" + comment.content + "</p>\n      <span>" + formattedDate + "</span>\n      <span>Commented by " + username + "</span>\n    </div>\n  ";
+    var commentHtml = "\n    <div class=\"comment\">\n    <h3>" + username + "<p>" + comment.content + "</p></h3>\n    <span>" + formattedDate + "</span>\n    </div>\n  ";
     return commentHtml;
 }
 function fetchUserById(userId) {
