@@ -158,7 +158,8 @@ body::before {
 }
 
 .main__postsContainer input[type="text"] {
-  background-color: #fafafa;
+  background-color: #32313163;
+  border-radius: 1rem;
   border: none;
   border-top: 1px solid #e6e6e6;
   font-size: 1.4rem;
@@ -219,7 +220,11 @@ body::before {
 }
 .addCommentContainer{
   object-fit: contain;
-width: 30rem;
+  width: 30rem;
+  input{
+    box-shadow: 0 2% 4% rgba(70, 69, 69, 0.1);
+    border: 2px dotted black;
+  }
 }
 
 .comment{
@@ -227,6 +232,9 @@ width: 30rem;
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
+  h3{
+    cursor: pointer;
+  }
 }
 
 .post {
