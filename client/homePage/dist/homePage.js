@@ -213,38 +213,50 @@ function handleCreateComment(postId) {
     }
 }
 function fetchCommentsForPost(postId) {
+    var _this = this;
     fetch("/api/comments/get-comments?postId=" + postId)
         .then(function (res) { return res.json(); })
         .then(function (_a) {
         var comments = _a.comments;
         if (!comments)
             throw new Error("No comments found");
-        var commentsHtml = comments
-            .map(function (comment) {
-            return renderComment(comment, postId, comment.currentDate);
-        })
-            .join("");
-        var postElement = document.querySelector("#post_" + postId);
-        if (!postElement)
-            throw new Error("Post element with id " + postId + " not found");
-        var commentContainers = postElement.querySelectorAll("#commentContainer_" + postId);
-        if (!commentContainers || commentContainers.length === 0)
-            throw new Error("Comments container for post " + postId + " not found");
-        commentContainers.forEach(function (commentContainer) {
-            commentContainer.innerHTML = commentsHtml;
+        var commentPromises = comments.map(function (comment) { return __awaiter(_this, void 0, void 0, function () {
+            var user;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0: return [4 /*yield*/, fetchUserById(comment.user)];
+                    case 1:
+                        user = _a.sent();
+                        return [2 /*return*/, renderComment(comment, postId, comment.currentDate, user.username)];
+                }
+            });
+        }); });
+        Promise.all(commentPromises)
+            .then(function (commentsHtml) {
+            var postElement = document.querySelector("#post_" + postId);
+            if (!postElement)
+                throw new Error("Post element with id " + postId + " not found");
+            var commentContainers = postElement.querySelectorAll("#commentContainer_" + postId);
+            if (!commentContainers || commentContainers.length === 0)
+                throw new Error("Comments container for post " + postId + " not found");
+            commentContainers.forEach(function (commentContainer) {
+                commentContainer.innerHTML = commentsHtml.join("");
+            });
+        })["catch"](function (error) {
+            console.error(error);
         });
     })["catch"](function (error) {
         console.error(error);
     });
 }
-function renderComment(comment, postId, date) {
+function renderComment(comment, postId, date, username) {
     var commentDate = new Date(date);
     var formattedDate = commentDate.toLocaleDateString("en-US", {
         year: "numeric",
         month: "short",
         day: "numeric"
     });
-    var commentHtml = "\n    <div class=\"comment\">\n      <p>" + comment.content + "</p>\n      <span>" + formattedDate + "</span>\n    </div>\n  ";
+    var commentHtml = "\n    <div class=\"comment\">\n      <p>" + comment.content + "</p>\n      <span>" + formattedDate + "</span>\n      <span>Commented by " + username + "</span>\n    </div>\n  ";
     return commentHtml;
 }
 function fetchUserById(userId) {
