@@ -139,3 +139,10 @@ export const logout = (req: any, res: any) => {
 
   }
 };
+
+export const getUser = async (req: any, res: any) => {
+  const userId = req.query.user
+  const user = await UserModel.findById(userId);
+  console.log(user)
+  res.send({user: user})
+}

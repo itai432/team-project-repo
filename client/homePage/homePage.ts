@@ -28,7 +28,8 @@ async function renderPost(post: Post) {
       day: "numeric",
     });
 
-    const user = await fetchUserById(post.user);
+    const res = await fetch(`/api/users/getUser?user=${post.user}`)
+    const {user} = await res.json();
 
     const html = `
       <div id="post_${post._id}" class="mainPagePost post">
@@ -202,7 +203,8 @@ function fetchCommentsForPost(postId: string) {
       if (!comments) throw new Error("No comments found");
 
       const commentPromises = comments.map(async (comment) => {
-        const user = await fetchUserById(comment.user);
+        const res = await fetch(`/api/users/getUser?user=${comment.user}`)
+        const {user} = await res.json();
 
         return renderComment(comment, postId, comment.currentDate, user.username);
       });
@@ -261,6 +263,7 @@ async function fetchUserById(userId: string): Promise<User> {
     throw error;
   }
 }
+
 function logout(){
   fetch('/api/users/logout', {
     method: 'GET',
