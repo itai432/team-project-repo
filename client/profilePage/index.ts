@@ -163,6 +163,9 @@ function handleGetProfileInfo() {
           <div class="main__container__updatePost" id="updatePostRoot_${post._id}">
             <button class="editPostIcon" onclick="reanderPopUpUpdatePost('${post._id}')"></button>
           </div>
+          <div class="main__container__deletePost" id="deletePostRoot_${post._id}">
+          <button class="deletePostIcon" onclick="handleDeletePost('${post._id}')"></button>
+        </div>
         </div>
       `;
       const postsUserRoot = document.querySelector("#postsUserRoot");
@@ -277,7 +280,60 @@ function handleGetProfileInfo() {
       console.error(error);
     }
   }
-  
+  function handleDeletePost(postId) {
+    const confirmation = confirm("Are you sure you want to delete this post?");
+    if(confirmation){
+  fetch(`/api/posts/delete-post?id=${postId}`, {
+    method: "DELETE",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ _id: postId }),
+  })
+    .then((response) => response.json())
+    .then((data) => {
+      getPostsAfterDelete();
+    })
+    .catch((error) => {
+      console.error(error);
+    });
+  }
+}
+const getPostsAfterDelete = async () => {
+  const res = await fetch("/api/posts/get-posts-of-user");
+  const { posts } = await res.json();
+  const html = ``;
+  const postRoot = document.querySelector("#postsUserRoot");
+  if (!postRoot) throw new Error("postRoot not found");
+  postRoot.innerHTML = html;
+  if (posts)
+    posts.map((post) => {
+      renderPostsAfterDelete(post);
+    });
+};
+const renderPostsAfterDelete = (post: Post) => {
+  const postDate = new Date(post.date);
+  const formattedDate = postDate.toLocaleDateString("en-US", {
+    year: "numeric",
+    month: "short",
+    day: "numeric",
+  });
+  const html = `
+  <div class="mainPagePost" id="post_${post._id}">
+  <img src="${post.content}" alt="${post.header}">
+  <h3>${post.header}</h3>
+  <div class="main__container__updatePost" id="updatePostRoot_${post._id}">
+    <button class="editPostIcon" onclick="reanderPopUpUpdatePost('${post._id}')"></button>
+  </div>
+  <div class="main__container__deletePost" id="deletePostRoot_${post._id}">
+  <button class="deletePostIcon" onclick="handleDeletePost('${post._id}')"></button>
+</div>
+</div>
+    `;
+  const postRoot = document.querySelector("#postsUserRoot");
+  if (!postRoot) throw new Error("postRoot not found");
+  postRoot.innerHTML += html;
+};
 
   function logout(){
     fetch('/api/users/logout', {

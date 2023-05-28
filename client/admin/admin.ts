@@ -48,7 +48,7 @@ async function renderAdminPost(post: IPost) {
             <img src="${post.content}" alt="${post.header}">
             <div class="postTitle">${post.header}</div>
             <p>Posted by ${user.username} on ${formattedDate}</p>
-            <button onclick="handleDeletePost('${post._id}')">Delete</button>
+            <button class="deletePostIcon" onclick="handleDeletePost('${post._id}')"></button>
           </div>
         `;
       const postRoot = document.querySelector("#postRoot");
@@ -122,7 +122,7 @@ function renderUsersInfo(users) {
                 <h3>${user.username}</h3>
                 <p>Email: ${user.email}</p><br></br>
                 <p>Birthday: ${user.birthday}</p>
-                <button onclick="deleteUser('${user._id}')">Delete</button>
+                <button class="deletePostIcon" onclick="deleteUser('${user._id}')"></button>
               </div>
             `;
       });
@@ -182,7 +182,7 @@ const renderPostsAfterDelete = (post: IPost) => {
         <img src="${post.content}" alt="${post.header}">
         <div class="postTitle">${post.header}</div>
         <div>Posted on ${formattedDate}</div>
-        <button onclick="handleDeletePost('${post._id}')">Delete</button>
+        <button class="deletePostIcon" onclick="handleDeletePost('${post._id}')"></button>
       </div>
     `;
   const postRoot = document.querySelector("#postRoot");
@@ -221,7 +221,7 @@ const renderUsersAfetrDelete = (user) => {
  <h3>${user.username}</h3>
  <p>Email: ${user.email}</p><br></br>
  <p>Birthday: ${user.birthday}</p>
- <button onclick="deleteUser('${user._id}')">Delete</button>
+ <button class="deletePostIcon" onclick="deleteUser('${user._id}')"></button>
 </div>`;
   const profileInfoRoot = document.querySelector("#profileInfoRoot");
   if (!profileInfoRoot) throw new Error("profileInfoRoot not found");

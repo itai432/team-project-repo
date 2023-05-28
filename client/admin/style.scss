@@ -56,6 +56,14 @@ body {
     height: 20%;
   }
 }
+.deletePostIcon {
+  background-image: url(https://logowik.com/content/uploads/images/trash-can7871.jpg);
+background-size: cover;
+background-position: center;
+width:40px;
+height: 40px;
+border-radius: 50%;
+}
 
 .usersContainer::-webkit-scrollbar {
   display: none; 
