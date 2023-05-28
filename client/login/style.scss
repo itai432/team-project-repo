@@ -37,6 +37,7 @@ $tertiary-color: #005cbf;
         display: block;
         font-size: 16px;
         margin-bottom: 5px;
+        text-align: center;
       }
 
       input[type="email"],
@@ -52,6 +53,10 @@ $tertiary-color: #005cbf;
           border-color: #007bff;
           outline: none;
         }
+      }
+      input{
+        max-width: 80%;
+        margin-left: 2rem;
       }
     }
 
