@@ -192,7 +192,7 @@ function handleCreateComment(postId) {
             throw new Error("No comment");
         }
         var currentDate_1 = new Date();
-        var newComment_1 = { postId: postId, content: comment, currentDate: currentDate_1 };
+        var newComment = { postId: postId, content: comment, date: currentDate_1 };
         fetch("/api/comments/create-comment", {
             method: "POST",
             headers: {
@@ -200,11 +200,12 @@ function handleCreateComment(postId) {
                 "Content-Type": "application/json",
                 Authorization: "Bearer <user>"
             },
-            body: JSON.stringify(newComment_1)
+            body: JSON.stringify(newComment)
         })
             .then(function (res) { return res.json(); })
             .then(function (data) {
-            renderComment(newComment_1, postId, currentDate_1.toString());
+            var comment = data.comment, username = data.username;
+            renderComment(comment, postId, currentDate_1.toString(), username);
             commentInput_1.value = "";
             fetchCommentsForPost(postId);
         })["catch"](function (error) {
