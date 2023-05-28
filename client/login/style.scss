@@ -21,6 +21,7 @@ $tertiary-color: #005cbf;
     max-width: 500px;
     padding-top: 30%;
     padding:  20px;
+    
 
     &__hederContainer {
       color: #333;
@@ -71,6 +72,7 @@ $tertiary-color: #005cbf;
       text-align: center;
       width: 100%;
       transition: background-color 0.2s;
+      border-radius: 1rem;
   
       &:hover {
         background-color: $secondary-color;
@@ -97,6 +99,7 @@ $tertiary-color: #005cbf;
         text-align: center;
         text-decoration: none;
         transition: background-color 0.2s;
+        border-radius: 1rem;
   
         &:hover {
           background-color: $secondary-color;
@@ -108,26 +111,27 @@ $tertiary-color: #005cbf;
       }
     }
   
-    &__ForgotPasswordBtn {
-      background-color: $primary-color;
-      border-radius: 3px;
-      color: #fff;
-      cursor: pointer;
-      font-size: 16px;
-      padding: 10px;
-      text-align: center;
-      transition: background-color 0.2s;
+  //   &__ForgotPasswordBtn {
+  //     background-color: $primary-color;
+  //     border-radius: 3px;
+  //     color: #fff;
+  //     cursor: pointer;
+  //     font-size: 16px;
+  //     padding: 10px;
+  //     text-align: center;
+  //     transition: background-color 0.2s;
+  //     border-radius: 1rem;
   
-      &:hover {
-        background-color: $secondary-color;
-      }
+  //     &:hover {
+  //       background-color: $secondary-color;
+  //     }
   
-      &:active {
-        background-color: $tertiary-color;
-      }
-    }
+  //     &:active {
+  //       background-color: $tertiary-color;
+  //     }
+  //   }
 
-  }
+  // }
 
   @media (max-width: 600px) {
     .LoginContainer {
@@ -246,3 +250,4 @@ $tertiary-color: #005cbf;
   margin-left: 2%;
   font-size: 1.5vw;
 }
+
