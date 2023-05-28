@@ -36,31 +36,34 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 };
 function renderPost(post) {
     return __awaiter(this, void 0, void 0, function () {
-        var postDate, formattedDate, user, html, postRoot, error_1;
+        var postDate, formattedDate, res, user, html, postRoot, error_1;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
-                    _a.trys.push([0, 2, , 3]);
+                    _a.trys.push([0, 3, , 4]);
                     postDate = new Date(post.date);
                     formattedDate = postDate.toLocaleDateString("en-US", {
                         year: "numeric",
                         month: "short",
                         day: "numeric"
                     });
-                    return [4 /*yield*/, fetchUserById(post.user)];
+                    return [4 /*yield*/, fetch("/api/users/getUser?user=" + post.user)];
                 case 1:
-                    user = _a.sent();
+                    res = _a.sent();
+                    return [4 /*yield*/, res.json()];
+                case 2:
+                    user = (_a.sent()).user;
                     html = "\n      <div id=\"post_" + post._id + "\" class=\"mainPagePost post\">\n        <img src=\"" + post.content + "\" alt=\"" + post.header + "\">\n        <h1>" + post.header + "</h1>\n        <p>Posted by " + user.username + " on " + formattedDate + "</p>\n        <div class=\"addCommentContainer\">\n          <input placeholder=\"Add Comment\" type=\"text\" id=\"commentInput_" + post._id + "\">\n          <br></br>\n          <button onclick=\"handleCreateComment('" + post._id + "')\">Add Comment</button>\n          <br></br> \n        </div>\n        <div class=\"containerClass\" id=\"commentContainer_" + post._id + "\"></div>\n      </div>\n    ";
                     postRoot = document.querySelector("#postRoot");
                     if (!postRoot)
                         throw new Error("postRoot not found");
                     postRoot.innerHTML += html;
-                    return [3 /*break*/, 3];
-                case 2:
+                    return [3 /*break*/, 4];
+                case 3:
                     error_1 = _a.sent();
                     console.error(error_1);
-                    return [3 /*break*/, 3];
-                case 3: return [2 /*return*/];
+                    return [3 /*break*/, 4];
+                case 4: return [2 /*return*/];
             }
         });
     });
@@ -213,38 +216,53 @@ function handleCreateComment(postId) {
     }
 }
 function fetchCommentsForPost(postId) {
+    var _this = this;
     fetch("/api/comments/get-comments?postId=" + postId)
         .then(function (res) { return res.json(); })
         .then(function (_a) {
         var comments = _a.comments;
         if (!comments)
             throw new Error("No comments found");
-        var commentsHtml = comments
-            .map(function (comment) {
-            return renderComment(comment, postId, comment.currentDate);
-        })
-            .join("");
-        var postElement = document.querySelector("#post_" + postId);
-        if (!postElement)
-            throw new Error("Post element with id " + postId + " not found");
-        var commentContainers = postElement.querySelectorAll("#commentContainer_" + postId);
-        if (!commentContainers || commentContainers.length === 0)
-            throw new Error("Comments container for post " + postId + " not found");
-        commentContainers.forEach(function (commentContainer) {
-            commentContainer.innerHTML = commentsHtml;
+        var commentPromises = comments.map(function (comment) { return __awaiter(_this, void 0, void 0, function () {
+            var res, user;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0: return [4 /*yield*/, fetch("/api/users/getUser?user=" + comment.user)];
+                    case 1:
+                        res = _a.sent();
+                        return [4 /*yield*/, res.json()];
+                    case 2:
+                        user = (_a.sent()).user;
+                        return [2 /*return*/, renderComment(comment, postId, comment.currentDate, user.username)];
+                }
+            });
+        }); });
+        Promise.all(commentPromises)
+            .then(function (commentsHtml) {
+            var postElement = document.querySelector("#post_" + postId);
+            if (!postElement)
+                throw new Error("Post element with id " + postId + " not found");
+            var commentContainers = postElement.querySelectorAll("#commentContainer_" + postId);
+            if (!commentContainers || commentContainers.length === 0)
+                throw new Error("Comments container for post " + postId + " not found");
+            commentContainers.forEach(function (commentContainer) {
+                commentContainer.innerHTML = commentsHtml.join("");
+            });
+        })["catch"](function (error) {
+            console.error(error);
         });
     })["catch"](function (error) {
         console.error(error);
     });
 }
-function renderComment(comment, postId, date) {
+function renderComment(comment, postId, date, username) {
     var commentDate = new Date(date);
     var formattedDate = commentDate.toLocaleDateString("en-US", {
         year: "numeric",
         month: "short",
         day: "numeric"
     });
-    var commentHtml = "\n    <div class=\"comment\">\n      <p>" + comment.content + "</p>\n      <span>" + formattedDate + "</span>\n    </div>\n  ";
+    var commentHtml = "\n    <div class=\"comment\">\n      <p>" + comment.content + "</p>\n      <span>" + formattedDate + "</span>\n      <span>Commented by " + username + "</span>\n    </div>\n  ";
     return commentHtml;
 }
 function fetchUserById(userId) {

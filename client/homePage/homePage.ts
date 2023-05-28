@@ -28,7 +28,8 @@ async function renderPost(post: Post) {
       day: "numeric",
     });
 
-    const user = await fetchUserById(post.user);
+    const res = await fetch(`/api/users/getUser?user=${post.user}`)
+    const {user} = await res.json();
 
     const html = `
       <div id="post_${post._id}" class="mainPagePost post">
@@ -196,35 +197,41 @@ function handleCreateComment(postId: string) {
 }
 
 function fetchCommentsForPost(postId: string) {
-
   fetch(`/api/comments/get-comments?postId=${postId}`)
-    .then((res) => res.json() )
+    .then((res) => res.json())
     .then(({ comments }) => {
       if (!comments) throw new Error("No comments found");
-      const commentsHtml = comments
-        .map((comment) => {
-          return renderComment(comment, postId, comment.currentDate);
-        })
-        .join("");
 
-      const postElement = document.querySelector(`#post_${postId}`);
-      if (!postElement)
-        throw new Error(`Post element with id ${postId} not found`);
+      const commentPromises = comments.map(async (comment) => {
+        const res = await fetch(`/api/users/getUser?user=${comment.user}`)
+        const {user} = await res.json();
 
-      const commentContainers = postElement.querySelectorAll(`#commentContainer_${postId}`);
-      if (!commentContainers || commentContainers.length === 0)
-        throw new Error(`Comments container for post ${postId} not found`);
-
-      commentContainers.forEach((commentContainer) => {
-        commentContainer.innerHTML = commentsHtml;
+        return renderComment(comment, postId, comment.currentDate, user.username);
       });
+
+      Promise.all(commentPromises)
+        .then((commentsHtml) => {
+          const postElement = document.querySelector(`#post_${postId}`);
+          if (!postElement) throw new Error(`Post element with id ${postId} not found`);
+
+          const commentContainers = postElement.querySelectorAll(`#commentContainer_${postId}`);
+          if (!commentContainers || commentContainers.length === 0)
+            throw new Error(`Comments container for post ${postId} not found`);
+
+          commentContainers.forEach((commentContainer) => {
+            commentContainer.innerHTML = commentsHtml.join("");
+          });
+        })
+        .catch((error) => {
+          console.error(error);
+        });
     })
     .catch((error) => {
       console.error(error);
     });
 }
 
-function renderComment(comment: IComment, postId: string, date: string,) {
+function renderComment(comment: IComment, postId: string, date: string, username: string) {
   const commentDate = new Date(date);
   const formattedDate = commentDate.toLocaleDateString("en-US", {
     year: "numeric",
@@ -236,6 +243,7 @@ function renderComment(comment: IComment, postId: string, date: string,) {
     <div class="comment">
       <p>${comment.content}</p>
       <span>${formattedDate}</span>
+      <span>Commented by ${username}</span>
     </div>
   `;
 
@@ -255,6 +263,7 @@ async function fetchUserById(userId: string): Promise<User> {
     throw error;
   }
 }
+
 function logout(){
   fetch('/api/users/logout', {
     method: 'GET',
