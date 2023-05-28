@@ -60,9 +60,15 @@ function handleUpdateUserName(ev, userId) {
         ev.preventDefault();
         var usernameInput = document.querySelector("#username");
         var emailInput = document.querySelector("#email");
-        var username = usernameInput.value;
-        var email = emailInput.value;
-        var newUser = { username: username, email: email, userId: userId };
+        var username = usernameInput.value.trim();
+        var email = emailInput.value.trim();
+        var newUser = { userId: userId };
+        if (username !== "") {
+            newUser.username = username;
+        }
+        if (email !== "") {
+            newUser.email = email;
+        }
         fetch("/api/users/update-user-name?userId=" + userId, {
             method: "PATCH",
             headers: {

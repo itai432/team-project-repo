@@ -102,10 +102,18 @@ function handleGetProfileInfo() {
       ev.preventDefault();
       const usernameInput = document.querySelector("#username") as HTMLInputElement;
       const emailInput = document.querySelector("#email") as HTMLInputElement;
-      const username = usernameInput.value;
-      const email = emailInput.value;
+      const username = usernameInput.value.trim();
+      const email = emailInput.value.trim();
   
-      const newUser: any = { username, email, userId };
+      const newUser: any = { userId };
+  
+      if (username !== "") {
+        newUser.username = username;
+      }
+  
+      if (email !== "") {
+        newUser.email = email;
+      }
   
       fetch(`/api/users/update-user-name?userId=${userId}`, {
         method: "PATCH",
@@ -117,8 +125,8 @@ function handleGetProfileInfo() {
       })
         .then((res) => res.json())
         .then(({ user }) => {
-          console.log(user)
-          renderProfileInfo(user)
+          console.log(user);
+          renderProfileInfo(user);
         })
         .catch((error) => {
           console.error(error);
