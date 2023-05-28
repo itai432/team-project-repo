@@ -312,6 +312,5 @@ function logout() {
         }
     })["catch"](function (error) {
         console.error(error);
-        // Handle the error
     });
 }

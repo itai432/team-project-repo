@@ -60,9 +60,15 @@ function handleUpdateUserName(ev, userId) {
         ev.preventDefault();
         var usernameInput = document.querySelector("#username");
         var emailInput = document.querySelector("#email");
-        var username = usernameInput.value;
-        var email = emailInput.value;
-        var newUser = { username: username, email: email, userId: userId };
+        var username = usernameInput.value.trim();
+        var email = emailInput.value.trim();
+        var newUser = { userId: userId };
+        if (username !== "") {
+            newUser.username = username;
+        }
+        if (email !== "") {
+            newUser.email = email;
+        }
         fetch("/api/users/update-user-name?userId=" + userId, {
             method: "PATCH",
             headers: {
@@ -107,7 +113,7 @@ function handleGetUserPosts() {
 }
 function renderUserPosts(post) {
     try {
-        var html = "\n        <div class=\"mainPagePost\">\n          <img src=\"" + post.content + "\" alt=\"" + post.header + "\">\n          <h3>" + post.header + "</h3>\n          <div class=\"main__container__updatePost\" id=\"updatePostRoot_" + post._id + "\">\n            <button class=\"editPostIcon\" onclick=\"reanderPopUpUpdatePost('" + post._id + "')\"></button>\n          </div>\n        </div>\n      ";
+        var html = "\n        <div class=\"mainPagePost\" id=\"post_" + post._id + "\">\n          <img src=\"" + post.content + "\" alt=\"" + post.header + "\">\n          <h3>" + post.header + "</h3>\n          <div class=\"main__container__updatePost\" id=\"updatePostRoot_" + post._id + "\">\n            <button class=\"editPostIcon\" onclick=\"reanderPopUpUpdatePost('" + post._id + "')\"></button>\n          </div>\n        </div>\n      ";
         var postsUserRoot = document.querySelector("#postsUserRoot");
         if (!postsUserRoot)
             throw new Error("postsUserRoot not found");
@@ -119,11 +125,17 @@ function renderUserPosts(post) {
 }
 function renderUserPostsAfterUpdate(post) {
     try {
-        var html = "\n        <div class=\"mainPagePost\">\n          <img src=\"" + post.content + "\" alt=\"" + post.header + "\">\n          <h3>" + post.header + "</h3>\n          <div class=\"main__container__updatePost\" id=\"updatePostRoot_" + post._id + "\">\n            <button class=\"editPostIcon\" onclick=\"reanderPopUpUpdatePost('" + post._id + "')\"></button>\n          </div>\n        </div>\n      ";
-        var postsUserRoot = document.querySelector("#postsUserRoot");
-        if (!postsUserRoot)
-            throw new Error("postsUserRoot not found");
-        postsUserRoot.innerHTML = html;
+        var postElement = document.getElementById("post_" + post._id);
+        if (!postElement)
+            throw new Error("postElement not found");
+        var imageElement = postElement.querySelector("img");
+        if (!imageElement)
+            throw new Error("imageElement not found");
+        imageElement.src = post.content;
+        var headerElement = postElement.querySelector("h3");
+        if (!headerElement)
+            throw new Error("headerElement not found");
+        headerElement.textContent = post.header;
     }
     catch (error) {
         console.error(error);
@@ -134,7 +146,7 @@ function reanderPopUpUpdatePost(postId) {
         var updatePostRoot = document.querySelector("#updatePostRoot_" + postId);
         if (!updatePostRoot)
             throw new Error("updatePostRoot not found");
-        var html = "\n        <form onsubmit=\"handleUpdateUserPost(event)\" class=\"updatePostContainer\">\n          <button type=\"button\" class=\"updatePostContainer__CloseBtn\" onclick=\"closeupdatePostPopup('" + postId + "')\">&times;</button>\n          <div class=\"updatePostContainer__updatePostHeader\"></div>\n          <div>\n            <label for=\"header\">header:</label>\n            <input type=\"text\" id=\"header\" name=\"header\" class=\"updatePostContainer__HeaderInput\" >\n          </div>\n          <div>\n            <label for=\"content\">content:</label>\n            <input type=\"content\" id=\"content\" name=\"content\" class=\"updatePostContainer__ContentInput\" >\n          </div>\n          <div>\n            <button type=\"submit\" class=\"updatePostContainer__SubmitBtn\" onclick=\"handleUpdateUserPost(event,'" + postId + "')\">update</button>\n          </div>\n        </form>\n      ";
+        var html = "\n        <form onsubmit=\"handleUpdateUserPost(event)\" class=\"updatePostContainer\">\n          <button type=\"button\" class=\"updatePostContainer__CloseBtn\" onclick=\"closeupdatePostPopup('" + postId + "')\">&times;</button>\n          <div class=\"updatePostContainer__updatePostHeader\"></div>\n          <div>\n            <label for=\"header\">header:</label>\n            <input type=\"text\" id=\"header\" name=\"header\" class=\"updatePostContainer__HeaderInput\" required>\n          </div>\n          <div>\n            <label for=\"content\">content:</label>\n            <input type=\"content\" id=\"content\" name=\"content\" class=\"updatePostContainer__ContentInput\" required>\n          </div>\n          <div>\n            <button type=\"submit\" class=\"updatePostContainer__SubmitBtn\" onclick=\"handleUpdateUserPost(event,'" + postId + "')\">update</button>\n          </div>\n        </form>\n      ";
         var updatePostBtn = updatePostRoot.querySelector("button");
         if (!updatePostBtn)
             throw new Error("updatePostBtn not found");
@@ -159,9 +171,19 @@ function handleUpdateUserPost(ev, postId) {
         ev.preventDefault();
         var headerInput = document.querySelector("#header");
         var contentInput = document.querySelector("#content");
-        var header = headerInput.value;
-        var content = contentInput.value;
-        var newPost = { header: header, content: content, postId: postId };
+        var header = headerInput.value.trim();
+        var content = contentInput.value.trim();
+        if (header === "" && content === "") {
+            console.error("Both header and content fields cannot be empty");
+            return;
+        }
+        var newPost = { postId: postId };
+        if (header !== "") {
+            newPost.header = header;
+        }
+        if (content !== "") {
+            newPost.content = content;
+        }
         fetch("/api/posts/update-post?postId=" + postId, {
             method: "PATCH",
             headers: {

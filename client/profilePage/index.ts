@@ -102,10 +102,18 @@ function handleGetProfileInfo() {
       ev.preventDefault();
       const usernameInput = document.querySelector("#username") as HTMLInputElement;
       const emailInput = document.querySelector("#email") as HTMLInputElement;
-      const username = usernameInput.value;
-      const email = emailInput.value;
+      const username = usernameInput.value.trim();
+      const email = emailInput.value.trim();
   
-      const newUser: any = { username, email, userId };
+      const newUser: any = { userId };
+  
+      if (username !== "") {
+        newUser.username = username;
+      }
+  
+      if (email !== "") {
+        newUser.email = email;
+      }
   
       fetch(`/api/users/update-user-name?userId=${userId}`, {
         method: "PATCH",
@@ -117,8 +125,8 @@ function handleGetProfileInfo() {
       })
         .then((res) => res.json())
         .then(({ user }) => {
-          console.log(user)
-          renderProfileInfo(user)
+          console.log(user);
+          renderProfileInfo(user);
         })
         .catch((error) => {
           console.error(error);
@@ -150,7 +158,7 @@ function handleGetProfileInfo() {
   function renderUserPosts(post: Post) {
     try {
       const html = `
-        <div class="mainPagePost">
+        <div class="mainPagePost" id="post_${post._id}">
           <img src="${post.content}" alt="${post.header}">
           <h3>${post.header}</h3>
           <div class="main__container__updatePost" id="updatePostRoot_${post._id}">
@@ -168,18 +176,18 @@ function handleGetProfileInfo() {
 
   function renderUserPostsAfterUpdate(post: Post) {
     try {
-      const html = `
-        <div class="mainPagePost">
-          <img src="${post.content}" alt="${post.header}">
-          <h3>${post.header}</h3>
-          <div class="main__container__updatePost" id="updatePostRoot_${post._id}">
-            <button class="editPostIcon" onclick="reanderPopUpUpdatePost('${post._id}')"></button>
-          </div>
-        </div>
-      `;
-      const postsUserRoot = document.querySelector("#postsUserRoot");
-      if (!postsUserRoot) throw new Error("postsUserRoot not found");
-      postsUserRoot.innerHTML = html;
+      const postElement = document.getElementById(`post_${post._id}`);
+      if (!postElement) throw new Error("postElement not found");
+  
+      const imageElement = postElement.querySelector("img");
+      if (!imageElement) throw new Error("imageElement not found");
+  
+      imageElement.src = post.content;
+  
+      const headerElement = postElement.querySelector("h3");
+      if (!headerElement) throw new Error("headerElement not found");
+  
+      headerElement.textContent = post.header;
     } catch (error) {
       console.error(error);
     }
@@ -197,11 +205,11 @@ function handleGetProfileInfo() {
           <div class="updatePostContainer__updatePostHeader"></div>
           <div>
             <label for="header">header:</label>
-            <input type="text" id="header" name="header" class="updatePostContainer__HeaderInput" >
+            <input type="text" id="header" name="header" class="updatePostContainer__HeaderInput" required>
           </div>
           <div>
             <label for="content">content:</label>
-            <input type="content" id="content" name="content" class="updatePostContainer__ContentInput" >
+            <input type="content" id="content" name="content" class="updatePostContainer__ContentInput" required>
           </div>
           <div>
             <button type="submit" class="updatePostContainer__SubmitBtn" onclick="handleUpdateUserPost(event,'${postId}')">update</button>
@@ -233,10 +241,23 @@ function handleGetProfileInfo() {
       ev.preventDefault();
       const headerInput = document.querySelector("#header") as HTMLInputElement;
       const contentInput = document.querySelector("#content") as HTMLInputElement;
-      const header = headerInput.value;
-      const content = contentInput.value;
+      const header = headerInput.value.trim();
+      const content = contentInput.value.trim();
   
-      const newPost: any = { header, content, postId };
+      if (header === "" && content === "") {
+        console.error("Both header and content fields cannot be empty");
+        return;
+      }
+  
+      const newPost: any = { postId };
+  
+      if (header !== "") {
+        newPost.header = header;
+      }
+  
+      if (content !== "") {
+        newPost.content = content;
+      }
   
       fetch(`/api/posts/update-post?postId=${postId}`, {
         method: "PATCH",
@@ -248,7 +269,7 @@ function handleGetProfileInfo() {
       })
         .then((res) => res.json())
         .then(({ post }) => {
-          renderUserPostsAfterUpdate(post)
+          renderUserPostsAfterUpdate(post);
         })
         .catch((error) => {
           console.error(error);
