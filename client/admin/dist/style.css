@@ -37,7 +37,6 @@ body {
 
 .postsContainer::-webkit-scrollbar {
   display: none;
-  /* Hide the scrollbar */
 }
 
 .usersContainer {
@@ -61,7 +60,6 @@ body {
 
 .usersContainer::-webkit-scrollbar {
   display: none;
-  /* Hide the scrollbar */
 }
 
 .mainPagePost {

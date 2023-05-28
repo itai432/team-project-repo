@@ -208,7 +208,6 @@ function renderUsersInfo(users) {
         console.log("not admin");
     }
 }
-//Deleting posts
 function handleDeletePost(postId) {
     fetch("/api/posts/delete-post?id=" + postId, {
         method: "DELETE",
@@ -260,7 +259,6 @@ var renderPostsAfterDelete = function (post) {
         throw new Error("postRoot not found");
     postRoot.innerHTML += html;
 };
-// deleting users
 var deleteUser = function (userId) { return __awaiter(_this, void 0, void 0, function () {
     var html, profileInfoRoot;
     return __generator(this, function (_a) {
