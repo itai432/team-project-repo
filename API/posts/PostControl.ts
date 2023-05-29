@@ -21,45 +21,21 @@ export const createPost = async (req: any, res: any) => {
 };
 
 
-  export const deletePost = async (req: any, res: any) => {
-    try {
-      const { _id } = req.body;
-      console.log(req)
-      const deletePost = await PostsModel.deleteOne({ _id });
-      const posts = await PostsModel.find({});
-  
-      res.send({ ok: true, posts });
-    } catch (error: any) {
-      console.error(error);
-      res.status(500).send({ error: "cannot find or delete post" });
-    }
-  };
+export const deletePost = async (req: any, res: any) => {
+  try {
+    const { _id } = req.body;
+    const post = await PostsModel.findById(_id);
+    await PostsModel.deleteOne({ _id });
+    await CommentsModel.deleteMany({ post: _id });
 
-  // export const deletePost = async (req: any, res: any) => {
-  //   try {
-  //     const { _id } = req.body;
-  
-  //     // Find the post
-  //     const post = await PostsModel.findById(_id);
-  
-  //     if (!post) {
-  //       return res.status(404).send({ error: "Post not found" });
-  //     }
-  
-  //     const postId = post._id;
-  
-  //     // Delete the comments associated with the post
-  //     await CommentsModel.deleteMany({ postId: postId });
-  
-  //     // Delete the post
-  //     await PostsModel.findByIdAndDelete(_id);
-  
-  //     res.status(200).send({ message: "Post deleted successfully" });
-  //   } catch (error: any) {
-  //     console.error(error);
-  //     res.status(500).send({ error: "Internal server error" });
-  //   }
-  // };
+    const posts = await PostsModel.find({});
+    res.send({ ok: true, posts });
+  } catch (error: any) {
+    console.error(error);
+    res.status(500).send({ error: "cannot find or delete post" });
+  }
+};
+
   export const editPost = async (req: any, res: any) => {
     try {
       const { postId, content } = req.body;
@@ -78,10 +54,9 @@ export const createPost = async (req: any, res: any) => {
     }
   };
 
-
   export const getPosts = async (req: any, res: any) => {
     try {
-      const posts = await PostsModel.find({});
+      const posts = await PostsModel.find({}).sort({ date: -1 });
       res.send({ posts });
     } catch (error: any) {
       res.status(500).send(error);

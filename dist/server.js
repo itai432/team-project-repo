@@ -40,6 +40,9 @@ app.use("/api/comments", commentsRoute_1["default"]);
 //     io.emit("newMessage", message);
 //   });
 // });
+app.get("/", function (req, res) {
+    res.redirect("http://localhost:3000/login/index.html");
+});
 var port = process.env.PORT || 3000;
 server.listen(port, function () {
     console.log("Server is listening on port " + port);

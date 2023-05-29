@@ -38,6 +38,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 exports.__esModule = true;
 exports.updatePost = exports.getPostsOfUser = exports.getPosts = exports.editPost = exports.deletePost = exports.createPost = void 0;
 var postsModel_1 = require("./postsModel");
+var commentsModel_1 = require("../comments/commentsModel");
 var jwt_simple_1 = require("jwt-simple");
 var secret = process.env.JWT_SECRET;
 exports.createPost = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
@@ -67,49 +68,35 @@ exports.createPost = function (req, res) { return __awaiter(void 0, void 0, void
     });
 }); };
 exports.deletePost = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var _id, deletePost_1, posts, error_2;
+    var _id, post, posts, error_2;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
-                _a.trys.push([0, 3, , 4]);
+                _a.trys.push([0, 5, , 6]);
                 _id = req.body._id;
-                console.log(req);
-                return [4 /*yield*/, postsModel_1["default"].deleteOne({ _id: _id })];
+                return [4 /*yield*/, postsModel_1["default"].findById(_id)];
             case 1:
-                deletePost_1 = _a.sent();
-                return [4 /*yield*/, postsModel_1["default"].find({})];
+                post = _a.sent();
+                return [4 /*yield*/, postsModel_1["default"].deleteOne({ _id: _id })];
             case 2:
+                _a.sent();
+                return [4 /*yield*/, commentsModel_1["default"].deleteMany({ post: _id })];
+            case 3:
+                _a.sent();
+                return [4 /*yield*/, postsModel_1["default"].find({})];
+            case 4:
                 posts = _a.sent();
                 res.send({ ok: true, posts: posts });
-                return [3 /*break*/, 4];
-            case 3:
+                return [3 /*break*/, 6];
+            case 5:
                 error_2 = _a.sent();
                 console.error(error_2);
                 res.status(500).send({ error: "cannot find or delete post" });
-                return [3 /*break*/, 4];
-            case 4: return [2 /*return*/];
+                return [3 /*break*/, 6];
+            case 6: return [2 /*return*/];
         }
     });
 }); };
-// export const deletePost = async (req: any, res: any) => {
-//   try {
-//     const { _id } = req.body;
-//     // Find the post
-//     const post = await PostsModel.findById(_id);
-//     if (!post) {
-//       return res.status(404).send({ error: "Post not found" });
-//     }
-//     const postId = post._id;
-//     // Delete the comments associated with the post
-//     await CommentsModel.deleteMany({ postId: postId });
-//     // Delete the post
-//     await PostsModel.findByIdAndDelete(_id);
-//     res.status(200).send({ message: "Post deleted successfully" });
-//   } catch (error: any) {
-//     console.error(error);
-//     res.status(500).send({ error: "Internal server error" });
-//   }
-// };
 exports.editPost = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
     var _a, postId, content, postDB, error_3;
     return __generator(this, function (_b) {
@@ -139,7 +126,7 @@ exports.getPosts = function (req, res) { return __awaiter(void 0, void 0, void 0
         switch (_a.label) {
             case 0:
                 _a.trys.push([0, 2, , 3]);
-                return [4 /*yield*/, postsModel_1["default"].find({})];
+                return [4 /*yield*/, postsModel_1["default"].find({}).sort({ date: -1 })];
             case 1:
                 posts = _a.sent();
                 res.send({ posts: posts });
