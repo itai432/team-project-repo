@@ -28,8 +28,8 @@ async function renderPost(post: Post) {
       day: "numeric",
     });
 
-    const res = await fetch(`/api/users/getUser?user=${post.user}`)
-    const {user} = await res.json();
+    const res = await fetch(`/api/users/getUser?user=${post.user}`);
+    const { user } = await res.json();
 
     const html = `
       <div id="post_${post._id}" class="mainPagePost post">
@@ -48,7 +48,8 @@ async function renderPost(post: Post) {
 
     const postRoot = document.querySelector("#postRoot");
     if (!postRoot) throw new Error("postRoot not found");
-    postRoot.innerHTML += html;
+    postRoot.innerHTML = html + postRoot.innerHTML;
+
   } catch (error) {
     console.error(error);
   }
@@ -60,7 +61,8 @@ async function handleGetPosts() {
     const { posts } = await res.json();
 
     if (!posts) throw new Error("didnt find Posts");
-    for (const post of posts) {
+    const reversedPosts = posts.reverse();
+    for (const post of reversedPosts) {
       await renderPost(post);
       fetchCommentsForPost(post._id);
     }

@@ -57,7 +57,7 @@ function renderPost(post) {
                     postRoot = document.querySelector("#postRoot");
                     if (!postRoot)
                         throw new Error("postRoot not found");
-                    postRoot.innerHTML += html;
+                    postRoot.innerHTML = html + postRoot.innerHTML;
                     return [3 /*break*/, 4];
                 case 3:
                     error_1 = _a.sent();
@@ -70,7 +70,7 @@ function renderPost(post) {
 }
 function handleGetPosts() {
     return __awaiter(this, void 0, void 0, function () {
-        var res, posts, _i, posts_1, post, error_2;
+        var res, posts, reversedPosts, _i, reversedPosts_1, post, error_2;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
@@ -83,11 +83,12 @@ function handleGetPosts() {
                     posts = (_a.sent()).posts;
                     if (!posts)
                         throw new Error("didnt find Posts");
-                    _i = 0, posts_1 = posts;
+                    reversedPosts = posts.reverse();
+                    _i = 0, reversedPosts_1 = reversedPosts;
                     _a.label = 3;
                 case 3:
-                    if (!(_i < posts_1.length)) return [3 /*break*/, 6];
-                    post = posts_1[_i];
+                    if (!(_i < reversedPosts_1.length)) return [3 /*break*/, 6];
+                    post = reversedPosts_1[_i];
                     return [4 /*yield*/, renderPost(post)];
                 case 4:
                     _a.sent();
