@@ -54,6 +54,11 @@ app.use("/api/comments", commentsRoute);
 //   });
 // });
 
+app.get("/", (req, res) => {
+  res.redirect("http://localhost:3000/login/index.html"); 
+});
+
+
 const port = process.env.PORT || 3000;
 server.listen(port, () => {
   console.log(`Server is listening on port ${port}`);
